@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  user_id: mongoose.Schema.Types.ObjectId,
-  movie_id: mongoose.Schema.Types.ObjectId,
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+  movie_id: { type: mongoose.Schema.Types.ObjectId, ref: "movies" },
   content: String,
 });
 
