@@ -62,7 +62,7 @@ exports.updateMovieById = async function (request, response, next) {
       newMovie[prop] = request.body[prop];
     }
 
-    let movie = await Movie.findByIdAndUpdate(request.body._id, newMovie, {
+    let movie = await Movie.findByIdAndUpdate(request.params.id, newMovie, {
       new: true,
     });
 
@@ -76,9 +76,31 @@ exports.updateMovieById = async function (request, response, next) {
 
 exports.deleteMovieById = async function (request, response, next) {
   try {
-    let movie = await Movie.findByIdAndDelete(request.body._id);
+    let movie = await Movie.findByIdAndDelete(request.params.id);
     if (!movie) throw new Error("No Movies exist by this ID");
     response.status(200).json(movie);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.searchMovie = async function (request, response, next) {
+  try {
+    let movies;
+    // No query params
+    if (Object.keys(request.query).length === 0) throw new Error("Not Exist");
+    // if request has name parameter
+    if (request.query.name) {
+      movies = await Movie.find({
+        ...request.query,
+        name: { $regex: request.query.name },
+      });
+    } else {
+      movies = await Movie.find(request.query);
+    }
+
+    if (!movies) throw new Error("No Movies exist");
+    response.status(200).json(movies);
   } catch (error) {
     next(error);
   }
