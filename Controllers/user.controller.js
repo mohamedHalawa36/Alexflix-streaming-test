@@ -69,14 +69,38 @@ exports.deleteUser = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+
 exports.getFavoritesUser = (req, res, next) => {
-  res.status(200).json("getFavoritesUser");
+  const { _id } = req.user;
+  User.findById({_id}, { favorites: 1 })
+    .then((data) => {
+      if (!data?.favorites.length) throw new Error("User Favorites not found");
+      res.status(200).json({ message: "Done", data });
+    })
+    .catch((err) => next(err));
 };
+
 exports.addFavoritesUser = (req, res, next) => {
-  res.status(200).json("addFavoritesUser");
+  const { _id } = req.user;
+  const { id,name } = req.body;
+  User.updateOne({_id}, { $addToSet:{favorites:{id,name}}})
+    .then((data) => {
+      if (!data.modifiedCount) throw new Error("Update Favorites Fail");
+      res.status(200).json({ message: "Done" });
+    })
+    .catch((err) => next(err));
 };
+
+
 exports.deleteFavoritesUser = (req, res, next) => {
-  res.status(200).json("deleteFavoritesUser");
+  const { _id } = req.user;
+  const { id } = req.body;
+  User.updateOne({_id}, { $pull:{favorites:{id}}})
+    .then((data) => {
+       if (!data.modifiedCount) throw new Error("Delete Favorites Fail");
+      res.status(200).json({ message: "Done"});
+    })
+    .catch((err) => next(err));
 };
 
 exports.changePasswordUser = (req, res, next) => {
@@ -102,7 +126,7 @@ Admin
 */
 
 exports.getAllUsers = (req, res, next) => {
-  User.find({}, { password: 0, confirmation: 0, status: 0 })
+  User.find({isAdmin:false}, { password: 0, confirmation: 0, status: 0,isAdmin:0 })
     .then((data) => {
       if (!data.length) throw new Error("Users not found");
       res.status(200).json({ message: "Done", data });
@@ -179,9 +203,20 @@ exports.softDeleteUser = (req, res, next) => {
 };
 
 exports.getAllFavoritesUsers = (req, res, next) => {
-  res.status(200).json("getAllFavoritesUsers");
+  User.find({isAdmin:false}, { favorites: 1 })
+  .then((data) => {
+    if (!data.length) throw new Error("Users Favorites not found");
+    res.status(200).json({ message: "Done", data });
+  })
+  .catch((err) => next(err));
 };
 
 exports.getFavoritesUserById = (req, res, next) => {
-  res.status(200).json("getFavoritesUserById");
+  const { id } = req.params;
+  User.findById({_id:id }, { favorites: 1 })
+    .then((data) => {
+      if (!data?.favorites.length) throw new Error("User Favorites not found");
+      res.status(200).json({ message: "Done", data });
+    })
+    .catch((err) => next(err));
 };

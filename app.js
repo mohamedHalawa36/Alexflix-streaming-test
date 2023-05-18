@@ -5,6 +5,7 @@ const {connect} = require("mongoose");
 const morgan = require("morgan");
 var cors = require("cors");
 require("./Models/userModel")
+require("./Models/movieModel")
 
 const accountRouter= require("./Routes/account.routes");
 const { authentication } = require("./Middlewares/auth");

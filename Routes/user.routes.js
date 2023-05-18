@@ -1,11 +1,15 @@
 const { Router } = require("express");
-const userController = require("../controllers/user.controller");
-const { multerData ,formats} = require("../middleWares/services/multer");
+const userController = require("../Controllers/user.controller");
+const { multerData ,formats} = require("../Middlewares/services/multer");
 const validate = require("../Middlewares/validation/validate");
 const { updateValidate } = require("../Middlewares/validation/userValiation/update.validation");
 const { authorization } = require("../Middlewares/auth");
 const { forgetPasswordValidation } = require("../Middlewares/validation/accountValidation/forgetPassword.validation");
 const { addValidate } = require("../Middlewares/validation/userValiation/add.validation");
+const moviesExists=require("../Middlewares/services/moviesExists");
+const { addFavoriteValidation } = require("../Middlewares/validation/userValiation/addFavorite.validation");
+const { deleteFavoriteValidation } = require("../Middlewares/validation/userValiation/deleteFavorite.validation");
+
 const router=Router()
 
 
@@ -18,9 +22,9 @@ router.route("/user")
 .delete(userController.deleteUser)
 
 router.route("/user/favorites")
-.get(userController.getAllFavoritesUsers)
-.patch(userController.addFavoritesUser)
-.delete(userController.deleteFavoritesUser)
+.get(userController.getFavoritesUser)
+.patch(moviesExists,addFavoriteValidation,validate,userController.addFavoritesUser)
+.delete(deleteFavoriteValidation,validate,userController.deleteFavoritesUser)
 
 router.patch("/user/changePassword",forgetPasswordValidation,validate,userController.changePasswordUser)
 

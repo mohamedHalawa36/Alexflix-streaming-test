@@ -1,4 +1,4 @@
-const { param, body } = require("express-validator");
+const { query, body } = require("express-validator");
 
 exports.movieArray = [
   body("name").optional().isString().withMessage("name should be String"),
@@ -16,10 +16,10 @@ exports.movieArray = [
 ];
 
 exports.searchMovieArray = [
-  param("name").optional().isString().withMessage("name should be String"),
-  param("rate").optional().isNumeric().withMessage("rate should be number"),
-  param("type").optional().isString().withMessage("type should be String"),
-  param("production_year")
+  query("name").optional().isString().withMessage("name should be String"),
+  query("rate").optional().isNumeric().withMessage("rate should be number"),
+  query("type").optional().isString().withMessage("type should be String"),
+  query("production_year")
     .optional()
     .isNumeric()
     .withMessage("production_year should be Number"),

@@ -35,9 +35,9 @@ const userSchema = new Schema({
     default: false,
   },
   favorites: [
-    {
+    
       favorite,
-    },
+
   ],
   profile_img,
   confirmation: {
