@@ -1,8 +1,8 @@
 const express = require("express");
 
-const dataSchema = require("./../Middlewares/validations/dataSchema");
-const validator = require("./../Middlewares/validations/validatorMW");
+const validator = require("../Middlewares/validation/validate");
 const controller = require("./../Controllers/movieController");
+const dataSchema = require("../Middlewares/validation/dataSchema");
 const router = express.Router();
 
 router
