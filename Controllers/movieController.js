@@ -93,13 +93,13 @@ exports.searchMovie = async function (request, response, next) {
     if (request.query.name) {
       movies = await Movie.find({
         ...request.query,
-        name: { $regex: request.query.name },
+        name: { $regex: request.query.name, $options: "i" },
       });
     } else {
       movies = await Movie.find(request.query);
     }
 
-    if (!movies) throw new Error("No Movies exist");
+    if (movies.length == 0) throw new Error("No Movies exist");
     response.status(200).json(movies);
   } catch (error) {
     next(error);

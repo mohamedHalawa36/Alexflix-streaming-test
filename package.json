@@ -4,13 +4,12 @@
   "description": "movie and store web app",
   "main": "app.js",
   "scripts": {
-    "start":"nodemon app"
+    "start": "nodemon app"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@typegoose/auto-increment": "^3.1.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

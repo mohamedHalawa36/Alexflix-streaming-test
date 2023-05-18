@@ -8,14 +8,16 @@ const router = express.Router();
 router
   .route("/movies")
   .get(controller.getAllMovies)
-  .post(controller.addNewMovie);
+  .post(dataSchema.movieArray, validator, controller.addNewMovie);
 
-router.route("/movies/search").get(controller.searchMovie);
+router
+  .route("/movies/search")
+  .get(dataSchema.searchMovieArray, validator, controller.searchMovie);
 
 router
   .route("/movies/:id")
   .get(controller.getMovieById)
-  .patch(controller.updateMovieById)
+  .patch(dataSchema.movieArray, validator, controller.updateMovieById)
   .delete(controller.deleteMovieById);
 
 module.exports = router;
