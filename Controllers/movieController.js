@@ -80,7 +80,7 @@ exports.deleteMovieById = async function (request, response, next) {
     let movie = await Movie.findByIdAndDelete(request.params.id);
     if (!movie) throw new Error("No Movies exist by this ID");
 
-    let updatedUsers = await User.updateMany(
+    let updatedUsersStatus = await User.updateMany(
       { "favorites.id": request.params.id },
       {
         $pull: {
@@ -89,7 +89,7 @@ exports.deleteMovieById = async function (request, response, next) {
       }
     );
 
-    response.status(200).json(updatedUsers);
+    response.status(200).json({ movie, updatedUsersStatus });
   } catch (error) {
     next(error);
   }
