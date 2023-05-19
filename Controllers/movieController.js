@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 require("./../Models/movieModel");
 const Movie = mongoose.model("movies");
+const User = mongoose.model("users");
 
 exports.getAllMovies = async function (request, response, next) {
   try {
@@ -78,7 +79,17 @@ exports.deleteMovieById = async function (request, response, next) {
   try {
     let movie = await Movie.findByIdAndDelete(request.params.id);
     if (!movie) throw new Error("No Movies exist by this ID");
-    response.status(200).json(movie);
+
+    let updatedUsers = await User.updateMany(
+      { "favorites.id": request.params.id },
+      {
+        $pull: {
+          favorites: { id: movie._id, name: movie.name },
+        },
+      }
+    );
+
+    response.status(200).json(updatedUsers);
   } catch (error) {
     next(error);
   }

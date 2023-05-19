@@ -45,7 +45,7 @@ exports.addProfileImgForUser = (req, res, next) => {
       return cloudinary.uploader.destroy(public_id);
     })
     .then((data) => {
-      if(!data?.result) return res.status(200).json({ message: "Done" });
+      if (!data?.result) return res.status(200).json({ message: "Done" });
       if (data.result !== "ok") throw new Error(data.result);
       res.status(200).json({ message: "Done" });
     })
@@ -62,17 +62,16 @@ exports.deleteUser = (req, res, next) => {
       return cloudinary.uploader.destroy(public_id);
     })
     .then((data) => {
-      if(!data?.result) return res.status(200).json({ message: "Done" });
+      if (!data?.result) return res.status(200).json({ message: "Done" });
       if (data.result !== "ok") throw new Error(data.result);
       res.status(200).json({ message: "Done" });
     })
     .catch((err) => next(err));
 };
 
-
 exports.getFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
-  User.findById({_id}, { favorites: 1 })
+  User.findById({ _id }, { favorites: 1 })
     .then((data) => {
       if (!data?.favorites.length) throw new Error("User Favorites not found");
       res.status(200).json({ message: "Done", data });
@@ -82,8 +81,8 @@ exports.getFavoritesUser = (req, res, next) => {
 
 exports.addFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
-  const { id,name } = req.body;
-  User.updateOne({_id}, { $addToSet:{favorites:{id,name}}})
+  const { id, name } = req.body;
+  User.updateOne({ _id }, { $addToSet: { favorites: { id, name } } })
     .then((data) => {
       if (!data.modifiedCount) throw new Error("Update Favorites Fail");
       res.status(200).json({ message: "Done" });
@@ -91,14 +90,13 @@ exports.addFavoritesUser = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-
 exports.deleteFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
   const { id } = req.body;
-  User.updateOne({_id}, { $pull:{favorites:{id}}})
+  User.updateOne({ _id }, { $pull: { favorites: { id } } })
     .then((data) => {
-       if (!data.modifiedCount) throw new Error("Delete Favorites Fail");
-      res.status(200).json({ message: "Done"});
+      if (!data.modifiedCount) throw new Error("Delete Favorites Fail");
+      res.status(200).json({ message: "Done" });
     })
     .catch((err) => next(err));
 };
@@ -126,7 +124,11 @@ Admin
 */
 
 exports.getAllUsers = (req, res, next) => {
-  User.find({isAdmin:false}, { password: 0, confirmation: 0, status: 0,isAdmin:0 })
+  User
+    .find
+    // { isAdmin: false },
+    // { password: 0, confirmation: 0, status: 0, isAdmin: 0 }
+    ()
     .then((data) => {
       if (!data.length) throw new Error("Users not found");
       res.status(200).json({ message: "Done", data });
@@ -136,7 +138,7 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.getUserById = (req, res, next) => {
   const { id } = req.params;
-  User.findById({_id:id }, { password: 0, confirmation: 0, status: 0 })
+  User.findById({ _id: id }, { password: 0, confirmation: 0, status: 0 })
     .then((data) => {
       if (!data) throw new Error("User not found");
       res.status(200).json({ message: "Done", data });
@@ -144,9 +146,12 @@ exports.getUserById = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-
 exports.addUser = (req, res, next) => {
-  const { firstName, lastName, email, phone, gender, age,isAdmin } = req.body;
+  // const { firstName, lastName, email, phone, gender, age, isAdmin } = req.body;
+
+  // this for testing
+  const { firstName, lastName, email, phone, gender, age, isAdmin, favorites } =
+    req.body;
 
   const otp = otpGenerator.generate(6, {
     digits: true,
@@ -164,23 +169,27 @@ exports.addUser = (req, res, next) => {
     phone,
     gender,
     age,
-    isAdmin
+    isAdmin,
+    favorites, // this for testing
   });
   const id = jwt.sign({ id: userData._id }, process.env.KEY);
-  const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
-  sendEmail
-    .sendMessage({
-      to: email,
-      subject: "confirmationEmail",
-      html: sendEmail.confirmationEmailWithPassword(
-        "confirm your email address and send your Password",
-        confirmationLink,
-        otp
-      ),
-    })
-    .then(() => userData.save())
+  // const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
+  // sendEmail
+  //   .sendMessage({
+  //     to: email,
+  //     subject: "confirmationEmail",
+  //     html: sendEmail.confirmationEmailWithPassword(
+  //       "confirm your email address and send your Password",
+  //       confirmationLink,
+  //       otp
+  //     ),
+  // })
+  // .then(() => userData.save())
+  userData
+    .save()
     .then(() =>
-      res.status(201).json({ message: "Please check your email address" })
+      // res.status(201).json({ message: "Please check your email address" })
+      res.status(201).json({ id })
     )
     .catch((error) => next(error));
 };
@@ -188,32 +197,31 @@ exports.addUser = (req, res, next) => {
 exports.softDeleteUser = (req, res, next) => {
   const { id } = req.params;
 
-    User.findById({ _id: id }, { status:1 })
+  User.findById({ _id: id }, { status: 1 })
     .then((data) => {
       if (!data) throw new Error("User not find");
       data.status = !data.status;
-      return data.save()
+      return data.save();
     })
-      .then((data) => {
-        if (!data) throw new Error("block Fail");
+    .then((data) => {
+      if (!data) throw new Error("block Fail");
       res.status(200).json({ message: "Done" });
     })
     .catch((err) => next(err));
-
 };
 
 exports.getAllFavoritesUsers = (req, res, next) => {
-  User.find({isAdmin:false}, { favorites: 1 })
-  .then((data) => {
-    if (!data.length) throw new Error("Users Favorites not found");
-    res.status(200).json({ message: "Done", data });
-  })
-  .catch((err) => next(err));
+  User.find({ isAdmin: false }, { favorites: 1 })
+    .then((data) => {
+      if (!data.length) throw new Error("Users Favorites not found");
+      res.status(200).json({ message: "Done", data });
+    })
+    .catch((err) => next(err));
 };
 
 exports.getFavoritesUserById = (req, res, next) => {
   const { id } = req.params;
-  User.findById({_id:id }, { favorites: 1 })
+  User.findById({ _id: id }, { favorites: 1 })
     .then((data) => {
       if (!data?.favorites.length) throw new Error("User Favorites not found");
       res.status(200).json({ message: "Done", data });
