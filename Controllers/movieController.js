@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-require("./../Models/movieModel");
 const Movie = mongoose.model("movies");
 const User = mongoose.model("users");
+const Review = mongoose.model("reviews");
 
 exports.getAllMovies = async function (request, response, next) {
   try {
@@ -88,8 +88,9 @@ exports.deleteMovieById = async function (request, response, next) {
         },
       }
     );
+    let deleteMoviesReviews = await Review.deleteMany({movie_id:movie._id})
 
-    response.status(200).json({ movie, updatedUsersStatus });
+    response.status(200).json({ movie, updatedUsersStatus,deleteMoviesReviews });
   } catch (error) {
     next(error);
   }

@@ -6,11 +6,13 @@ const morgan = require("morgan");
 var cors = require("cors");
 require("./Models/userModel");
 require("./Models/movieModel");
+require("./Models/reviewModel");
 
 const accountRouter = require("./Routes/account.routes");
 const { authentication } = require("./Middlewares/auth");
 const userRouter = require("./Routes/user.routes");
 const movieRoute = require("./Routes/movieRoute");
+const reviewRoute = require("./Routes/reviewRoute");
 
 config();
 const port = process.env.PORT || 8080;
@@ -31,6 +33,7 @@ app.use(accountRouter);
 // app.use(authentication)
 app.use(userRouter);
 app.use(movieRoute);
+app.use(reviewRoute);
 
 app.use((req, res) => res.status(404).json({ massage: "not found" }));
 

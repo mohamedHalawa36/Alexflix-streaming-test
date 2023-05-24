@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 
 const User = model("users");
+const Review = model("reviews");
 
 exports.getUserData = (req, res, next) => {
   const { _id } = req.user;
@@ -52,9 +53,16 @@ exports.addProfileImgForUser = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+// button has user id when admin delete him
 exports.deleteUser = (req, res, next) => {
-  const { _id } = req.user;
-  User.findByIdAndDelete({ _id })
+  // const { _id } = req.user;
+  const { _id } = req.body;
+
+  Review.deleteMany({user_id:_id})
+  .then((data) => {
+    if(!data.deletedCount) throw new Error("delete Fail")
+    return User.findByIdAndDelete({ _id })
+  })
     .then((data) => {
       if (!data) throw new Error("delete Fail");
       if (!data?.profile_img?.public_id) return data;
