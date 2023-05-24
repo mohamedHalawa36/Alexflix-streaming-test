@@ -7,7 +7,7 @@ exports.getAllMovies = async function (request, response, next) {
   try {
     const allMovies = await Movie.find();
     if (allMovies.length == 0) throw new Error("No Movies exist");
-    response.status(200).json(allMovies);
+    response.status(200).json({ message: "Done", data: allMovies });
   } catch (error) {
     next(error);
   }
@@ -39,7 +39,7 @@ exports.addNewMovie = async function (request, response, next) {
       videos,
     });
     await movie.save();
-    response.status(200).json(movie);
+    response.status(200).json({ message: "Done", data: movie });
   } catch (error) {
     next(error);
   }
@@ -50,7 +50,7 @@ exports.getMovieById = async function (request, response, next) {
     let movie = await Movie.findById(request.params.id);
 
     if (!movie) throw new Error("No Movies exist by this ID");
-    response.status(200).json(movie);
+    response.status(200).json({ message: "Done", data: movie });
   } catch (error) {
     next(error);
   }
@@ -69,7 +69,7 @@ exports.updateMovieById = async function (request, response, next) {
 
     if (!movie) throw new Error("No Movies exist by this ID");
 
-    response.status(200).json(movie);
+    response.status(200).json({ message: "Done", data: movie });
   } catch (error) {
     next(error);
   }
@@ -88,9 +88,14 @@ exports.deleteMovieById = async function (request, response, next) {
         },
       }
     );
-    let deleteMoviesReviews = await Review.deleteMany({movie_id:movie._id})
+    let deleteMoviesReviews = await Review.deleteMany({ movie_id: movie._id });
 
-    response.status(200).json({ movie, updatedUsersStatus,deleteMoviesReviews });
+    response
+      .status(200)
+      .json({
+        message: "Done",
+        data: { movie, updatedUsersStatus, deleteMoviesReviews },
+      });
   } catch (error) {
     next(error);
   }
@@ -98,21 +103,22 @@ exports.deleteMovieById = async function (request, response, next) {
 
 exports.searchMovie = async function (request, response, next) {
   try {
-    let movies;
     // No query params
     if (Object.keys(request.query).length === 0) throw new Error("Not Exist");
-    // if request has name parameter
-    if (request.query.name) {
-      movies = await Movie.find({
-        ...request.query,
-        name: { $regex: request.query.name, $options: "i" },
-      });
-    } else {
-      movies = await Movie.find(request.query);
+
+    const query = {};
+    for (const key in request.query) {
+      if (request.query[key]) query[key] = request.query[key];
+
+      // if request has name parameter
+      if (key === "name")
+        query[key] = { $regex: request.query[key], $options: "i" };
     }
 
+    let movies = await Movie.find(query);
+
     if (movies.length == 0) throw new Error("No Movies exist");
-    response.status(200).json(movies);
+    response.status(200).json({ message: "Done", data: movies });
   } catch (error) {
     next(error);
   }

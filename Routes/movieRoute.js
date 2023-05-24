@@ -12,7 +12,9 @@ router
 
 router
   .route("/movies/search")
-  .get(movieValidator.searchMovieArray, validator, controller.searchMovie);
+  // .get(movieValidator.searchMovieArray, validator, controller.searchMovie);
+  .get(movieValidator.searchMovieArray, controller.searchMovie);
+
 
 router
   .route("/movies/:id")

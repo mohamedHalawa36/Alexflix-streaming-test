@@ -59,8 +59,7 @@ exports.deleteUser = (req, res, next) => {
   const { _id } = req.body;
 
   Review.deleteMany({user_id:_id})
-  .then((data) => {
-    if(!data.deletedCount) throw new Error("delete Fail")
+  .then(() => {
     return User.findByIdAndDelete({ _id })
   })
     .then((data) => {
