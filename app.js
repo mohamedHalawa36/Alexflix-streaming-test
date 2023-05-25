@@ -5,6 +5,7 @@ const { connect } = require("mongoose");
 const morgan = require("morgan");
 var cors = require("cors");
 require("./Models/userModel");
+require("./Models/orderModel");
 require("./Models/movieModel");
 require("./Models/reviewModel");
 
@@ -13,6 +14,7 @@ const { authentication } = require("./Middlewares/auth");
 const userRouter = require("./Routes/user.routes");
 const movieRoute = require("./Routes/movieRoute");
 const reviewRoute = require("./Routes/reviewRoute");
+const orderRoute = require("./Routes/orderRoute");
 
 config();
 const port = process.env.PORT || 8080;
@@ -33,6 +35,7 @@ app.use(accountRouter);
 // app.use(authentication)
 app.use(userRouter);
 app.use(movieRoute);
+app.use(orderRoute);
 app.use(reviewRoute);
 
 app.use((req, res) => res.status(404).json({ massage: "not found" }));

@@ -35,3 +35,27 @@ exports.authorization=(req,res,next)=>{
 }
 
 
+module.exports.isAdmin = (request, repsone, next) => {
+    // 3. check if that user is admin or not
+    // the user is authorized
+    if (request.decodedPayload.isAdmin) next();
+    else {
+      let error = new Error("not Authorized");
+      error.status = 403;
+      next(error);
+    }
+  };
+
+  
+//   module.exports.isRegisteredUser = (request,response,next)=>{
+  
+//     User.findById(request.decodedPayload.userId,{_id:1})
+//     .then((data)=>{
+//       if(!data)throw new Error("User Doesn't exist")
+//       next()
+//     })
+//     .catch(error=>next(error))
+  
+//   }
+
+
