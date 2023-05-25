@@ -8,6 +8,7 @@ require("./Models/userModel");
 require("./Models/orderModel");
 require("./Models/movieModel");
 require("./Models/reviewModel");
+require("./Models/productModel");
 
 const accountRouter = require("./Routes/account.routes");
 const { authentication } = require("./Middlewares/auth");
@@ -15,6 +16,7 @@ const userRouter = require("./Routes/user.routes");
 const movieRoute = require("./Routes/movieRoute");
 const reviewRoute = require("./Routes/reviewRoute");
 const orderRoute = require("./Routes/orderRoute");
+const productRoute = require("./Routes/productRoute");
 
 config();
 const port = process.env.PORT || 8080;
@@ -37,6 +39,7 @@ app.use(userRouter);
 app.use(movieRoute);
 app.use(orderRoute);
 app.use(reviewRoute);
+app.use(productRoute);
 
 app.use((req, res) => res.status(404).json({ massage: "not found" }));
 

@@ -26,7 +26,13 @@ exports.addNewMovie = async function (request, response, next) {
       poster,
       videos,
     } = request.body;
-
+    // Check That Product Id Exist in Products Collection !
+    const data = await Product.find({ _id: { $in: products } });
+    const dataIds = data.map((d) => d._id);
+    if (dataIds.length !== products.length) {
+      const wrongIds = products.filter((id) => !dataIds.includes(id)).join(",");
+      throw new Error(`One of these ids don't exist: ${wrongIds}`);
+    }
     let movie = new Movie({
       name,
       rate,
@@ -90,12 +96,10 @@ exports.deleteMovieById = async function (request, response, next) {
     );
     let deleteMoviesReviews = await Review.deleteMany({ movie_id: movie._id });
 
-    response
-      .status(200)
-      .json({
-        message: "Done",
-        data: { movie, updatedUsersStatus, deleteMoviesReviews },
-      });
+    response.status(200).json({
+      message: "Done",
+      data: { movie, updatedUsersStatus, deleteMoviesReviews },
+    });
   } catch (error) {
     next(error);
   }
