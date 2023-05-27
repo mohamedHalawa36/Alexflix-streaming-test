@@ -9,6 +9,7 @@ router
   .route("/reviews/:movieId")
   .get(controller.getAllMovieReviews)
   .post(controller.addNewReview);
+  
 router.route("/review/:reviewId")
 .patch(controller.updateReview)
    .delete(controller.deleteReview);

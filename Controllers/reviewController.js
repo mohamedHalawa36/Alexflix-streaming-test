@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Movie = mongoose.model("movies");
-const User = mongoose.model("users");
 const Review = mongoose.model("reviews");
 
 exports.getAllReviews = async function (request, response, next) {

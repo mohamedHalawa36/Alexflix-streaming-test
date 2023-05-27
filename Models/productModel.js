@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
   name: String,
   price: Number,
   description: String,
-  images: [product_img],
+  images: [{ type: product_img }],
   colors: [{ type: String }],
   available: Number,
   category: String, // enum [keywords,....]
