@@ -55,8 +55,7 @@ exports.addProfileImgForUser = (req, res, next) => {
 
 // button has user id when admin delete him
 exports.deleteUser = (req, res, next) => {
-  // const { _id } = req.user;
-  const { _id } = req.body;
+   const { _id } = req.user;
 
   Review.deleteMany({user_id:_id})
   .then(() => {
@@ -88,8 +87,10 @@ exports.getFavoritesUser = (req, res, next) => {
 
 exports.addFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
-  const { id, name } = req.body;
-  User.updateOne({ _id }, { $addToSet: { favorites: { id, name } } })
+  const { id } = req.body;
+  const {name,poster}=req.moves
+  console.log(poster);
+  User.updateOne({ _id }, { $addToSet: { favorites: { id, name,poster } } })
     .then((data) => {
       if (!data.modifiedCount) throw new Error("Update Favorites Fail");
       res.status(200).json({ message: "Done" });
@@ -133,9 +134,9 @@ Admin
 exports.getAllUsers = (req, res, next) => {
   User
     .find
-    // { isAdmin: false },
-    // { password: 0, confirmation: 0, status: 0, isAdmin: 0 }
-    ()
+    (    { isAdmin: false },
+      { password: 0, confirmation: 0, isAdmin: 0 }
+  )
     .then((data) => {
       if (!data.length) throw new Error("Users not found");
       res.status(200).json({ message: "Done", data });
@@ -154,11 +155,7 @@ exports.getUserById = (req, res, next) => {
 };
 
 exports.addUser = (req, res, next) => {
-  // const { firstName, lastName, email, phone, gender, age, isAdmin } = req.body;
-
-  // this for testing
-  const { firstName, lastName, email, phone, gender, age, isAdmin, favorites } =
-    req.body;
+  const { firstName, lastName, email, phone, gender, age, isAdmin } = req.body;
 
   const otp = otpGenerator.generate(6, {
     digits: true,
@@ -180,23 +177,22 @@ exports.addUser = (req, res, next) => {
     favorites, // this for testing
   });
   const id = jwt.sign({ id: userData._id }, process.env.KEY);
-  // const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
-  // sendEmail
-  //   .sendMessage({
-  //     to: email,
-  //     subject: "confirmationEmail",
-  //     html: sendEmail.confirmationEmailWithPassword(
-  //       "confirm your email address and send your Password",
-  //       confirmationLink,
-  //       otp
-  //     ),
-  // })
-  // .then(() => userData.save())
+  const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
+  sendEmail
+    .sendMessage({
+      to: email,
+      subject: "confirmationEmail",
+      html: sendEmail.confirmationEmailWithPassword(
+        "confirm your email address and send your Password",
+        confirmationLink,
+        otp
+      ),
+  })
+  .then(() => userData.save())
   userData
     .save()
     .then(() =>
-      // res.status(201).json({ message: "Please check your email address" })
-      res.status(201).json({ id })
+      res.status(201).json({ message: "Please check your email address" })
     )
     .catch((error) => next(error));
 };

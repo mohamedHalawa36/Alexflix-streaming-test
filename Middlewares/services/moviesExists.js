@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
   Movies.findById( id )
     .then((data) => {
         if(!data) throw new Error("Movies Id not exists")
+        req.moves=data
         next();
     })
     .catch((error) => next(error));
