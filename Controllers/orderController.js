@@ -14,65 +14,55 @@ module.exports.getAllUserOrders = function (req, res, next) {
     .catch((error) => next(error));
 };
 module.exports.addNewOrder = async function (req, res, next) {
-  try {
-    let { products } = req.body;
-    // Ensure ids are correct
-    let productsFound = await Product.find(
-      { _id: { $in: products } },
-      { available: 1 }
-    );
+  let productIds = [];
+  let products = req.body.products.sort((a, b) => {
+    if (a._id > b._id) return 1;
+    else if (a._id < b._id) return -1;
+    else return 0;
+  });
 
-    if (productsFound.length !== products.length)
-      throw new Error("there are some ids don't exit");
+  products.forEach((product) => {
+    productIds.push(product._id);
+  });
 
-    //Ensure the quantity is available
-    const filteredProducts = productsFound.filter((product) => {
-      const desiredQuantity = products.find(
-        (p) => p._id === product._id.toString()
-      ).quantity;
-      return product.available >= desiredQuantity;
-    });
+  //check for products existance
+  Product.find({ _id: { $in: productIds } }, { available: 1 })
+    .sort({ _id: 1 })
 
-    if (filteredProducts.length !== products.length)
-      throw new Error("there are some products don't has the quantity");
+    .then((data) => {
+      if (data.length != productIds.length)
+        throw new Error("products not exist");
 
-    const newOrder = new Order({
-      user_id: req.body.user_id,
-      products: req.body.products,
-      total_price: req.body.total_price,
-      address: req.body.address,
-      contact_phone: req.body.contact_phone,
-    });
+      for (let i = 0; i < data.length; i++) {
+        //check for products availability
+        if (products[i].quantity > data[i].available)
+          throw new Error(
+            `there is no available quantity for ${products[i].name} product`
+          );
+      }
 
-    await newOrder.save();
+      //creating order after passing all checks
+      let object = {
+        user_id: req.body.user_id,
+        products: req.body.products,
+        total_price: req.body.total_price,
+        address: req.body.address,
+        contact_phone: req.body.contact_phone,
+      };
 
-    // decrement the quantity from the availability
-    const finalResult = [];
-
-    for (const product of filteredProducts) {
-      const desiredQuantity = products.find(
-        (p) => p._id === product._id.toString()
-      ).quantity;
-
-      const updatedProduct = await Product.findByIdAndUpdate(
-        product._id,
-        {
-          $inc: { available: -desiredQuantity },
-        },
-        { new: true }
-      );
-
-      finalResult.push(updatedProduct);
-    }
-
-    res.status(201).json({ message: "Done", newOrder });
-  } catch (error) {
-    next(error);
-  }
-  //
+      return new Order(object).save()
+      .then((obj) => {
+        //Reducing the available quantity by the amount of the ordered ones
+        for (let i = 0; i < data.length; i++) {
+          data[i].available -= products[i].quantity;
+          data[i].save();
+        }
+        res.status(201).json(obj);
+      });
+    })
+    .catch((error) => next(error));
 };
 
-//waiting for isUser func decide
 module.exports.updateOrderById = async function (req, res, next) {
 
   try {
@@ -100,18 +90,40 @@ module.exports.updateOrderById = async function (req, res, next) {
 };
 
 module.exports.deleteOrderById = function (req, res, next) {
-  let { user_id, id } = req.body;
-
-  Order.findOneAndUpdate(
-    { _id: id, user_id },
-    {
-      $set: { status: "cancelled" },
-    }
+  let { user_id, _id } = req.body;
+  let productIds = [];
+  let products;
+  Order.findOne(
+    { _id, user_id, status: "pending" },
+    { status: 1, products: 1 }
   )
-    .then((data) => {
-      if (!data) throw new Error("Order Doesn't exist");
-      res.status(200).json(data);
+    .then((object) => {
+      if (!object) throw new Error("Order Doesn't exist");
+
+      object.status = "cancelled";
+      object.save();
+      products = object.products.sort((a, b) => {
+        if (a._id > b._id) return 1;
+        else if (a._id < b._id) return -1;
+        else return 0;
+      });
+
+      products.forEach((product) => {
+        productIds.push(product._id);
+      });
+      return Product.find({ _id: { $in: productIds } }, { available: 1 }).sort({
+        _id: 1,
+      });
     })
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        data[i].available += products[i].quantity;
+        data[i].save();
+      }
+
+      res.status(200).json({ message: "deleted", data });
+    })
+
     .catch((error) => next(error));
 };
 
@@ -134,19 +146,47 @@ module.exports.adminGetOrderById = function (req, res, next) {
 };
 
 module.exports.adminDeleteOrderById = function (req, res, next) {
-  Order.findByIdAndUpdate(req.params.id, {
-    $set: { status: "cancelled" },
-  })
-    .then((data) => {
-      if (!data) throw new Error("Order Doesn't Exist");
-      res.status(200).json(data);
+  let { _id } = req.params;
+  let productIds = [];
+  let products;
+  Order.findOne({ _id, status: "pending" }, { status: 1, products: 1 })
+    .then((object) => {
+      if (!object) throw new Error("Order Doesn't exist");
+
+      object.status = "cancelled";
+      object.save();
+      products = object.products.sort((a, b) => {
+        if (a._id > b._id) return 1;
+        else if (a._id < b._id) return -1;
+        else return 0;
+      });
+
+      products.forEach((product) => {
+        productIds.push(product._id);
+      });
+      return Product.find({ _id: { $in: productIds } }, { available: 1 }).sort({
+        _id: 1,
+      });
     })
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        data[i].available += products[i].quantity;
+        data[i].save();
+      }
+
+      res.status(200).json({ message: "deleted" });
+    })
+
     .catch((error) => next(error));
 };
 module.exports.adminUpdateOrderById = function (req, res, next) {
-  Order.findByIdAndUpdate(req.params.id, {
-    $set: { status: "approved" },
-  })
+  let { _id } = req.params;
+  Order.findOneAndUpdate(
+    { _id, status: "pending" },
+    {
+      $set: { status: "approved" },
+    }
+  )
     .then((data) => {
       if (!data) throw new Error("Order Doesn't Exist");
       res.status(200).json(data);
