@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route("/movies")
   .get(controller.getAllMovies)
-  .post(authorization,movieValidator.movieArray, validator, controller.addNewMovie);
+  .post(authorization,movieValidator.addMoviesArray, validator, controller.addNewMovie);
 
 router
   .route("/movies/search")
@@ -19,7 +19,7 @@ router
 router
   .route("/movies/:id")
   .get(controller.getMovieById)
-  .patch(authorization,movieValidator.movieArray, validator, controller.updateMovieById)
+  .patch(authorization,movieValidator.updateMoviesArray, validator, controller.updateMovieById)
   .delete(authorization,controller.deleteMovieById);
 
 module.exports = router;
