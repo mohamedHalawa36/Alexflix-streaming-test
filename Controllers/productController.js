@@ -75,6 +75,10 @@ exports.searchProduct = async function (request, response, next) {
         query.price = { ...query.price, $lte: +query[key] };
         delete query[key];
       }
+      if (key === "available")
+        // Search By 1 for Availability and 0  for all .
+        +query[key] ? (query.available = { $gte: 1 }) : delete query[key];
+
       // a query to find the price range
       // query.price = { $gte: +minPrice, $lte: +maxPrice}
     }

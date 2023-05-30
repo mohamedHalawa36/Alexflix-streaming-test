@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const Order = mongoose.model("orders");
-const User = mongoose.model("users");
+// const User = mongoose.model("users");
 const Product = mongoose.model("products");
 
 module.exports.getAllUserOrders = function (req, res, next) {
-  let tokenId = req.body.user_id;
-  Order.find({ user_id: tokenId })
+  const { _id:user_id } = req.user;
+  Order.find({ user_id })
     .then((data) => {
       if (data.length != 0) res.status(200).json({ message: "Done", data });
       else throw new Error("there is no orders yet");
@@ -14,6 +14,8 @@ module.exports.getAllUserOrders = function (req, res, next) {
     .catch((error) => next(error));
 };
 module.exports.addNewOrder = async function (req, res, next) {
+  const { _id:user_id } = req.user;
+
   let productIds = [];
   let products = req.body.products.sort((a, b) => {
     if (a._id > b._id) return 1;
@@ -43,7 +45,7 @@ module.exports.addNewOrder = async function (req, res, next) {
 
       //creating order after passing all checks
       let object = {
-        user_id: req.body.user_id,
+        user_id,
         products: req.body.products,
         total_price: req.body.total_price,
         address: req.body.address,
@@ -66,9 +68,10 @@ module.exports.addNewOrder = async function (req, res, next) {
 module.exports.updateOrderById = async function (req, res, next) {
 
   try {
+    const { _id:user_id } = req.user;
+
     let {
       _id,
-      user_id,
       address,
       contact_phone,
     } = req.body;
@@ -90,7 +93,9 @@ module.exports.updateOrderById = async function (req, res, next) {
 };
 
 module.exports.deleteOrderById = function (req, res, next) {
-  let { user_id, _id } = req.body;
+  const { _id:user_id } = req.user;
+
+  let {  _id } = req.body;
   let productIds = [];
   let products;
   Order.findOne(
