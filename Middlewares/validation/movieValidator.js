@@ -17,7 +17,7 @@ exports.movieArray = [
 
 exports.searchMovieArray = [
   query("name").optional().isString().withMessage("name should be String"),
-  query("rate").optional().isNumeric().withMessage("rate should be number"),
+  query("rate").optional().isString().withMessage("rate should be number"),
   query("type").optional().isString().withMessage("type should be String"),
   query("production_year")
     .optional()
