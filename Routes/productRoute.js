@@ -8,7 +8,6 @@ const { authorization } = require("../Middlewares/auth");
 
 const router = express.Router();
 
-
 router
   .route("/products")
   .get(controller.getAllProducts)

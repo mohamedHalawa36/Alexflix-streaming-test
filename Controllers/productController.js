@@ -9,7 +9,7 @@ exports.getAllProducts = async function (request, response, next) {
     let page = request.query.page;
     page = page * 1 || 1;
     if (page <= 0 || !page) page = 1;
-    let limit = 1; // display only 16 products for each page
+    let limit = 5; // display only 16 products for each page
     let skip = (page - 1) * limit;
     const allProducts = await Product.find({}, { __v: 0 })
       .sort({ name: 1 })
@@ -25,8 +25,7 @@ exports.getAllProducts = async function (request, response, next) {
 // Create a new product
 exports.createProduct = async (request, response, next) => {
   try {
-    const { name, price, description, colors, available, category } =
-      request.body;
+    const { name, price, description, available, category } = request.body;
 
     const images = [];
     for (const { path } of request.files) {
@@ -40,7 +39,6 @@ exports.createProduct = async (request, response, next) => {
       price,
       description,
       images,
-      colors,
       available,
       category,
     });

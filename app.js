@@ -24,7 +24,7 @@ const port = process.env.PORT || 8080;
 app.use(morgan(":method :url"));
 app.use(cors());
 
-connect(process.env.URL)
+connect(process.env.Atlas_URL)
   .then(() => {
     console.log("connect DB");
     app.listen(port, () => console.log(`listening on port ${port}!`));
@@ -34,7 +34,7 @@ connect(process.env.URL)
 app.use(express.json());
 
 app.use(accountRouter);
-app.use(authentication)
+// app.use(authentication);
 app.use(userRouter);
 app.use(movieRoute);
 app.use(orderRoute);
