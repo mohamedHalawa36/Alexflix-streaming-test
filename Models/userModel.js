@@ -7,7 +7,7 @@ const favorite = new Schema(
       ref: "movies",
     },
     name: String,
-    poster: String
+    poster: String,
   },
   { _id: false }
 );
@@ -31,25 +31,20 @@ const userSchema = new Schema({
     enum: ["male", "female"],
   },
   age: Number,
-  isAdmin: { 
+  isAdmin: {
     type: Boolean,
     default: false,
   },
-  favorites: [
-    
-      favorite,
-
-  ],
+  favorites: [favorite],
   profile_img,
   confirmation: {
     type: Boolean,
     default: false,
   },
-  status:{
+  status: {
     type: Boolean,
     default: true,
-  }
+  },
 });
 
 model("users", userSchema);
-

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Product = mongoose.model("products");
 
-exports.checks = function(req,res,next){
-    let errorsArray = [];
+exports.checks = function (req, res, next) {
+  let errorsArray = [];
   let productIds = [];
   let products = req.body.products.sort((a, b) => {
     if (a._id > b._id) return 1;
@@ -29,7 +29,7 @@ exports.checks = function(req,res,next){
         } else if (
           targetProduct &&
           targetProduct.available < product.quantity
-          ) {
+        ) {
           //Error handling 2
           targetProduct.errorMsg = "quantity not available";
           errorsArray.push(targetProduct);
@@ -44,9 +44,10 @@ exports.checks = function(req,res,next){
           );
         }, "");
         throw new Error(errorMessage);
-      }else next();
+      } else {
+        req.checkedProducts = data;
+        next();
+      }
     })
     .catch((error) => next(error));
-
-
-}
+};
