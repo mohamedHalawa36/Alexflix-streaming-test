@@ -6,18 +6,20 @@ const controller = require("./../Controllers/orderController");
 const { authorization } = require("../Middlewares/auth");
 const router = express.Router();
 
+const { checks } = require("../Middlewares/services/addedOrderValidatorMW");
+
+
 router
   //User Tasks
   .route("/user/order")
   .get(controller.getAllUserOrders)
-  .post(dataSchema.addNewOrder, validator, controller.addNewOrder)
+  .post(dataSchema.addNewOrder, validator, checks, controller.addNewOrder)
   .delete(dataSchema.deleteOrder, validator, controller.deleteOrderById)
   .patch(dataSchema.updateOrder, validator, controller.updateOrderById);
 
-
-
 //Admin Tasks
 router.get("/admin/order/",authorization,controller.adminGetAllOrders);
+
 router
   .route("/admin/order/:id")
   .all(authorization)

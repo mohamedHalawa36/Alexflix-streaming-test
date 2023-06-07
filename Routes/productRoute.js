@@ -8,6 +8,8 @@ const { authorization } = require("../Middlewares/auth");
 
 const router = express.Router();
 
+
+// multerData;
 router
   .route("/products")
   .get(controller.getAllProducts)
