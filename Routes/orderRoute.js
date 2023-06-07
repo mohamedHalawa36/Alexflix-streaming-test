@@ -16,7 +16,8 @@ router
   .patch(dataSchema.updateOrder, validator, controller.updateOrderById);
 
 //Admin Tasks
-router.get("/admin/order/", /*isAdmin,*/ controller.adminGetAllOrders);
+router.get("/admin/order/", authorization, controller.adminGetAllOrders);
+
 router
   .route("/admin/order/:id")
   .all(authorization)
