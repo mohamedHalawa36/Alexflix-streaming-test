@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Order = mongoose.model("orders");
-const User = mongoose.model("users");
+// const User = mongoose.model("users");
 const Product = mongoose.model("products");
 
 module.exports.getAllUserOrders = function (req, res, next) {
-  let tokenId = req.body.user_id;
-  Order.find({ user_id: tokenId })
+  const { _id: user_id } = req.user;
+  Order.find({ user_id })
     .then((data) => {
       if (data.length != 0) res.status(200).json({ message: "Done", data });
       else throw new Error("there is no orders yet");
@@ -57,7 +57,9 @@ module.exports.updateOrderById = async function (req, res, next) {
 };
 
 module.exports.deleteOrderById = function (req, res, next) {
-  let { user_id, _id } = req.body;
+  const { _id: user_id } = req.user;
+
+  let { _id } = req.body;
   let productIds = [];
   let products;
   Order.findOne({ _id, user_id, status: "pending" }, { status: 1, products: 1 })

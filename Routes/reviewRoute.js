@@ -3,6 +3,7 @@ const express = require("express");
 const validator = require("../Middlewares/validation/validate");
 const controller = require("./../Controllers/reviewController");
 const reviewValidator = require("../Middlewares/validation/reviewValidator");
+const { authorization } = require("../Middlewares/auth");
 const router = express.Router();
 
 router
@@ -15,6 +16,6 @@ router.route("/review/:reviewId")
    .delete(controller.deleteReview);
 
 //Admin
-router.get("/reviews", controller.getAllReviews);
+router.get("/reviews",authorization, controller.getAllReviews);
 
 module.exports = router;

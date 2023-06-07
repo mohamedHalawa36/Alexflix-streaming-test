@@ -7,6 +7,7 @@ const favorite = new Schema(
       ref: "movies",
     },
     name: String,
+    poster: String
   },
   { _id: false }
 );

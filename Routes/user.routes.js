@@ -2,32 +2,25 @@ const { Router } = require("express");
 const userController = require("../Controllers/user.controller");
 const { multerData, formats } = require("../Middlewares/services/multer");
 const validate = require("../Middlewares/validation/validate");
-const {
-  updateValidate,
-} = require("../Middlewares/validation/userValiation/update.validation");
 const { authorization } = require("../Middlewares/auth");
+const moviesExists = require("../Middlewares/services/moviesExists");
+const userValiation = require("../Middlewares/validation/userValiation");
 const {
   forgetPasswordValidation,
-} = require("../Middlewares/validation/accountValidation/forgetPassword.validation");
-const {
-  addValidate,
-} = require("../Middlewares/validation/userValiation/add.validation");
-const moviesExists = require("../Middlewares/services/moviesExists");
-const {
-  addFavoriteValidation,
-} = require("../Middlewares/validation/userValiation/addFavorite.validation");
-const {
-  deleteFavoriteValidation,
-} = require("../Middlewares/validation/userValiation/deleteFavorite.validation");
+} = require("../Middlewares/validation/accountValidation");
 
 const router = Router();
 
 router
   .route("/user")
   .get(userController.getUserData)
-  // .post(authorization,addValidate,validate,userController.addUser)    //send mail to user Admin
-  .post(userController.addUser)
-  .patch(updateValidate, validate, userController.updateUser)
+  .post(
+    authorization,
+    userValiation.addValidate,
+    validate,
+    userController.addUser
+  ) //send mail to user Admin
+  .patch(userValiation.updateValidate, validate, userController.updateUser)
   .delete(userController.deleteUser);
 
 router
@@ -35,12 +28,12 @@ router
   .get(userController.getFavoritesUser)
   .patch(
     moviesExists,
-    addFavoriteValidation,
+    userValiation.addFavoriteValidation,
     validate,
     userController.addFavoritesUser
   )
   .delete(
-    deleteFavoriteValidation,
+    userValiation.deleteFavoriteValidation,
     validate,
     userController.deleteFavoritesUser
   );
@@ -61,26 +54,10 @@ router.patch(
 /*
 Admin
 */
+router.get("/users", authorization, userController.getAllUsers);
 
-// router.get("/users", authorization, userController.getAllUsers);
-router.get("/users", userController.getAllUsers);
+router.get("/users/:name", authorization, userController.searchUser);
 
-router.get(
-  "/users/favorites",
-  authorization,
-  userController.getAllFavoritesUsers
-);
-
-router.get(
-  "/users/favorites/:id",
-  authorization,
-  userController.getFavoritesUserById
-);
-
-router
-  .route("/users/:id")
-  .all(authorization)
-  .get(userController.getUserById)
-  .delete(userController.softDeleteUser); //softDeleteUser
+router.delete("/users/:id", authorization, userController.softDeleteUser); //softDeleteUser
 
 module.exports = router;

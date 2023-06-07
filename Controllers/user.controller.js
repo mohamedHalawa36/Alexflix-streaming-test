@@ -55,13 +55,12 @@ exports.addProfileImgForUser = (req, res, next) => {
 
 // button has user id when admin delete him
 exports.deleteUser = (req, res, next) => {
-  // const { _id } = req.user;
-  const { _id } = req.body;
+  const { _id } = req.user;
 
-  Review.deleteMany({user_id:_id})
-  .then(() => {
-    return User.findByIdAndDelete({ _id })
-  })
+  Review.deleteMany({ user_id: _id })
+    .then(() => {
+      return User.findByIdAndDelete({ _id });
+    })
     .then((data) => {
       if (!data) throw new Error("delete Fail");
       if (!data?.profile_img?.public_id) return data;
@@ -88,8 +87,10 @@ exports.getFavoritesUser = (req, res, next) => {
 
 exports.addFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
-  const { id, name } = req.body;
-  User.updateOne({ _id }, { $addToSet: { favorites: { id, name } } })
+  const { id } = req.body;
+  const { name, poster } = req.moves;
+  console.log(poster);
+  User.updateOne({ _id }, { $addToSet: { favorites: { id, name, poster } } })
     .then((data) => {
       if (!data.modifiedCount) throw new Error("Update Favorites Fail");
       res.status(200).json({ message: "Done" });
@@ -131,11 +132,7 @@ Admin
 */
 
 exports.getAllUsers = (req, res, next) => {
-  User
-    .find
-    // { isAdmin: false },
-    // { password: 0, confirmation: 0, status: 0, isAdmin: 0 }
-    ()
+  User.find({}, { password: 0, confirmation: 0 })
     .then((data) => {
       if (!data.length) throw new Error("Users not found");
       res.status(200).json({ message: "Done", data });
@@ -143,22 +140,29 @@ exports.getAllUsers = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.getUserById = (req, res, next) => {
-  const { id } = req.params;
-  User.findById({ _id: id }, { password: 0, confirmation: 0, status: 0 })
+exports.searchUser = (req, res, next) => {
+  let { name } = req.params;
+  name = name.split(" ");
+  if (!name[1]) name[1] = "";
+  const first = {
+    firstName: { $regex: name[0], $options: "i" },
+    lastName: { $regex: name[1], $options: "i" },
+  };
+  const last = {
+    firstName: { $regex: name[1], $options: "i" },
+    lastName: { $regex: name[0], $options: "i" },
+  };
+
+  User.find({ $or: [first, last] }, { password: 0, confirmation: 0 })
     .then((data) => {
-      if (!data) throw new Error("User not found");
+      if (!data.length) throw new Error("User not found");
       res.status(200).json({ message: "Done", data });
     })
     .catch((err) => next(err));
 };
 
 exports.addUser = (req, res, next) => {
-  // const { firstName, lastName, email, phone, gender, age, isAdmin } = req.body;
-
-  // this for testing
-  const { firstName, lastName, email, phone, gender, age, isAdmin, favorites } =
-    req.body;
+  const { firstName, lastName, email, phone, gender, age, isAdmin } = req.body;
 
   const otp = otpGenerator.generate(6, {
     digits: true,
@@ -180,23 +184,22 @@ exports.addUser = (req, res, next) => {
     favorites, // this for testing
   });
   const id = jwt.sign({ id: userData._id }, process.env.KEY);
-  // const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
-  // sendEmail
-  //   .sendMessage({
-  //     to: email,
-  //     subject: "confirmationEmail",
-  //     html: sendEmail.confirmationEmailWithPassword(
-  //       "confirm your email address and send your Password",
-  //       confirmationLink,
-  //       otp
-  //     ),
-  // })
-  // .then(() => userData.save())
+  const confirmationLink = `${req.protocol}://${req.headers.host}/confirmation/${id}`;
+  sendEmail
+    .sendMessage({
+      to: email,
+      subject: "confirmationEmail",
+      html: sendEmail.confirmationEmailWithPassword(
+        "confirm your email address and send your Password",
+        confirmationLink,
+        otp
+      ),
+    })
+    .then(() => userData.save());
   userData
     .save()
     .then(() =>
-      // res.status(201).json({ message: "Please check your email address" })
-      res.status(201).json({ id })
+      res.status(201).json({ message: "Please check your email address" })
     )
     .catch((error) => next(error));
 };
@@ -213,25 +216,6 @@ exports.softDeleteUser = (req, res, next) => {
     .then((data) => {
       if (!data) throw new Error("block Fail");
       res.status(200).json({ message: "Done" });
-    })
-    .catch((err) => next(err));
-};
-
-exports.getAllFavoritesUsers = (req, res, next) => {
-  User.find({ isAdmin: false }, { favorites: 1 })
-    .then((data) => {
-      if (!data.length) throw new Error("Users Favorites not found");
-      res.status(200).json({ message: "Done", data });
-    })
-    .catch((err) => next(err));
-};
-
-exports.getFavoritesUserById = (req, res, next) => {
-  const { id } = req.params;
-  User.findById({ _id: id }, { favorites: 1 })
-    .then((data) => {
-      if (!data?.favorites.length) throw new Error("User Favorites not found");
-      res.status(200).json({ message: "Done", data });
     })
     .catch((err) => next(err));
 };
