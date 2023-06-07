@@ -3,9 +3,9 @@ const express = require("express");
 const dataSchema = require("./../Middlewares/validation/orderValidator");
 const validator = require("./../Middlewares/validation/validate");
 const controller = require("./../Controllers/orderController");
+const { authorization } = require("../Middlewares/auth");
 const router = express.Router();
 const { checks } = require("../Middlewares/services/addedOrderValidatorMW");
-//const {isAdmin} = require("../Middlewares/Auth/authMWPremissions")
 
 router
   //User Tasks
@@ -19,7 +19,7 @@ router
 router.get("/admin/order/", /*isAdmin,*/ controller.adminGetAllOrders);
 router
   .route("/admin/order/:id")
-  //.all(isAdmin)
+  .all(authorization)
   .get(dataSchema.paramIntegerCheck, validator, controller.adminGetOrderById)
   .patch(
     dataSchema.paramIntegerCheck,

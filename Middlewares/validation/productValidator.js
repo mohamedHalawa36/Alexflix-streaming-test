@@ -28,8 +28,8 @@ exports.productArray = [
     .withMessage("Available must be a number"),
   body("category")
     .notEmpty()
-    .isIn(["T-shirt", "Mug"])
-    .withMessage("Category must be one of these [T-shirt,Mug]"),
+    .isIn(["T-shirt", "Mug", "Accessories"])
+    .withMessage("Category must be one of >> [T-shirt , Mug , Accessories]"),
 ];
 
 exports.updatingArray = [

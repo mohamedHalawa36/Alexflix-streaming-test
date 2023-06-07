@@ -24,9 +24,10 @@ exports.getAllMovieReviews = async function (request, response, next) {
 
 exports.addNewReview = async function (request, response, next) {
   try {
-    let { user_id, content } = request.body;
+    let {_id}=request.user
+    let {  content } = request.body;
     let { movieId } = request.params;
-    let review = new Review({ user_id, movie_id: movieId, content });
+    let review = new Review({ user_id:_id, movie_id: movieId, content });
     await review.save();
     response.status(201).json({ message: "Done", data: review });
   } catch (error) {
@@ -36,10 +37,11 @@ exports.addNewReview = async function (request, response, next) {
 
 exports.updateReview = async function (request, response, next) {
   try {
+    let {_id}=request.user
     let { reviewId } = request.params;
-    let { user_id, content } = request.body;
+    let { content } = request.body;
     let review = await Review.findOneAndUpdate(
-      { _id: reviewId, user_id },
+      { _id: reviewId, user_id:_id },
       { content },
       { new: true }
     );
@@ -53,10 +55,10 @@ exports.updateReview = async function (request, response, next) {
 
 exports.deleteReview = async function (request, response, next) {
   try {
+    let {_id,isAdmin}=request.user
     let { reviewId } = request.params;
-    let { user_id, isAdmin } = request.body;
     let obj = {_id:reviewId};
-    if (!isAdmin) obj.user_id = user_id;
+    if (!isAdmin) obj.user_id = _id;
     let review = await Review.findOneAndDelete(obj);
     if (!review) throw new Error("delete failed");
     response.status(200).json({ message: "Done", date: review });

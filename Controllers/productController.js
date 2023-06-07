@@ -9,7 +9,7 @@ exports.getAllProducts = async function (request, response, next) {
     let page = request.query.page;
     page = page * 1 || 1;
     if (page <= 0 || !page) page = 1;
-    let limit = 1; // display only 16 products for each page
+    let limit = 5; // display only 16 products for each page
     let skip = (page - 1) * limit;
     const allProducts = await Product.find({}, { __v: 0 })
       .sort({ name: 1 })
@@ -25,8 +25,7 @@ exports.getAllProducts = async function (request, response, next) {
 // Create a new product
 exports.createProduct = async (request, response, next) => {
   try {
-    const { name, price, description, colors, available, category } =
-      request.body;
+    const { name, price, description, available, category } = request.body;
 
     const images = [];
     for (const { path } of request.files) {
@@ -40,7 +39,6 @@ exports.createProduct = async (request, response, next) => {
       price,
       description,
       images,
-      colors,
       available,
       category,
     });
@@ -75,6 +73,10 @@ exports.searchProduct = async function (request, response, next) {
         query.price = { ...query.price, $lte: +query[key] };
         delete query[key];
       }
+      if (key === "available")
+        // Search By 1 for Availability and 0  for all .
+        +query[key] ? (query.available = { $gte: 1 }) : delete query[key];
+
       // a query to find the price range
       // query.price = { $gte: +minPrice, $lte: +maxPrice}
     }
