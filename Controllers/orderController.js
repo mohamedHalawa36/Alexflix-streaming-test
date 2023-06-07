@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const Order = mongoose.model("orders");
 const User = mongoose.model("users");
 const Product = mongoose.model("products");
@@ -14,64 +13,32 @@ module.exports.getAllUserOrders = function (req, res, next) {
     .catch((error) => next(error));
 };
 module.exports.addNewOrder = async function (req, res, next) {
-  let productIds = [];
-  let products = req.body.products.sort((a, b) => {
-    if (a._id > b._id) return 1;
-    else if (a._id < b._id) return -1;
-    else return 0;
-  });
+  //creating order after passing all checks
+  let object = {
+    user_id: req.body.user_id,
+    products: req.body.products,
+    total_price: req.body.total_price,
+    address: req.body.address,
+    contact_phone: req.body.contact_phone,
+  };
 
-  products.forEach((product) => {
-    productIds.push(product._id);
-  });
-
-  //check for products existance
-  Product.find({ _id: { $in: productIds } }, { available: 1 })
-    .sort({ _id: 1 })
-
-    .then((data) => {
-      if (data.length != productIds.length)
-        throw new Error("products not exist");
-
+  new Order(object)
+    .save()
+    .then((obj) => {
+      //Reducing the available quantity by the amount of the ordered ones
       for (let i = 0; i < data.length; i++) {
-        //check for products availability
-        if (products[i].quantity > data[i].available)
-          throw new Error(
-            `there is no available quantity for ${products[i].name} product`
-          );
+        data[i].available -= products[i].quantity;
+        data[i].save();
       }
-
-      //creating order after passing all checks
-      let object = {
-        user_id: req.body.user_id,
-        products: req.body.products,
-        total_price: req.body.total_price,
-        address: req.body.address,
-        contact_phone: req.body.contact_phone,
-      };
-
-      return new Order(object).save()
-      .then((obj) => {
-        //Reducing the available quantity by the amount of the ordered ones
-        for (let i = 0; i < data.length; i++) {
-          data[i].available -= products[i].quantity;
-          data[i].save();
-        }
-        res.status(201).json(obj);
-      });
+      res.status(201).json(obj);
     })
+    // })
     .catch((error) => next(error));
 };
 
 module.exports.updateOrderById = async function (req, res, next) {
-
   try {
-    let {
-      _id,
-      user_id,
-      address,
-      contact_phone,
-    } = req.body;
+    let { _id, user_id, address, contact_phone } = req.body;
 
     const data = await Order.findOneAndUpdate(
       { _id, user_id },
@@ -93,10 +60,7 @@ module.exports.deleteOrderById = function (req, res, next) {
   let { user_id, _id } = req.body;
   let productIds = [];
   let products;
-  Order.findOne(
-    { _id, user_id, status: "pending" },
-    { status: 1, products: 1 }
-  )
+  Order.findOne({ _id, user_id, status: "pending" }, { status: 1, products: 1 })
     .then((object) => {
       if (!object) throw new Error("Order Doesn't exist");
 

@@ -7,7 +7,7 @@ const { multerData, formats } = require("../Middlewares/services/multer");
 
 const router = express.Router();
 
-multerData;
+// multerData;
 
 router
   .route("/products")
