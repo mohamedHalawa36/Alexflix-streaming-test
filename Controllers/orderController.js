@@ -110,7 +110,7 @@ module.exports.adminGetAllOrders = function (req, res, next) {
 };
 
 module.exports.adminGetOrderById = function (req, res, next) {
-  Order.findById(req.params.id)
+  Order.findById(req.params._id)
     .then((data) => {
       if (!data) throw new Error("Order Doesn't Exist");
       res.status(200).json(data);
