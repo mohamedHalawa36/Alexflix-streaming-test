@@ -102,6 +102,7 @@ module.exports.deleteOrderById = function (req, res, next) {
 
 module.exports.adminGetAllOrders = function (req, res, next) {
   Order.find()
+  .populate([{path:"user_id",select:{firstName:1,lastName:1}}])
     .then((data) => {
       if (!data) throw new Error("there is no orders placed yet");
       res.status(200).json(data);
@@ -110,7 +111,7 @@ module.exports.adminGetAllOrders = function (req, res, next) {
 };
 
 module.exports.adminGetOrderById = function (req, res, next) {
-  Order.findById(req.params._id)
+  Order.findById(req.params.id)
     .then((data) => {
       if (!data) throw new Error("Order Doesn't Exist");
       res.status(200).json(data);
