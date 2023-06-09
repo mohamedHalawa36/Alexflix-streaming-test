@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     for (const { products, _id } of data) {
       for (const item of products) {
         await Product.updateOne(
-          { _id: item.id },
+          { _id: item._id },
           { $inc: { available: item.quantity } }
         );
       }
