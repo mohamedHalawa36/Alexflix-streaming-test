@@ -9,14 +9,14 @@ exports.getAllProducts = async function (request, response, next) {
     let page = request.query.page;
     page = page * 1 || 1;
     if (page <= 0 || !page) page = 1;
-    let limit = 5; // display only 16 products for each page
+    let limit = 12; // display only 16 products for each page
     let skip = (page - 1) * limit;
     const allProducts = await Product.find({}, { __v: 0 })
       .sort({ name: 1 })
       .skip(skip)
       .limit(limit);
     if (allProducts.length == 0) throw new Error("No Products exist");
-    response.status(200).json({ page, allProducts });
+    response.status(200).json({message: "Done", page, allProducts });
   } catch (error) {
     next(error);
   }
@@ -26,7 +26,6 @@ exports.getAllProducts = async function (request, response, next) {
 exports.createProduct = async (request, response, next) => {
   try {
     const { name, price, description, available, category } = request.body;
-
     const images = [];
     for (const { path } of request.files) {
       const { secure_url, public_id } = await cloudinary.uploader.upload(path, {
@@ -45,7 +44,7 @@ exports.createProduct = async (request, response, next) => {
 
     // Save the product to the database
     const newProduct = await product.save();
-    response.status(201).json(newProduct);
+    response.status(201).json({message: "Done",newProduct});
   } catch (error) {
     next(error);
   }
@@ -114,7 +113,7 @@ exports.searchProduct = async function (request, response, next) {
     } else {
       const products = await Product.find(query);
       if (products.length == 0) throw new Error("No Product exist");
-      response.status(200).json(products);
+      response.status(200).json({message: "Done",products});
     }
   } catch (error) {
     next(error);
@@ -138,7 +137,7 @@ exports.updateProductById = async function (request, response, next) {
 
     if (!product) throw new Error("No product exist by this ID");
 
-    response.status(200).json(product);
+    response.status(200).json({ message:"Done", product });
   } catch (error) {
     next(error);
   }
@@ -170,7 +169,7 @@ exports.deleteProductById = async function (request, response, next) {
       }
     }
 
-    response.status(200).json({ message: `Done`, product });
+    response.status(200).json({ message:"Done", product });
   } catch (error) {
     next(error);
   }
