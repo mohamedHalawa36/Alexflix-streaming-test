@@ -2,7 +2,7 @@ import "./movies.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMovies } from "../../../store/Slice/videosSlice";
-import { Videos } from "../../Streaming Components/Videos Component/Videos";
+import { Videos } from "../Videos Component/Videos";
 
 export default function Movies() {
   const allVids = useSelector((state) => state.videos);

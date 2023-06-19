@@ -71,6 +71,7 @@ export const getUserData = async () => {
     return error;
   }
 };
+
 export const updateUser = async ( data) => {
   try {
     const check = await configAxios.patch("user", data);

@@ -30,7 +30,7 @@ export default function Router() {
   );
   //Stream
   const Movies = lazy(() =>
-    import("../components/Streaming Components/Movies Component/Movies")
+    import("../components/Streaming Components/MoviesComponent/Movies")
   );
   const MovieDetails = lazy(() =>
     import("../components/Streaming Components/Movie page component/Movie")

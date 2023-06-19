@@ -9,6 +9,15 @@ export const getAllMovies = async () => {
   }
 };
 
+export const getMovie = async (id) => {
+  try {
+    const check = await configAxios.get(`movies/${id}`);
+    if (check?.data) return check.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const searchMovie = async (name) => {
   try {
     const check = await configAxios.get(`movies/search?name=${name}`);

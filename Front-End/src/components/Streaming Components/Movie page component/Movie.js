@@ -10,17 +10,26 @@ import "react-circular-progressbar/dist/styles.css";
 import Reviews from "../Reviews Component/Reviews";
 import "./movie.css";
 
+import { getMovie } from "./../../../api/apiMovies";
+
 export default function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState({});
   const [modalShow, setModalShow] = useState(false);
   const params = useParams();
   const playerRef = useRef(null);
   useEffect(() => {
-    axios
-      .get(`https://project-pjo4l2v44-alex-flix.vercel.app/movies/${params.id}`)
-      .then((res) => setMovieDetails(res.data.data))
-      .catch((err) => console.log(err));
+    getMoviedetails();
   }, []);
+
+  function getMoviedetails() {
+    getMovie(params.id)
+      .then((res) => {
+        setMovieDetails(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function MyVerticallyCenteredModal(props) {
     return (
