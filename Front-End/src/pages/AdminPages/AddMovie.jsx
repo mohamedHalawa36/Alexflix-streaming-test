@@ -57,21 +57,26 @@ export default function AddMovie() {
     setProductAddList(list);
   };
 
-  const dataSubmit = (obj) => {
+  const dataSubmit = (obj, { resetForm }) => {
     if (!selectedCategories.length) setSelectCheck(true);
     else {
-      setLoader(true);
+      setLoader(false);
       const category = selectedCategories.map((item) => item.value);
       const products = productAddList.map((item) => item._id);
       obj["category"] = category;
       obj["products"] = products;
       addNewMovie(obj).then((data) => {
         if (data?.message) {
-          setLoader(false);
+          setLoader(true);
           Swal.fire({
             icon: "success",
             title: data.message,
           });
+          setSelectedCategories([]);
+          setSelectCheck(false);
+
+          setProductAddList([]);
+          resetForm();
         }
       });
     }
@@ -259,6 +264,7 @@ export default function AddMovie() {
                   <Select
                     isMulti
                     name="category"
+                    value={selectedCategories}
                     options={movieValidation.movieCategories}
                     className="text-dark"
                     onChange={handleCategory}
