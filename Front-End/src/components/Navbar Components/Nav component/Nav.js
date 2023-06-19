@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavAuth } from "../NavAuth  Component/NavAuth";
@@ -8,10 +8,13 @@ export function Nav({ positionStyle }) {
   const [isLogedIn, setIsLogedIn] = useState(false);
   const favoriteMovies = useSelector((state) => state.favorites);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
-
+  const signOut = () => {
+     localStorage.removeItem("token");
+  };
   useEffect(() => {
     //check if it's a logged in user
     if (localStorage.getItem("token")) setIsLogedIn(true);
@@ -30,9 +33,9 @@ export function Nav({ positionStyle }) {
       } ${positionStyle} w-100`}
     >
       <div className="container mw-100 px-5 ">
-        <a className="navbar-brand py-1" href="#">
+        <Link className="navbar-brand py-1">
           <img src={logo} alt="Alexflix" width="170" height="35" />
-        </a>
+        </Link>
         <button
           id="nav-toggler"
           className="navbar-toggler"
@@ -57,7 +60,7 @@ export function Nav({ positionStyle }) {
                 onClick={scrollToTop}
                 className="nav-link"
                 aria-current="page"
-                to={"/home"}
+                to={"/"}
               >
                 Home
               </NavLink>
@@ -94,15 +97,14 @@ export function Nav({ positionStyle }) {
             <li id="separator" className="nav-item flex-grow-1"></li>
             <li id="lg-bag" className="nav-item position-relative">
               <NavLink className="nav-link" to={"/cart"}>
-              <i className="fa-solid fa-bag-shopping fs-3x"/>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
-                3
-              </span>
+                <i className="fa-solid fa-bag-shopping fs-3x" />
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                  3   
+                </span>
               </NavLink>
             </li>
 
             {/* <li id="lg-bag" className={`nav-item`}></li> */}
-            
 
             <li className={`nav-item ${isLogedIn ? "d-none" : "d-block"}`}>
               <NavAuth />
@@ -112,7 +114,7 @@ export function Nav({ positionStyle }) {
                 isLogedIn ? "d-block" : "d-none"
               }`}
             >
-              <a
+              <Link
                 id="user_icon"
                 className="nav-link btn rounded-circle p-2 dropdown-toggle text-start"
                 role="button"
@@ -120,7 +122,7 @@ export function Nav({ positionStyle }) {
                 aria-expanded="false"
               >
                 <i className="fa-solid fa-user"></i>
-              </a>
+              </Link>
 
               <ul id="user_dropdown" className="dropdown-menu">
                 <li>
@@ -156,9 +158,9 @@ export function Nav({ positionStyle }) {
                 </li>
                 <li>
                   <Link
-                    onClick={scrollToTop}
                     className="dropdown-item text-capitalize"
-                    to={"/login"}
+                    to="/login"
+                    onClick={signOut}
                   >
                     sign out &nbsp;
                     <i className="fa-solid fa-right-from-bracket"></i>

@@ -8,7 +8,7 @@ export default function ConfirmEmail() {
     <>
       <main className="vh-100 bg-cover">
         <div className="h-100 bg-cover-shadow d-flex justify-content-center align-items-center">
-          <section className="col-md-4 col-10 mx-auto bg-dark-light text-light p-5 rounded-4">
+          <section className="col-xl-4 col-lg-6 col-md-8 col-10 mx-auto bg-dark-light text-light p-5 rounded-4">
             <i className="fa-solid fa-envelope-open-text fa-5x text-red pt-4 pb-3"></i>
             <h2 className="pt-3 pb-2">Success!</h2>
             <p className="pb-4">

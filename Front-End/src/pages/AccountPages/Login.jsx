@@ -9,6 +9,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { confirmation, login } from "../../api/apiData.js";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import jwtDecode from "jwt-decode";
 
 export default function Login() {
   const loginSchema = yup.object().shape({
@@ -19,12 +20,14 @@ export default function Login() {
   const loader = useSelector((state) => state.loader);
 
   const navigate = useNavigate();
-  
+
   const dataSubmit = (obj) => {
     login(obj).then((data) => {
       if (data?.message) {
         localStorage.setItem("token", data.token);
-        navigate("/");
+        const { isAdmin } = jwtDecode(localStorage.getItem("token"));
+        if (isAdmin) navigate("/userList");
+        else navigate("/");
       }
     });
   };
@@ -44,7 +47,7 @@ export default function Login() {
       searchParams.delete("id");
       setSearchParams(searchParams);
     }
-  },[]);
+  }, []);
   return (
     <>
       <main className="vh-100 bg-cover">
@@ -68,7 +71,7 @@ export default function Login() {
               <Form
                 noValidate
                 onSubmit={handleSubmit}
-                className="col-md-4 col-10 mx-auto bg-dark-light text-light p-5 rounded-4"
+                className="col-xl-4 col-lg-6 col-md-8  col-10 mx-auto bg-dark-light text-light p-5 rounded-4"
               >
                 <h2 className="py-5">Login</h2>
                 <Form.Group className="form-floating  mb-4">

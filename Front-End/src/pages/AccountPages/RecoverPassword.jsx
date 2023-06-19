@@ -42,7 +42,7 @@ export default function RecoverPassword() {
               <Form
                 noValidate
                 onSubmit={handleSubmit}
-                className="col-md-4 col-10 mx-auto bg-dark-light text-light p-5 rounded-4"
+                className="col-xl-4 col-lg-6 col-md-8 col-10 mx-auto bg-dark-light text-light p-5 rounded-4"
               >
                 <h2 className="pt-4">Recover Password</h2>
                 <p className="py-3">

@@ -18,3 +18,12 @@ export const UserGuard = (e) => {
   }
   return <Navigate to="/login" />;
 };
+
+export const LoginGuard = (e) => {
+  if (localStorage.getItem("token")) {
+    const { isAdmin } = jwtDecode(localStorage.getItem("token"));
+    if (isAdmin) return <Navigate to="/userList" />;
+    else return <Navigate to="/" />;
+  }
+  return e.children;
+};

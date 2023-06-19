@@ -67,7 +67,7 @@ export default function NavBarAdmin() {
                     </NavLink>
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
-                      to="/"
+                      to="/userList"
                     >
                       <i className="fa-regular fa-eye pe-3"></i>User List
                     </NavLink>

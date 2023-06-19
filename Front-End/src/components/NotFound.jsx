@@ -1,7 +1,9 @@
+import jwtDecode from "jwt-decode";
 import React from "react";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
+  const { isAdmin } = jwtDecode(localStorage.getItem("token"));
   return (
     <>
       <section className="vh-100 bg-NotFound">
@@ -14,7 +16,7 @@ export default function NotFound() {
               <span className="text-danger ps-1">follow the signal</span>
             </p>
             <div className="d-flex  col-lg-4 col-md-6 col-sm-7  col-8">
-              <Link to="/" className="text-uppercase text-decoration-none text-light py-2 px-4 border border-1 rounded-5 bg-hover-NotFound">
+              <Link to={isAdmin?"/userList":"/"} className="text-uppercase text-decoration-none text-light py-2 px-4 border border-1 rounded-5 bg-hover-NotFound">
                 <i className="fa-solid fa-house text-danger pe-2"></i>home
               </Link>
               <Link

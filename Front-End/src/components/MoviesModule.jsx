@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
+
 import { useSelector } from "react-redux";
 import { getAllProducts, searchProduct } from "../api/apiProduct";
 import { productListForm } from "../Utils/moviesUtils";
@@ -12,21 +13,19 @@ export default function MoviesModule(props) {
 
   const { show, setShow, itemSelect, updateMovie } = props;
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [productListSearch, setProductListSearch] = useState([]);
   const [productList, setProductList] = useState([]);
-
 
   const handleCategory = (e) => {
     if (e.length >= 0) setSelectedCategories(e);
   };
 
-  const handleInputChange = (value) => {
-    if (value)
-      searchProduct(value).then((data) => {
-        if (data?.message) setProductListSearch(productListForm(data.products));
+  const handleInputChange = (inputValue, callback) => {
+    if (inputValue)
+      searchProduct(inputValue).then((data) => {
+        if (data?.message) callback(productListForm(data.products));
       });
     else {
-      setProductListSearch([]);
+      callback([]);
     }
   };
 
@@ -48,17 +47,13 @@ export default function MoviesModule(props) {
 
   useEffect(() => {
     getAllProducts(1).then((data) => {
-      if (data?.message) {
-        setProductList(productListForm(data.allProducts));
-        setProductListSearch(productListForm(data.allProducts));
-      }
+      if (data?.message) setProductList(productListForm(data.allProducts));
     });
   }, []);
+
   useEffect(() => {
     setSelectedCategories(productListForm(itemSelect.products));
   }, [itemSelect]);
-
-
 
   return (
     <>
@@ -73,15 +68,15 @@ export default function MoviesModule(props) {
           <Form noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="product">
               <Form.Label>Products</Form.Label>
-              <Select
-                isMulti
-                name="category"
-                defaultValue={productListForm(itemSelect?.products)}
-                options={productList}
-                className="text-dark "
+              <AsyncSelect
+              isMulti
+                cacheOptions
+                defaultOptions={productList}
+                loadOptions={handleInputChange}
                 onChange={handleCategory}
                 onBlur={handleCategory}
-                onInputChange={handleInputChange}
+                defaultValue={productListForm(itemSelect?.products)}
+
               />
             </Form.Group>
 

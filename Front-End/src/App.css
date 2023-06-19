@@ -2,12 +2,7 @@
   --color-red: red;
   --bg-cover: url(./assets/img/Netflix-Background.jpg);
   --bg-NotFound: url(./assets/img/404.jpg);
-  --bgColor: rgb(28, 52, 88);
   --bgColor-black: rgb(27, 45, 73);
-  --specialColor: #00d0c5;
-  --userIconColor: rgb(73, 93, 120);
-  --textColor: whitesmoke;
-  --scrollNavColor: rgba(28, 52, 88, 0.75);
   --main-color: #13b6b6db;
   --star-color: rgb(243, 181, 25);
   --bgColor: rgb(8, 26, 54);
@@ -202,7 +197,7 @@ html {
 }
 
 /* Global Styles */
-
+/* 
 h1 {
   font-size: 50px;
   line-height: 64px;
@@ -229,7 +224,7 @@ p {
   font-size: 16px;
   color: #465b52;
   margin: 15px 0 20px 0;
-}
+} */
 
 .section-p1 {
   padding: 20px 40px;
