@@ -90,7 +90,6 @@ exports.addFavoritesUser = (req, res, next) => {
   const { _id } = req.user;
   const { id } = req.body;
   const { name, poster } = req.moves;
-  console.log(poster);
   User.updateOne({ _id }, { $addToSet: { favorites: { id, name, poster } } })
     .then((data) => {
       if (!data.modifiedCount) throw new Error("Update Favorites Fail");

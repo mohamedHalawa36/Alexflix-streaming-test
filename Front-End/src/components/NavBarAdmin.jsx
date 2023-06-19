@@ -9,12 +9,16 @@ export default function NavBarAdmin() {
     const backdrop = document.querySelector(".offcanvas-backdrop");
     offcanvas.classList.remove("show");
     backdrop.classList.remove("show");
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+  };
+  const signOut = () => {
+    navigate("/login");
+    localStorage.removeItem("token");
   };
 
   return (
     <>
-      <section className="col-xl-2">
+      <section className="col-xl-2 position-fixed top-0 start-0">
         <article className="navbar navbar-expand-xl">
           <button
             id="nav-toggler"
@@ -25,7 +29,7 @@ export default function NavBarAdmin() {
             aria-controls="admin-navBar"
           >
             <span id="nav-toggler-icon" className="navbar-toggler-icon">
-              <i className="fa-solid fa-bars " style={{ fontSize: "28px" }}></i>
+            <i className="fa-solid fa-bars-staggered" style={{ fontSize: "28px" }}></i>
             </span>
           </button>
         </article>
@@ -53,9 +57,31 @@ export default function NavBarAdmin() {
           </div>
           <div className="offcanvas-body py-3 ">
             <div
-              className="accordion accordion-flush w-100"
+              className="accordion accordion-flush w-100 "
               id="accordionFlushExample"
             >
+              <div
+                id="accordion-logo"
+                className="accordion-item border-0 pb-4 d-none d-xl-block "
+                onClick={dismissOffcanvas}
+              >
+                <h3
+                  className="accordion-header   collapsed  h4 cursor"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#orderFlush"
+                  aria-controls="orderFlush"
+                  onClick={() => navigate("/userList")}
+                >
+                  <Link className="navbar-brand py-1">
+                    <img src={logo} alt="Alexflix" width="170" height="35" />
+                  </Link>
+                </h3>
+                <div
+                  id="orderFlush"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                ></div>
+              </div>
               <div className="accordion-item border-0 py-3">
                 <h3
                   className="accordion-header d-flex justify-content-between  collapsed custom-icon h4 cursor"
@@ -136,8 +162,9 @@ export default function NavBarAdmin() {
                   data-bs-target="#productFlush"
                   aria-controls="productFlush"
                 >
-                  <span>
-                    <i className="fa-solid fa-shop pe-3"></i> Products
+                  <span className="d-flex flex-nowrap">
+                    <i className="fa-solid fa-shop pe-3"></i>
+                    Products
                   </span>
                 </h3>
                 <div
@@ -198,6 +225,30 @@ export default function NavBarAdmin() {
                 >
                   <i className="fa-solid fa-bag-shopping pe-3"></i>
                   Orders
+                </h3>
+                <div
+                  id="orderFlush"
+                  className="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample"
+                ></div>
+              </div>
+
+              <div className=" accordion-item">
+                <hr className="dropdown-divider" />
+              </div>
+
+              <div
+                className="accordion-item border-0 py-3"
+              >
+                <h3
+                  className="accordion-header   collapsed  h4 cursor"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#orderFlush"
+                  aria-controls="orderFlush"
+                  onClick={signOut}
+                >
+                  <i className="fa-solid fa-right-from-bracket"></i>
+                  &nbsp; sign out
                 </h3>
                 <div
                   id="orderFlush"

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavAuth } from "../NavAuth  Component/NavAuth";
 import logo from "../../../assets/images/logo trans2.png";
+import Dropdown from 'react-bootstrap/Dropdown';
 import "./nav.css";
 export function Nav({ positionStyle }) {
   const [isLogedIn, setIsLogedIn] = useState(false);
@@ -136,13 +137,17 @@ export function Nav({ positionStyle }) {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    onClick={scrollToTop}
-                    className="dropdown-item text-capitalize"
-                    to={"/settings"}
-                  >
-                    settings
-                  </Link>
+                <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Dropdown Button
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
                 </li>
                 <li>
                   <Link

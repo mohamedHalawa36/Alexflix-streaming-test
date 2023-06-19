@@ -5,3 +5,14 @@ export const searchForVid = (type, category, name) => {
     params: { type, category, name },
   });
 };
+
+export const addToFavorites = (id) => {
+  axiosInstance.patch("/user/favorites", {
+    id,
+  });
+};
+export const deleteFromFavorites = (id) => {
+  axiosInstance.delete("/user/favorites", {
+    id,
+  });
+};

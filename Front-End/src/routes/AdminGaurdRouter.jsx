@@ -10,7 +10,7 @@ export default function AdminGaurdRouter() {
     <>
     <AuthGuards>
     <Suspense fallback={<FullScreenLoader />}>
-    <Nav positionStyle={"position-sticky top-0 start-0"} />
+    {/* <Nav positionStyle={"position-sticky top-0 start-0"} /> */}
       <main className="container-fluid">
         <div className="row ">
           <NavBarAdmin />

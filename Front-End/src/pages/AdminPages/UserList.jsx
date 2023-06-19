@@ -71,10 +71,10 @@ export default function UserList() {
   }, [searchParams]);
   return (
     <>
-      <section className="col-xl-10 py-5 text-light">
-        <h2 className="pb-2 ">User List</h2>
+      <section className="col-xl-10 py-5 text-light offset-xl-2">
+        <h2 className="pt-xl-0 pt-3 ps-4">User List</h2>
         <Form
-          className="d-flex col-xl-4 col-lg-11 col-10 mx-lg-0 mx-auto ms-lg-auto py-4 pe-lg-5"
+          className="d-flex col-xl-4 col-lg-11 col-10 mx-lg-0 mx-auto ms-lg-auto pb-4 pe-lg-5"
           onSubmit={handleSearch}
         >
           <Form.Control
@@ -175,8 +175,8 @@ export default function UserList() {
                     </p>
                   </div>
                   <div className="col-xl col-12 row">
-                    <p className="lead d-xl-none d-block col-6">Action</p>
-                    <p className="col-xl col-6 text-xl-center text-end">
+                    <p className="lead d-xl-none d-block col-6 ">Action</p>
+                    <p className="col-xl col-6 text-xl-center text-end d-flex flex-nowrap justify-content-xl-center justify-content-end">
                       <i
                         className="fa-solid fa-eye me-2 p-2 bg-info rounded-2 cursor text-red "
                         onClick={() => showUserDetails(item)}

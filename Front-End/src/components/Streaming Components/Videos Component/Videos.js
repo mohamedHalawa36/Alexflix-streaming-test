@@ -37,8 +37,9 @@ export function Videos({ videos, type }) {
           onChange={categoryHandler}
           className="category-filter filter w-25 py-2 px-3 pe-5 text-capitalize rounded-3"
           aria-label="Default select example"
+          defaultValue={""}
         >
-          <option value="" selected>
+          <option value="">
             all category
           </option>
           <option value="action">action</option>
@@ -53,7 +54,7 @@ export function Videos({ videos, type }) {
       </div>
       <div className="movie-cards row justify-content-center">
         {renderedVids.map((movie) => {
-          return <MovieCard movie={movie} isFav={false} key={movie._id} />;
+          return <MovieCard movie={movie} isFav={false} key={movie._id} type={`video`} />;
         })}
       </div>
     </section>

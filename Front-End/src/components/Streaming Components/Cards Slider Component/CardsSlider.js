@@ -4,15 +4,10 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./cardsSlider.css";
 
-export function CardsSlider({ title, movies }) {
-  // const responsive = {
-  //   0: { items: 1 },
-  //   568: { items: 2 },
-  //   1024: { items: 3 },
-  // };
+export function CardsSlider({ title, movies,type }) {
 
   const items = movies.map((movie) => {
-    return <MovieCard movie={movie} isFav={false} key={movie.id} />;
+    return <MovieCard movie={movie} isFav={false} key={movie.id} type={type} />;
   });
 
   const Carousel = () => (
@@ -24,7 +19,6 @@ export function CardsSlider({ title, movies }) {
       disableDotsControls
       mouseTracking
       items={items}
-      //responsive={responsive}
       controlsStrategy="alternate"
       renderPrevButton={() => {
         return <p className="m-0 p-0 fs-1 fw-bold ">&lang;</p>;
