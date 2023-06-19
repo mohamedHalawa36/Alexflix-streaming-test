@@ -18,11 +18,11 @@ module.exports.addNewOrder = async function (req, res, next) {
     else if (a._id < b._id) return -1;
     else return 0;
   });
-
+ const { _id: user_id } = req.user;
   let data = req.checkedProducts;
   //creating order after passing all checks
   let object = {
-    user_id: req.body.user_id,
+    user_id,
     products: req.body.products,
     total_price: req.body.total_price,
     address: req.body.address,
