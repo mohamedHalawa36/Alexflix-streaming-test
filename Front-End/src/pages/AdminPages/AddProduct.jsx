@@ -25,7 +25,7 @@ export default function AddProduct() {
     if (img.length < 5) setImg([...img, ...e.target.files]);
   };
 
-  const dataSubmit = (obj) => {
+  const dataSubmit = (obj, { resetForm }) => {
     if (!img.length)
       return Swal.fire({
         icon: "error",
@@ -42,11 +42,14 @@ export default function AddProduct() {
     formData.append("category", obj.category);
 
     createProduct(formData).then((data) => {
-      if (data?.message)
+      if (data?.message) {
         Swal.fire({
           icon: "success",
           title: data.message,
         });
+        resetForm();
+        setImg([]);
+      }
     });
   };
 

@@ -26,7 +26,7 @@ export default function AddUser() {
     setImg(e.target.files[0]);
   };
 
-  const dataSubmit = (obj) => {
+  const dataSubmit = (obj, { resetForm }) => {
     addUser(obj).then((data) => {
       if (data?.message) {
         if (img) {
@@ -34,17 +34,22 @@ export default function AddUser() {
           formData.append("img", img);
           formData.append("_id", data.data._id);
           addProfileImgForUser(formData).then((data) => {
-            if (data?.message)
+            if (data?.message) {
               Swal.fire({
                 icon: "success",
                 title: data.message,
               });
+              resetForm();
+              setImg(null);
+            }
           });
-        } else
+        } else {
           Swal.fire({
             icon: "success",
             title: data.message,
           });
+          resetForm();
+        }
       }
     });
   };

@@ -4,6 +4,14 @@ import logo from "../assets/images/logo trans2.png";
 
 export default function NavBarAdmin() {
   const navigate = useNavigate();
+  const dismissOffcanvas = () => {
+    const offcanvas = document.querySelector("#admin-navBar");
+    const backdrop = document.querySelector(".offcanvas-backdrop");
+    offcanvas.classList.remove("show");
+    backdrop.classList.remove("show");
+    window.scrollTo(0, 0)
+  };
+
   return (
     <>
       <section className="col-xl-2">
@@ -18,7 +26,7 @@ export default function NavBarAdmin() {
           >
             <span id="nav-toggler-icon" className="navbar-toggler-icon">
               <i className="fa-solid fa-bars " style={{ fontSize: "28px" }}></i>
-            </span>{" "}
+            </span>
           </button>
         </article>
         <article
@@ -28,7 +36,11 @@ export default function NavBarAdmin() {
           aria-labelledby="offcanvasExampleLabel"
         >
           <div className="offcanvas-header text-light">
-            <Link className="navbar-brand py-1" to="/userList">
+            <Link
+              className="navbar-brand py-1"
+              to="/userList"
+              onClick={dismissOffcanvas}
+            >
               <img src={logo} alt="Alexflix" width="170" height="35" />
             </Link>
             <button
@@ -66,12 +78,14 @@ export default function NavBarAdmin() {
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/addUser"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-solid fa-user-plus pe-3"></i>Add User
                     </NavLink>
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/userList"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-regular fa-eye pe-3"></i>User List
                     </NavLink>
@@ -100,12 +114,14 @@ export default function NavBarAdmin() {
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/addMovie"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-solid fa-user-plus pe-3"></i>Add Movie
                     </NavLink>
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/moviesList"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-regular fa-eye pe-3"></i>Movies List
                     </NavLink>
@@ -133,12 +149,14 @@ export default function NavBarAdmin() {
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/addProduct"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-solid fa-user-plus pe-3"></i>Add Product
                     </NavLink>
                     <NavLink
                       className="text-hover text-light text-decoration-none pb-2"
                       to="/productsList"
+                      onClick={dismissOffcanvas}
                     >
                       <i className="fa-regular fa-eye pe-3"></i>Products List
                     </NavLink>
@@ -146,7 +164,10 @@ export default function NavBarAdmin() {
                 </div>
               </div>
 
-              <div className="accordion-item border-0 py-3">
+              <div
+                className="accordion-item border-0 py-3"
+                onClick={dismissOffcanvas}
+              >
                 <h3
                   className="accordion-header   collapsed  h4 cursor"
                   data-bs-toggle="collapse"
@@ -164,7 +185,10 @@ export default function NavBarAdmin() {
                 ></div>
               </div>
 
-              <div className="accordion-item border-0 py-3">
+              <div
+                className="accordion-item border-0 py-3"
+                onClick={dismissOffcanvas}
+              >
                 <h3
                   className="accordion-header   collapsed  h4 cursor"
                   data-bs-toggle="collapse"
