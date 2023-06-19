@@ -156,19 +156,5 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem("token");
         window.location.reload();
       }
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.response.data.massage,
-      });
-    }
-
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: error.message,
-    });
-
-    // return Promise.reject(error);
-  }
-);
+      return error;
+    }})

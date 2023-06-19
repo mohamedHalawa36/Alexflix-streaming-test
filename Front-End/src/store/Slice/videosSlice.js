@@ -5,7 +5,9 @@ import { axiosInstance } from "../../api/config";
 
 //1- get all videos
 export const fetchAllVids = createAsyncThunk("allVideos", () => {
-  return axiosInstance.get("movies").then((res) => res.data.data);
+  return axiosInstance.get("movies")
+  .then((res) => res?.data.data)
+  .catch((error)=> []);
 });
 
 //2- get all movies
@@ -14,7 +16,7 @@ export const fetchAllMovies = createAsyncThunk("allMovies", () => {
     .get("movies/search", {
       params: { type: "movie" },
     })
-    .then((res) => res.data.data);
+    .then((res) => res?.data?.data);
 });
 //3- get all series
 export const fetchAllSeries = createAsyncThunk("allSeries", () => {
@@ -22,7 +24,7 @@ export const fetchAllSeries = createAsyncThunk("allSeries", () => {
     .get("movies/search", {
       params: { type: "series" },
     })
-    .then((res) => res.data.data);
+    .then((res) => res?.data?.data);
 });
 //4- get all animes
 export const fetchAllAnimes = createAsyncThunk("allAnimes", () => {

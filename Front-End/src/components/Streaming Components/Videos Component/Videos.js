@@ -10,9 +10,16 @@ export function Videos({ videos, type }) {
   useEffect(() => {
     if (searchVal.length > 0 || category !== "") {
       searchForVid(type, category, searchVal).then((res) => {
-        setRenderedVids(res.data.data);
-      });
-    } else {
+        if(res.data.data)
+        setRenderedVids(res.data.data)
+        else
+        setRenderedVids([])
+        
+      })
+      .catch((error)=>setRenderedVids([]) )
+      
+    }
+     else {
       setRenderedVids(videos);
     }
   }, [searchVal, category, videos]);
@@ -53,6 +60,7 @@ export function Videos({ videos, type }) {
         </Form.Select>
       </div>
       <div className="movie-cards row justify-content-center">
+        <span className={`text-center text-capitalize text-light ${renderedVids.length ===0?"":"d-none"}`}>{type} not exist</span>
         {renderedVids.map((movie) => {
           return <MovieCard movie={movie} isFav={false} key={movie._id} type={`video`} />;
         })}
