@@ -76,11 +76,11 @@ export default function MovieReviews() {
             <li key={review._id} className="list-group-item">
               <div className="d-flex align-items-start">
                 <Avatar className="me-3">
-                  {user.firstName && user.firstName.charAt(0)}
+                  {review.user_id.firstName && review.user_id.firstName.charAt(0)}
                 </Avatar>
                 <div className="flex-grow-1">
                   <div className="d-flex align-items-center">
-                    <h5 className="mb-0 me-2">{`${user.firstName} ${user.lastName} `}</h5>
+                    <h5 className="mb-0 me-2">{`${review.user_id.firstName} ${review.user_id.lastName} `}</h5>
                   </div>
                   {review.isEditing ? (
                     <div className="d-flex mt-2">
@@ -91,7 +91,7 @@ export default function MovieReviews() {
                         onChange={(e) =>
                           setReviews((prevReviews) =>
                             prevReviews.map((prevReview) =>
-                              prevReview.id === review._id
+                              prevReview._id === review._id
                                 ? {
                                     ...prevReview,
                                     updatedReview: e.target.value,
@@ -120,7 +120,7 @@ export default function MovieReviews() {
                           onClick={() =>
                             setReviews((prevReviews) =>
                               prevReviews.map((prevReview) =>
-                                prevReview.id === review.id
+                                prevReview._id === review._id
                                   ? { ...prevReview, isEditing: true }
                                   : prevReview
                               )
@@ -131,7 +131,7 @@ export default function MovieReviews() {
                         </button>
                         <button
                           className="btn btn-link btn-sm"
-                          onClick={() => handleDeleteReview(review.id)}
+                          onClick={() => handleDeleteReview(review._id)}
                         >
                           Delete
                         </button>
