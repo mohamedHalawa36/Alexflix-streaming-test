@@ -10,7 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import Reviews from "../Reviews Component/Reviews";
 import "./movie.css";
 import { CardsSlider } from "../../Streaming Components//Cards Slider Component/CardsSlider";
-import { searchProduct } from "./../../../api/apiEcommerce";
+import { searchProduct, getProductById } from "./../../../api/apiEcommerce";
 import { getMovie } from "./../../../api/apiMovies";
 
 export default function MovieDetails() {
@@ -32,14 +32,14 @@ export default function MovieDetails() {
         setMovieDetails(res.data);
         return res.data;
       })
-      .then((movie) => {
-        let query = {
-          movie: movie.name,
-          minPrice: 0,
-          maxPrice: "max",
-          category: "",
-        };
-        searchProduct(query).then((res) => setProducts(res));
+      .then(async (movie) => {
+        let products = [];
+        for (let id of movie.products) {
+          await getProductById(id).then((data) => {
+            products.push(data);
+          });
+        }
+        setProducts(products);
       })
       .catch((err) => {
         console.log(err);
@@ -86,12 +86,15 @@ export default function MovieDetails() {
         alignItems: "center",
       }}
     >
-      <div className=" container" onKeyDown={(e) => {
-            if (e.key === " " && e.target.localName === "div") {
-              setTyping(true);
-            }
-          }}
-          tabIndex={0}>
+      <div
+        className=" container"
+        onKeyDown={(e) => {
+          if (e.key === " " && e.target.localName === "div") {
+            setTyping(true);
+          }
+        }}
+        tabIndex={0}
+      >
         <div
           className="movie-card mb-3 cardDetails custom-card my-5"
           style={{ backgroundColor: "transparent" }}
@@ -203,19 +206,6 @@ export default function MovieDetails() {
                   url: "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/480.mp4",
                 },
               ]}
-              // subtitles={[
-              //   {
-              //     lang: "en",
-              //     language: "English",
-              //     url: "https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/en.vtt",
-              //   },
-              //   {
-              //     lang: "fr",
-              //     language: "French",
-              //     url: "https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/fr.vtt",
-              //   },
-              // ]}
-              // dimensions={{ width: "80 vw", height: "50 vh" }}
               poster={movieDetails.cover_image}
               controls
               // keyboard
