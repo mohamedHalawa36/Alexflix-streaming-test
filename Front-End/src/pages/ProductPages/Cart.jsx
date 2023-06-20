@@ -146,7 +146,14 @@ export default function Cart() {
             <tr key={product._id}>
               <td>
                 <Link to={`/store/product/${product._id}`}>
-                  <img src={product.image} alt="" />
+                  <img
+                    src={
+                      product.image
+                        ? product.image
+                        : product.images[0]?.secure_url
+                    }
+                    alt=""
+                  />
                 </Link>
               </td>
               <td>{product.name}</td>
