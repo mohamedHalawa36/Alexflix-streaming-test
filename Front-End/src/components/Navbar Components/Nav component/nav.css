@@ -77,7 +77,7 @@
 #lg-bag .badge {
   background-color: var(--main-color);
 }
-#lg-bag > .nav-link>#cart-icon-container {
+#lg-bag > .nav-link > #cart-icon-container {
   width: fit-content;
 }
 /* #lg-bag > .nav-link>#cart-icon-container>#cart-count {
@@ -87,3 +87,22 @@
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
 } */
+
+.blue-purple-badge {
+  display: inline-block;
+  position: absolute;
+  top:-5px;
+  right:-4px;
+  background-image: linear-gradient(
+    to right,
+    #004eff,
+    #3386ff,
+    #66b2ff,
+    #9933ff,
+    #cc66ff
+  );
+  color: white;
+  padding: 0 3px;
+  font-size: x-small;
+  clip-path:polygon(100% 0,93% 50%,100% 99%,0% 100%, 7% 50%,0% 0%)
+}

@@ -81,18 +81,17 @@ export function Nav({ positionStyle }) {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink onClick={scrollToTop} className="nav-link" to={"/store"}>
+              <NavLink onClick={scrollToTop} className="nav-link position-relative" to={"/store"}>
                 Store
+                <span class="blue-purple-badge">
+                  NEW
+                </span>
               </NavLink>
             </li>
 
             <li id="separator" className="nav-item flex-grow-1"></li>
             <li id="lg-bag" className="nav-item ">
-              <NavLink
-              
-                className="nav-link  me-2"
-                to={"/store/cart"}
-              >
+              <NavLink className="nav-link  me-2" to={"/store/cart"}>
                 <div id="cart-icon-container" className="position-relative">
                   <i className="fa-solid fa-bag-shopping fa-lg" />
                   <span

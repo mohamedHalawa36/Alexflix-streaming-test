@@ -85,13 +85,13 @@ export default function ProductDetails() {
         )}
 
         <div className="single-pro-details">
-          <h6 className="text-secondary">{product.category}</h6>
+          <h6>{product.category}</h6>
           <h4>{product.name}</h4>
           <h2>${product.price}</h2>
-          <p className="mb-3 text-secondary">
+          <p className="mb-3">
             {" "}
             In Stock :{" "}
-            <strong className="text-success">{product.available}</strong> item
+            <strong className="text-warning">{product.available}</strong> item
           </p>
           <select name="" id="">
             <option value="" disabled defaultValue>
@@ -111,7 +111,7 @@ export default function ProductDetails() {
             placeholder="1"
           />
           <button
-            className="btn btn-outline-primary"
+            className="btn add-button"
             disabled={
               quantity > product.available || quantity <= 0 ? true : false
             }
@@ -121,7 +121,7 @@ export default function ProductDetails() {
               );
             }}
           >
-            Add To Cart
+            <i class="fa-solid fa-cart-plus"></i> Add To Cart
           </button>
           <h4>Product Details</h4>
           <span>{product.description}</span>
