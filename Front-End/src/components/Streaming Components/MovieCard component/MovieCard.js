@@ -7,11 +7,17 @@ import {
   deleteFromFavorites,
 } from "../../../store/Slice/favoritesSlice";
 import { Button } from "react-bootstrap";
+import { addToCart } from "../../../store/Slice/cart";
 export function MovieCard({ movie, isFav, type }) {
+  const [inCart,setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
-  const [inCart, setInCart] = useState(false);
   const dispatch = useDispatch();
-  const addToCart = function (e) {};
+  const handleAddToCart = function (e) {
+    if(!inCart) setInCart(true);
+    let obj = { ...movie, quantity: 1 };
+    dispatch(addToCart(obj));
+    console.log(movie);
+  };
   const addToFav = function (e) {
     e.stopPropagation();
     if (!isFavorite) {
@@ -42,12 +48,11 @@ export function MovieCard({ movie, isFav, type }) {
               List
             </Button>
             <Button
-              onClick={addToCart}
+              onClick={handleAddToCart}
               className={`my-1 ${type === "product" ? "" : "d-none"}`}
               variant="outline-secondary"
             >
-              <i className={`fa-solid fa-${inCart ? "check" : "plus"}`}></i>{" "}
-              Cart
+              <i className={`fa-solid fa-${inCart?"check":"plus"}`}></i> Cart
             </Button>
             <br />
             <Button
@@ -60,7 +65,7 @@ export function MovieCard({ movie, isFav, type }) {
           </div>
         </div>
         <img
-          src={movie.poster_image|| movie.images[0].secure_url}
+          src={movie.poster_image || movie.images[0].secure_url}
           className="card-img-top rounded-4"
           alt="..."
         />

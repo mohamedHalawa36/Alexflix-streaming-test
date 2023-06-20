@@ -3,19 +3,19 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavAuth } from "../NavAuth  Component/NavAuth";
 import logo from "../../../assets/images/logo trans2.png";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from "react-bootstrap/Dropdown";
 import "./nav.css";
 export function Nav({ positionStyle }) {
   const [isLogedIn, setIsLogedIn] = useState(false);
   const favoriteMovies = useSelector((state) => state.favorites);
   const [isScrolled, setIsScrolled] = useState(false);
-  const totalInCart = useSelector((state)=> state.cart.total);
+  const totalInCart = useSelector((state) => state.cart.total);
   const navigate = useNavigate();
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
   const signOut = () => {
-     localStorage.removeItem("token");
+    localStorage.removeItem("token");
   };
   useEffect(() => {
     //check if it's a logged in user
@@ -35,7 +35,7 @@ export function Nav({ positionStyle }) {
       } ${positionStyle} w-100`}
     >
       <div className="container mw-100 px-5 ">
-        <Link className="navbar-brand py-1" to={"/"}>
+        <Link className="navbar-brand py-1" to={"/"} onClick={scrollToTop}>
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
         <button
@@ -57,16 +57,6 @@ export function Nav({ positionStyle }) {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 flex-grow-1">
-            {/* <li className="nav-item">
-              <NavLink
-                onClick={scrollToTop}
-                className="nav-link"
-                aria-current="page"
-                to={"/"}
-              >
-                Home
-              </NavLink>
-            </li> */}
             <li className="nav-item">
               <NavLink
                 onClick={scrollToTop}
@@ -97,12 +87,21 @@ export function Nav({ positionStyle }) {
             </li>
 
             <li id="separator" className="nav-item flex-grow-1"></li>
-            <li id="lg-bag" className="nav-item position-relative">
-              <NavLink className="nav-link" to={"/store/cart"}>
-                <i className="fa-solid fa-bag-shopping fs-3x" />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
-                {totalInCart}  
-                </span>
+            <li id="lg-bag" className="nav-item ">
+              <NavLink
+              
+                className="nav-link  me-2"
+                to={"/store/cart"}
+              >
+                <div id="cart-icon-container" className="position-relative">
+                  <i className="fa-solid fa-bag-shopping fa-lg" />
+                  <span
+                    id="cart-count"
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                  >
+                    {totalInCart}
+                  </span>
+                </div>
               </NavLink>
             </li>
 
@@ -118,7 +117,7 @@ export function Nav({ positionStyle }) {
             >
               <Link
                 id="user_icon"
-                className="nav-link btn rounded-circle p-2 dropdown-toggle text-start"
+                className="nav-link btn rounded-circle py-2 dropdown-toggle text-start"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -137,17 +136,21 @@ export function Nav({ positionStyle }) {
                   </Link>
                 </li>
                 <li>
-                <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Dropdown Button
-      </Dropdown.Toggle>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      Dropdown Button
+                    </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">
+                        Another action
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">
+                        Something else
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </li>
                 <li>
                   <Link

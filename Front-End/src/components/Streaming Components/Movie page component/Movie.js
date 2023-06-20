@@ -74,6 +74,7 @@ export default function MovieDetails() {
 
   return (
     <div
+    id="movie-details-page"
       className="movie-details-container position-relative"
       style={{
         backgroundImage: `linear-gradient(rgba(8, 26, 54, 0.8), rgba(8, 26, 54, 0.8)) , url(${movieDetails.cover_image})`,
@@ -214,11 +215,11 @@ export default function MovieDetails() {
           </div>
         </div>{" "}
         {products.length > 0 && (
-          <CardsSlider
-            movies={products}
-            title={"Related Products"}
-            type={`product`}
-          />
+            <CardsSlider
+              movies={products}
+              title={"Related Products"}
+              type={`product`}
+            />
         )}
         <Reviews typing={typing} setTyping={setTyping} />
       </div>

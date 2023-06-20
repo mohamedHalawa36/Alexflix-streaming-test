@@ -538,7 +538,7 @@ body {
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.028);
   border-radius: 25px;
-  /* box-shadow: 20px 20px 30px rgba(255, 255, 255, 0.037); */
+  box-shadow: 0 0px 10px 0px rgba(255, 255, 255,0.4);
   margin: 15px 0;
   transition: 0.2s ease;
   position: relative;
@@ -688,30 +688,6 @@ body {
   .section-p1 {
     padding: 40px;
   }
-  #navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: fixed;
-    top: 0;
-    right: -300px; /*to hide the navbar*/
-    height: 100vh;
-    width: 300px;
-    background-color: #e3e6f3;
-    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
-    padding: 80px 0 0 10px;
-    transition: 0.3s;
-  }
-
-  #navbar li {
-    margin-bottom: 25px;
-  }
-
-  #navbar.active {
-    right: 0;
-  }
-
   #mobile {
     display: flex;
     align-items: center;
@@ -731,10 +707,6 @@ body {
     color: #222;
     font-size: 24px;
   }
-  #lg-bag {
-    display: none;
-  }
-
   #product1 .pro-container {
     justify-content: center;
   }

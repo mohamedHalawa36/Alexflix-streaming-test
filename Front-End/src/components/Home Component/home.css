@@ -8,11 +8,11 @@
   -o-transform: translate(-50%, -30%);
 }
 
-#home-img > .text-content>h1,#home-img > .text-content>p{
+/* #home-img > .text-content>h1,#home-img > .text-content>p{
 
 font-size: 60px;
 
-}
+} */
 
 #home-img > .text-content > #welcome-msg > span {
   color: var(--specialColor);
