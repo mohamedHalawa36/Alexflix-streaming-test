@@ -35,7 +35,7 @@ export function Nav({ positionStyle }) {
       } ${positionStyle} w-100`}
     >
       <div className="container mw-100 px-5 ">
-        <Link className="navbar-brand py-1">
+        <Link className="navbar-brand py-1" to={"/"}>
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
         <button
@@ -57,7 +57,7 @@ export function Nav({ positionStyle }) {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 flex-grow-1">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink
                 onClick={scrollToTop}
                 className="nav-link"
@@ -66,7 +66,7 @@ export function Nav({ positionStyle }) {
               >
                 Home
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink
                 onClick={scrollToTop}

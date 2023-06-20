@@ -4,10 +4,11 @@ import { Nav } from "../Navbar Components/Nav component/Nav";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllVids } from "../../store/Slice/videosSlice";
 import { getAllProduct } from "../../api/apiEcommerce";
+import homeImage from "../../assets/images/homeImg.jpg";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./home.css";
 export function Home() {
-  const [products,setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const allVids = useSelector((state) => state.videos);
   const dispatch = useDispatch();
   const movies = [...allVids.movies].sort((a, b) => b.rate - a.rate);
@@ -16,47 +17,27 @@ export function Home() {
   useEffect(() => {
     getAllProduct().then((res)=>setProducts(res))
     dispatch(fetchAllVids());
-  }, []);
+  }, [dispatch]);
 
   //Loader till the data arrive
-  if (allVids.length === 0)
-    return (
-      <h1 className="w-100 h-100 text-light d-flex justify-content-center align-items-center">
-        Loading....
-      </h1>
-    );
-
   return (
     <>
       <Nav positionStyle={"position-fixed top-0 start-0"} />
       <div
-        id="carouselExampleSlidesOnly"
-        className="carousel slide d-flex justify-content-center align-items-center"
-        data-bs-ride="carousel"
-        data-interval="3000"
+        id="home-img"
+        className=" position-relative d-flex justify-content-center align-items-center vh-100"
       >
-        <div className="carousel-inner">   
-          {
-            series.map((movie,index)=> {
-              return (
-                <div className={`carousel-item vh-100 ${index===0?"active":""}`} key={`carousel-${movie._id}`}>
-            <img
-              src={movie.cover_image}
-              className="d-block w-100 h-100"
-              alt="..."
-            />
-          </div>
-              )
-            })
-          }
-
-        </div>
-        <div className="text ms-5 position-absolute start-0 top-50">
-          <h1 id="welcome-msg" className="text-capitalize">
+        <span
+          id="home-img-overlay"
+          className=" position-absolute start-0 top-0 w-100 h-100"
+        ></span>
+        <img src={homeImage} className="w-100 h-100" alt="Home-Img" />
+        <div className="text-content position-absolute start-50 top-25 text-center fw-bold">
+          <h1 id="welcome-msg" className="text-capitalize mb-4 ">
             welcome to <span className="text-uppercase">alexflix</span>
           </h1>
-          <p id="description" className="fs-4">
-            Millions of movies, TV shows,Animes and thier wonderfull products
+          <p id="description" className="fs-4 m-0">
+            Millions of movies, TV shows, Animes and thier wonderfull products
           </p>
         </div>
       </div>
@@ -64,8 +45,6 @@ export function Home() {
       <CardsSlider movies={series} title={"top series"} type={`video`} />
       <CardsSlider movies={animes} title={"top animes"} type={`video`} />
       <CardsSlider movies={products} title={"top products"} type={`product`} />
-
-  
     </>
   );
 }

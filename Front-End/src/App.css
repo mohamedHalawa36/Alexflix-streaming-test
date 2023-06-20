@@ -10,8 +10,9 @@
   --userIconColor: rgb(73, 93, 120);
   --textColor: whitesmoke;
   --dropDownBg: rgba(245, 245, 245, 0.25);
-  --scrollNavColor: rgb(8, 26, 54, 0.85);
+  --scrollNavColor: rgb(8, 26, 54, 0.9);
   --animationDuration: 1;
+  --homeOverlay:rgb(8, 26, 54, 0.5);
 }
 
 .cursor {

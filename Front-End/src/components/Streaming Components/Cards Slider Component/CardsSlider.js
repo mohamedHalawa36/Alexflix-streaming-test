@@ -4,8 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./cardsSlider.css";
 
-export function CardsSlider({ title, movies,type }) {
-
+export function CardsSlider({ title, movies, type }) {
   const items = movies.map((movie) => {
     return <MovieCard movie={movie} isFav={false} key={movie.id} type={type} />;
   });
