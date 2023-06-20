@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import imgDefault from "../../assets/img/01.jpg";
+import imgDefault from "../../assets/img/Add-Movies.jpg";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSearchParams } from "react-router-dom";
@@ -69,8 +69,8 @@ export default function MoviesList() {
 
   return (
     <>
-      <section className="col-xl-10 py-5 text-light">
-        <h2 className="pb-2 ">Movies List</h2>
+      <section className="col-xl-10 py-5 text-light offset-xl-2">
+        <h2 className="pt-xl-0 pt-3 ps-4 ">Movies List</h2>
         <Form
           className="d-flex col-xl-4 col-lg-11 col-10 mx-lg-0 mx-auto ms-lg-auto py-4 pe-lg-5"
           onSubmit={handleSearch}

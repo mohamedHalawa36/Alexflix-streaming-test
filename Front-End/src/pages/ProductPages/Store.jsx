@@ -75,12 +75,14 @@ export default function Store() {
   }
 
   function increasePage(e) {
-    if (page === 16) return;
+    e.preventDefault();
+    if (page === 13) return;
     let newP = page;
     newP++;
     setPage(newP);
   }
-  function decreasePage() {
+  function decreasePage(e) {
+    e.preventDefault();
     if (page === 1) return;
     let newP = page;
     newP--;
@@ -96,17 +98,20 @@ export default function Store() {
   }
 
   return (
-    <div className="bg-light">
-      <section id="page-header">
-        <h2>Super value deals</h2>
-        <p>save more coupons & up to 70% off!</p>
+    <div className="">
+      <section id="page-header" className="">
+        <h2>
+          At <strong className="alex-cl">Alexflix </strong>Store, you can
+          explore a world of products <br /> inspired by your favorite Movie,
+          Series, and Anime!
+        </h2>
       </section>
 
       <section id="product-search">
         <input
           type="text"
           name="movie"
-          className="search-bar "
+          className="search-bar  rounded-3 "
           placeholder="What's you favorite movie?"
           id=""
           value={query.movie}
@@ -119,6 +124,7 @@ export default function Store() {
             name="minPrice"
             min="0"
             placeholder="min"
+            className="text-dark rounded-3"
             id=""
             value={query.minPrice === 0 ? "" : query.minPrice}
             onChange={searchProductsHandler}
@@ -127,7 +133,7 @@ export default function Store() {
             type="number"
             name="maxPrice"
             min="0"
-            className="mx-1"
+            className="mx-1 text-dark rounded-3"
             value={query.maxPrice === "max" ? "" : query.maxPrice}
             placeholder="max"
             id=""
@@ -138,6 +144,7 @@ export default function Store() {
             id=""
             onChange={searchProductsHandler}
             value={query.category}
+            className="rounded text-dark "
           >
             <option value="">All</option>
             <option value="Accessories">Accessories</option>
@@ -149,7 +156,7 @@ export default function Store() {
       <section id="product1" className="section-p1">
         <div className="pro-container">
           {allProducts?.map((product) => (
-            <div key={product._id} className="pro bg-light">
+            <div key={product._id} className="pro">
               <img
                 src={product.images[0].secure_url}
                 className="full-width "
@@ -181,13 +188,15 @@ export default function Store() {
             </div>
           ))}
         </div>
-        {allProducts.length === 0 && <span>Not found</span>}
+        {allProducts.length === 0 && (
+          <span className="text-danger">NO PRODUCTS FOUND .. </span>
+        )}
       </section>
       {paginationState && (
         <section id="pagination" className="section-p1">
           <button
             disabled={page === 1 ? true : false}
-            onClick={() => decreasePage()}
+            onClick={(e) => decreasePage(e)}
           >
             <i className="fa-solid fa-long-arrow-alt-left"></i>
           </button>
@@ -199,7 +208,7 @@ export default function Store() {
           </button>
           <button
             className=""
-            disabled={page === 16 ? true : false}
+            disabled={page === 13 ? true : false}
             onClick={(e) => increasePage(e)}
           >
             <i className="fa-solid fa-long-arrow-alt-right"></i>

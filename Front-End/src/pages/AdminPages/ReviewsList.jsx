@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import imgDefault from "../../assets/img/01.jpg";
+import imgDefaultFemale from "../../assets/img/02.png";
+import imgDefaultMale from "../../assets/img/03.png";
 import { getAllReviews } from "../../api/apiReview";
 import { deleteReviewByAdmin } from "../../Utils/reviewUtils";
 
@@ -16,8 +17,8 @@ export default function ReviewsList() {
 
   return (
     <>
-      <section className="col-xl-10 py-5 text-light">
-        <h2 className="pb-2 ">Review List</h2>
+      <section className="col-xl-10 py-5 text-light offset-xl-2">
+        <h2 className="pt-xl-0 py-3 ps-4 ">Review List</h2>
         {reviewList.length ? (
           <div className="row row-cols-1">
             <article className="table-header row d-xl-flex d-none px-xl-3 pb-4 pt-2 col-lg-11 mx-auto bg-blue-dark border border-1 border-bottom-0">
@@ -42,7 +43,7 @@ export default function ReviewsList() {
                       src={
                         item?.movie_id?.poster
                           ? item.movie_id.poster
-                          : imgDefault
+                          : item.gender==="female"? imgDefaultFemale:imgDefaultMale
                       }
                       alt="Profile"
                       className="col-xl-8 col-lg-6 col-12 rounded-3"

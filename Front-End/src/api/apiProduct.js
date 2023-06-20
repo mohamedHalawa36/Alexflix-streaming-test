@@ -15,7 +15,6 @@ export const getAllProducts = async (page) => {
   
   export const searchProduct = async (name) => {
     try {
-      console.log(name)
       const check = await configAxios.get(`products/search/?name=${name}`);
       if (check?.data) return check.data;
     } catch (error) {

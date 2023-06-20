@@ -7,8 +7,10 @@ export default function NavBarAdmin() {
   const dismissOffcanvas = () => {
     const offcanvas = document.querySelector("#admin-navBar");
     const backdrop = document.querySelector(".offcanvas-backdrop");
-    offcanvas.classList.remove("show");
-    backdrop.classList.remove("show");
+    if (offcanvas && backdrop) {
+      offcanvas.classList.remove("show");
+      backdrop.classList.remove("show");
+    }
     window.scrollTo(0, 0);
   };
   const signOut = () => {
@@ -29,7 +31,10 @@ export default function NavBarAdmin() {
             aria-controls="admin-navBar"
           >
             <span id="nav-toggler-icon" className="navbar-toggler-icon">
-            <i className="fa-solid fa-bars-staggered" style={{ fontSize: "28px" }}></i>
+              <i
+                className="fa-solid fa-bars-staggered"
+                style={{ fontSize: "28px" }}
+              ></i>
             </span>
           </button>
         </article>
@@ -68,8 +73,8 @@ export default function NavBarAdmin() {
                 <h3
                   className="accordion-header   collapsed  h4 cursor"
                   data-bs-toggle="collapse"
-                  data-bs-target="#orderFlush"
-                  aria-controls="orderFlush"
+                  data-bs-target="#logoFlush"
+                  aria-controls="logoFlush"
                   onClick={() => navigate("/userList")}
                 >
                   <Link className="navbar-brand py-1">
@@ -77,7 +82,7 @@ export default function NavBarAdmin() {
                   </Link>
                 </h3>
                 <div
-                  id="orderFlush"
+                  id="logoFlush"
                   className="accordion-collapse collapse"
                   data-bs-parent="#accordionFlushExample"
                 ></div>
@@ -237,21 +242,19 @@ export default function NavBarAdmin() {
                 <hr className="dropdown-divider" />
               </div>
 
-              <div
-                className="accordion-item border-0 py-3"
-              >
+              <div className="accordion-item border-0 py-3">
                 <h3
                   className="accordion-header   collapsed  h4 cursor"
                   data-bs-toggle="collapse"
-                  data-bs-target="#orderFlush"
-                  aria-controls="orderFlush"
+                  data-bs-target="#signOutFlush"
+                  aria-controls="signOutFlush"
                   onClick={signOut}
                 >
                   <i className="fa-solid fa-right-from-bracket"></i>
                   &nbsp; sign out
                 </h3>
                 <div
-                  id="orderFlush"
+                  id="signOutFlush"
                   className="accordion-collapse collapse"
                   data-bs-parent="#accordionFlushExample"
                 ></div>

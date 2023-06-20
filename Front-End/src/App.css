@@ -13,6 +13,12 @@
   --scrollNavColor: rgb(8, 26, 54, 0.85);
   --animationDuration: 1;
 }
+.alex-bg{
+  background-color: var(--bgColor);
+}
+.alex-cl{
+  color: var(--main-color);
+}
 
 .cursor {
   cursor: pointer;
@@ -526,19 +532,19 @@ body {
 }
 
 #product1 .pro {
-  width: 23%;
+  width: 15%;
   min-width: 250px;
   padding: 10px 12px;
-  border: 1px solid #cce7d0;
+  border: 1px solid rgba(255, 255, 255, 0.028);
   border-radius: 25px;
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
+  /* box-shadow: 20px 20px 30px rgba(255, 255, 255, 0.037); */
   margin: 15px 0;
   transition: 0.2s ease;
   position: relative;
 }
 
 #product1 .pro:hover {
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 20px 20px 30px rgba(255, 255, 255, 0.02);
   transform: translateY(-15px);
 }
 #product1 .pro img {
@@ -560,7 +566,7 @@ body {
 }
 #product1 .pro .des h5 {
   padding-top: 7px;
-  color: #1a1a1a;
+  color: var(--textColor);
   font-size: 14px;
   font-weight: bolder;
 }
@@ -593,10 +599,10 @@ body {
 }
 /* Shopping Page */
 #page-header {
-  background-image: url("https://wpassets.brainstation.io/app/uploads/2017/04/13100509/Netflix-Background.jpg");
-  width: 100%;
-  height: 40vh;
+  background-image: linear-gradient(to bottom, rgba(27, 45, 73), rgba(27, 45, 73, 0.8)), url("https://wpassets.brainstation.io/app/uploads/2017/04/13100509/Netflix-Background.jpg");  height: 40vh;
   background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -606,8 +612,9 @@ body {
 
 #page-header h2,
 #page-header p {
-  color: #fff;
+  color: var(--textColor);
 }
+
 
 #product-search {
   display: flex;
@@ -623,14 +630,28 @@ body {
   height: 3.125rem;
   padding: 0 1.25em;
   font-size: 14px;
-  border: 1px solid#13b6b64c;
-  border-radius: 20px;
+  /* border: 1px solid#13b6b64c; */
+  /* border-radius: 20px; */
   outline: none;
-  width: 150px;
-  background-color: transparent !important;
+  box-shadow: inset 0 0 1px var(--textColor);
+  color: var(--textColor);
+  border: none;
+  width: 100px !important;
 }
-#product-search input {
-  width: 100px;
+
+#product-search >  .search-bar  {
+  background-color: transparent !important;
+  width: 30% !important;
+  box-shadow: inset 0 0 1px var(--textColor);
+  color: var(--textColor);
+  /* outline: none; */
+  border: none;
+  transition: all 0.5s;
+}
+#product-search >  .search-bar:focus {
+  box-shadow: 0 0 7px var(--specialColor);
+  border: none;
+  width: 40% !important;
 }
 
 #product-search .search-bar {
@@ -646,9 +667,10 @@ body {
   background-color: var(--main-color);
   padding: 5px 10px;
   border-radius: 4px;
-  color: #fff;
+  color: var(--textColor);
   font-weight: 600;
   cursor: pointer;
+  font-size: 12px;
   user-select: none;
 }
 #pagination button:disabled {
@@ -656,7 +678,7 @@ body {
 }
 
 #pagination button i {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -724,8 +746,13 @@ body {
   /* search */
 
   #product-search .search-bar {
-    width: 90%;
+    width: 50% !important;
+    margin: 10px auto;
   }
+  #product-search .search-bar:focus{
+    width: 100% !important;
+  }
+  
   #product-search input,
   #product-search select {
     width: 150px;
@@ -770,6 +797,10 @@ body {
 
   #product-search input,
   #product-search select {
-    width: 32%;
+    width: 32% !important;
   }
+}
+
+.error {
+  font-size: 12px;
 }
