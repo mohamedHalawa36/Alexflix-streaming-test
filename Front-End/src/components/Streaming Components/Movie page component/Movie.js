@@ -17,6 +17,9 @@ export default function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState({});
   const [products, setProducts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+
+  const [typing, setTyping] = useState(true);
+
   const params = useParams();
   const playerRef = useRef(null);
   useEffect(() => {
@@ -71,7 +74,7 @@ export default function MovieDetails() {
 
   return (
     <div
-      className="movie-details-container"
+      className="movie-details-container position-relative"
       style={{
         backgroundImage: `linear-gradient(rgba(8, 26, 54, 0.8), rgba(8, 26, 54, 0.8)) , url(${movieDetails.cover_image})`,
         minHeight: "100vh",
@@ -83,7 +86,12 @@ export default function MovieDetails() {
         alignItems: "center",
       }}
     >
-      <div className=" container">
+      <div className=" container" onKeyDown={(e) => {
+            if (e.key === " " && e.target.localName === "div") {
+              setTyping(true);
+            }
+          }}
+          tabIndex={0}>
         <div
           className="movie-card mb-3 cardDetails custom-card my-5"
           style={{ backgroundColor: "transparent" }}
@@ -169,17 +177,16 @@ export default function MovieDetails() {
           </div>
         </div>
         {/* video player */}
-        <div className=" my-5 w- 75   mx-auto ">
-          <div className="  ">
-            {" "}
+        <div>
+          <div>
             <Player
               keyboardShortcut={{
-                pause: false,
-                forward: true,
-                rewind: true,
+                pause: typing,
+                forward: typing,
+                rewind: typing,
                 fullScreen: false,
-                mute: true,
-                subtitle: true,
+                mute: typing,
+                subtitle: typing,
               }}
               ref={playerRef}
               src={[
@@ -216,13 +223,14 @@ export default function MovieDetails() {
             />
           </div>
         </div>{" "}
-        { products.length > 0 &&
-        <CardsSlider
-          movies={products}
-          title={"Related Products"}
-          type={`product`}
-        />}
-        <Reviews />
+        {products.length > 0 && (
+          <CardsSlider
+            movies={products}
+            title={"Related Products"}
+            type={`product`}
+          />
+        )}
+        <Reviews typing={typing} setTyping={setTyping} />
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ import {
 
 import "./reviews.css";
 
-export default function MovieReviews() {
+export default function MovieReviews({typing, setTyping}) {
   const [reviews, setReviews] = useState([]);
 
   const params = useParams();
@@ -73,10 +73,16 @@ export default function MovieReviews() {
     }
   };
 
-  const handleUpdateReview = (reviewId, updatedReview) => {
+  const handleUpdateReview = async (reviewId, updatedReview) => {
 
-    updateMovieReview(reviewId, { content: updatedReview });
-    getAllReviews();
+    await updateMovieReview(reviewId, { content: updatedReview });
+    await getAllReviews();
+    Swal.fire({
+      icon: "success",
+      title: "Review Updated",
+      showConfirmButton: false,
+      timer: 1500,
+    });
     setReviews((prevReviews) =>
       prevReviews.map((review) =>
         review._id === reviewId
@@ -155,13 +161,13 @@ export default function MovieReviews() {
                                 )
                               }
                             >
-                              Edit
+                             <i className="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button
                               className="btn btn-link btn-sm"
                               onClick={() => handleDeleteReview(review._id)}
                             >
-                              Delete
+                              <i className="fa-solid fa-trash-can px-3"></i>
                             </button>
                           </div>
                         </>
@@ -191,7 +197,15 @@ export default function MovieReviews() {
               rows="3"
               placeholder="Write your review..."
               value={newReview}
-              onChange={(e) => setNewReview(e.target.value)}
+              onChange={(e) =>{setNewReview(e.target.value);}}
+              onKeyDown={(e) => {
+                if (e.key === " ") {
+                  // Space key is pressed
+                  setTyping(false)
+                  console.log("Space key pressed");
+                  setNewReview(newReview +" ")
+                }
+              }}
             ></textarea>
             <button
               id="post-review"
