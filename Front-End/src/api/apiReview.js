@@ -27,23 +27,20 @@ export const getMovieReviews = async (movieId) => {
   }
 };
 
-
-export const addMovieReview = async (movieId,data) => {
+export const addMovieReview = async (movieId, data) => {
   try {
-    const check = await configAxios.post(`reviews/${movieId}`,data);
-    console.log(check)
+    const check = await configAxios.post(`reviews/${movieId}`, data);
+
     if (check?.data) return check.data;
   } catch (error) {
     return error;
   }
 };
 
-
-
 export const updateMovieReview = async (reviewId, data) => {
   try {
-    const check = await configAxios.patch(`reviews/${reviewId}`,data);
-    console.log(check)
+    const check = await configAxios.patch(`review/${reviewId}`, data);
+    console.log(check);
     if (check?.data) return check.data;
   } catch (error) {
     return error;

@@ -2,8 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import { getMovieReviews, addMovieReview } from "./../../../api/apiReview";
+import Swal from "sweetalert2";
 import { getUserData } from "./../../../api/apiData";
+import {
+  getMovieReviews,
+  addMovieReview,
+  deleteReview,
+  updateMovieReview,
+} from "./../../../api/apiReview";
+
 import "./reviews.css";
 
 export default function MovieReviews() {
@@ -42,19 +49,37 @@ export default function MovieReviews() {
     setVisibleReviews(visibleReviews + 5);
   };
 
-  const handleDeleteReview = (id) => {
-    setReviews(reviews.filter((review) => review._id !== id));
+  const handleDeleteReview = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      await deleteReview(id);
+      await getAllReviews();
+      Swal.fire({
+        icon: "success",
+        title: "Review Deleted",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
-  const handleUpdateReview = (id, updatedReview) => {
-    // use review api to update data {content:updatedReview}
+  const handleUpdateReview = (reviewId, updatedReview) => {
 
-
-    // then get and update review
-    //getAllReviews();
+    updateMovieReview(reviewId, { content: updatedReview });
+    getAllReviews();
     setReviews((prevReviews) =>
       prevReviews.map((review) =>
-        review.id === id
+        review._id === reviewId
           ? { ...review, review: updatedReview, isEditing: false }
           : review
       )
@@ -76,7 +101,8 @@ export default function MovieReviews() {
             <li key={review._id} className="list-group-item">
               <div className="d-flex align-items-start">
                 <Avatar className="me-3">
-                  {review.user_id.firstName && review.user_id.firstName.charAt(0)}
+                  {review.user_id.firstName &&
+                    review.user_id.firstName.charAt(0)}
                 </Avatar>
                 <div className="flex-grow-1">
                   <div className="d-flex align-items-center">
@@ -114,28 +140,32 @@ export default function MovieReviews() {
                   ) : (
                     <>
                       <p className="mt-2 mb-0">{review.content}</p>
-                      <div className="review-btns mt-2">
-                        <button
-                          className="btn btn-link btn-sm"
-                          onClick={() =>
-                            setReviews((prevReviews) =>
-                              prevReviews.map((prevReview) =>
-                                prevReview._id === review._id
-                                  ? { ...prevReview, isEditing: true }
-                                  : prevReview
-                              )
-                            )
-                          }
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-link btn-sm"
-                          onClick={() => handleDeleteReview(review._id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
+                      {user._id === review.user_id._id && (
+                        <>
+                          <div className="review-btns mt-2">
+                            <button
+                              className="btn btn-link btn-sm"
+                              onClick={() =>
+                                setReviews((prevReviews) =>
+                                  prevReviews.map((prevReview) =>
+                                    prevReview._id === review._id
+                                      ? { ...prevReview, isEditing: true }
+                                      : prevReview
+                                  )
+                                )
+                              }
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="btn btn-link btn-sm"
+                              onClick={() => handleDeleteReview(review._id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </>
                   )}
                 </div>
