@@ -9,11 +9,13 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Reviews from "../Reviews Component/Reviews";
 import "./movie.css";
-
+import { CardsSlider } from "../../Streaming Components//Cards Slider Component/CardsSlider";
+import { searchProduct } from "./../../../api/apiEcommerce";
 import { getMovie } from "./../../../api/apiMovies";
 
 export default function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState({});
+  const [products, setProducts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const params = useParams();
   const playerRef = useRef(null);
@@ -21,10 +23,20 @@ export default function MovieDetails() {
     getMoviedetails();
   }, []);
 
-  function getMoviedetails() {
+  async function getMoviedetails() {
     getMovie(params.id)
       .then((res) => {
         setMovieDetails(res.data);
+        return res.data;
+      })
+      .then((movie) => {
+        let query = {
+          movie: movie.name,
+          minPrice: 0,
+          maxPrice: "max",
+          category: "",
+        };
+        searchProduct(query).then((res) => setProducts(res));
       })
       .catch((err) => {
         console.log(err);
@@ -204,6 +216,12 @@ export default function MovieDetails() {
             />
           </div>
         </div>{" "}
+        { products.length > 0 &&
+        <CardsSlider
+          movies={products}
+          title={"Related Products"}
+          type={`product`}
+        />}
         <Reviews />
       </div>
     </div>

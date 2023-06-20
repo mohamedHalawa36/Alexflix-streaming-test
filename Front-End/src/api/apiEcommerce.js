@@ -21,13 +21,8 @@ export async function searchProduct(query) {
         query.category
       }`
     );
-    console.log(data.products);
     return data.products;
   } catch (error) {
     return [];
   }
 }
-/*
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDhkZmYyZDhmNzJlNjQ1NjI4ODg3ZjYiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2ODcwODUwMzB9.Su_8Tt02YvqXEflGNHKq2A_asRDySqiJn-YdfuZhrh0
-*/
