@@ -85,12 +85,13 @@ export default function ProductDetails() {
         )}
 
         <div className="single-pro-details">
-          <h6 className="text-muted">{product.category}</h6>
+          <h6 className="text-secondary">{product.category}</h6>
           <h4>{product.name}</h4>
           <h2>${product.price}</h2>
-          <p className="mb-3">
+          <p className="mb-3 text-secondary">
             {" "}
-            In Stock : <strong>{product.available}</strong> item
+            In Stock :{" "}
+            <strong className="text-success">{product.available}</strong> item
           </p>
           <select name="" id="">
             <option value="" disabled defaultValue>
@@ -115,7 +116,9 @@ export default function ProductDetails() {
               quantity > product.available || quantity <= 0 ? true : false
             }
             onClick={() => {
-              dispatch(addToCart({ ...product, quantity }));
+              dispatch(
+                addToCart({ ...product, quantity, image: imgRef.current.src })
+              );
             }}
           >
             Add To Cart
