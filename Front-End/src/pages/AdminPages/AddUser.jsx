@@ -55,8 +55,8 @@ export default function AddUser() {
   };
   return (
     <>
-      <section className="col-xl-10 py-5 text-light">
-        <h2 className="pb-2 ms-lg-5">Add User</h2>
+      <section className="col-xl-10 py-5 text-light offset-xl-2">
+        <h2 className="pt-xl-0 pt-3 pb-2 ms-lg-5">Add User</h2>
         <section className="row">
           <article className="col-lg-3 col-md-4 col-10  mx-auto">
             <div className="position-relative">
