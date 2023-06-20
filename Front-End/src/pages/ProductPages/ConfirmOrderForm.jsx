@@ -20,14 +20,17 @@ export default function ConfirmOrderForm({
           <Modal.Title>Additional Info</Modal.Title>
         </Modal.Header>
         <Modal.Body className="alex-bg text-white">
-          <form onSubmit={handleSubmit} noValidate>
-            <div className="mb-3">
-              <label htmlFor="cityInput" className="form-label ms-1 mt-1">
+          <form onSubmit={handleSubmit} noValidate className="p-2">
+            <div className="mb-3 ">
+              <label
+                htmlFor="cityInput"
+                className="form-label text-secondary ms-1 mt-1"
+              >
                 City
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control text-light bg-transparent"
                 id="cityInput"
                 name="city"
                 value={formData.city}
@@ -39,12 +42,15 @@ export default function ConfirmOrderForm({
               )}
             </div>
             <div className="mb-3">
-              <label htmlFor="streetInput" className="form-label ms-1">
+              <label
+                htmlFor="streetInput"
+                className="form-label ms-1 text-secondary "
+              >
                 Street
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control text-light bg-transparent"
                 id="streetInput"
                 name="street"
                 value={formData.street}
@@ -56,12 +62,15 @@ export default function ConfirmOrderForm({
               )}
             </div>
             <div className="mb-3">
-              <label htmlFor="buildingInput" className="form-label ms-1">
+              <label
+                htmlFor="buildingInput"
+                className="form-label ms-1 text-secondary "
+              >
                 Building
               </label>
               <input
                 type="number"
-                className="form-control"
+                className="form-control text-light bg-transparent"
                 id="buildingInput"
                 name="building"
                 value={formData.building}
@@ -73,11 +82,14 @@ export default function ConfirmOrderForm({
               )}
             </div>
             <div className="mb-3">
-              <label htmlFor="notesInput" className="form-label ms-1">
+              <label
+                htmlFor="notesInput"
+                className="form-label ms-1 text-secondary "
+              >
                 Notes
               </label>
               <textarea
-                className="form-control"
+                className="form-control text-light bg-transparent"
                 id="notesInput"
                 name="notes"
                 value={formData.notes}
@@ -86,12 +98,15 @@ export default function ConfirmOrderForm({
               ></textarea>
             </div>
             <div className="mb-3">
-              <label htmlFor="phoneInput" className="form-label ms-1">
+              <label
+                htmlFor="phoneInput"
+                className="form-label ms-1 text-secondary "
+              >
                 Phone
               </label>
               <input
                 type="tel"
-                className="form-control"
+                className="form-control text-light bg-transparent"
                 id="phoneInput"
                 name="phone"
                 value={formData.phone}
