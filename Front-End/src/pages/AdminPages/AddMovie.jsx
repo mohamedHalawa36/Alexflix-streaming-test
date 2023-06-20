@@ -6,7 +6,7 @@ import * as yup from "yup";
 import * as movieValidation from "../../validation/movieValidation";
 import Select from "react-select";
 
-import imgDefault from "../../assets/img/movie-19.jpg";
+import imgDefault from "../../assets/img/Add-Movies.jpg";
 import { getAllProducts, searchProduct } from "../../api/apiProduct";
 import { addNewMovie } from "../../api/apiMovies";
 import Swal from "sweetalert2";
@@ -88,11 +88,11 @@ export default function AddMovie() {
   }, []);
   return (
     <>
-      <section className="col-xl-10 py-5 text-light">
-        <h2 className="pb-2 ms-lg-5">Add Movie</h2>
+      <section className="col-xl-10 py-5 text-light offset-xl-2">
+        <h2 className="pt-xl-0 pt-3 pb-2 ms-lg-5">Add Movie</h2>
         <section className="row">
-          <article className="col-lg-3 col-md-4 col-10 mx-auto ">
-            <div>
+          <article className="col-xl-3 col-md-4 col-10 mx-auto ">
+            <div className="col-10 mx-auto">
               <img
                 src={img ? img : imgDefault}
                 alt="Profile"
@@ -100,7 +100,7 @@ export default function AddMovie() {
               />
             </div>
             {productListSearch.length || productList.length ? (
-              <div>
+              <div className="col-10 mx-auto">
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -110,7 +110,7 @@ export default function AddMovie() {
                 />
                 <div
                   className="rounded-bottom-3 overflow-y-auto"
-                  style={{ maxHeight: "400px" }}
+                  style={{ maxHeight: "200px" }}
                 >
                   <ul className="list-group list-group-flush">
                     {(productListSearch.length
@@ -151,8 +151,8 @@ export default function AddMovie() {
 
             {productAddList.length ? (
               <div
-                className="my-3 overflow-y-auto"
-                style={{ borderRadius: "10px 0 0 10px", maxHeight: "400px" }}
+                className="my-3 overflow-y-auto col-10 mx-auto"
+                style={{ borderRadius: "10px 0 0 10px", maxHeight: "200px" }}
               >
                 <ul className="list-group list-group-flush">
                   {productAddList.map((item) => (

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import imgDefault from "../../assets/img/01.jpg";
+import imgDefaultFemale from "../../assets/img/02.png";
+import imgDefaultMale from "../../assets/img/03.png";
+
 import { useSearchParams } from "react-router-dom";
 import { getAllUsers, searchUser } from "../../api/apiData";
 import Button from "react-bootstrap/Button";
@@ -118,7 +120,7 @@ export default function UserList() {
                         src={
                           item?.profile_img?.secure_url
                             ? item.profile_img.secure_url
-                            : imgDefault
+                            : item.gender==="female"? imgDefaultFemale:imgDefaultMale
                         }
                         alt="Profile"
                         className="col-xl-8 col-lg-6 col-12 rounded-3 "
