@@ -13,7 +13,7 @@ import {
 
 import "./reviews.css";
 
-export default function MovieReviews({typing, setTyping}) {
+export default function MovieReviews({ typing, setTyping }) {
   const [reviews, setReviews] = useState([]);
 
   const params = useParams();
@@ -55,7 +55,7 @@ export default function MovieReviews({typing, setTyping}) {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#00d0c5",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "Cancel",
@@ -74,7 +74,6 @@ export default function MovieReviews({typing, setTyping}) {
   };
 
   const handleUpdateReview = async (reviewId, updatedReview) => {
-
     await updateMovieReview(reviewId, { content: updatedReview });
     await getAllReviews();
     Swal.fire({
@@ -161,7 +160,7 @@ export default function MovieReviews({typing, setTyping}) {
                                 )
                               }
                             >
-                             <i className="fa-solid fa-pen-to-square"></i>
+                              <i className="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button
                               className="btn btn-link btn-sm"
@@ -197,13 +196,15 @@ export default function MovieReviews({typing, setTyping}) {
               rows="3"
               placeholder="Write your review..."
               value={newReview}
-              onChange={(e) =>{setNewReview(e.target.value);}}
+              onChange={(e) => {
+                setNewReview(e.target.value);
+              }}
               onKeyDown={(e) => {
                 if (e.key === " ") {
                   // Space key is pressed
-                  setTyping(false)
+                  setTyping(false);
                   console.log("Space key pressed");
-                  setNewReview(newReview +" ")
+                  setNewReview(newReview + " ");
                 }
               }}
             ></textarea>

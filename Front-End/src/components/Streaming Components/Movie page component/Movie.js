@@ -47,6 +47,7 @@ export default function MovieDetails() {
   }
 
   function MyVerticallyCenteredModal(props) {
+    console.log(movieDetails);
     return (
       <div>
         <Modal
@@ -60,7 +61,7 @@ export default function MovieDetails() {
             <div className="ratio ratio-16x9">
               <iframe
                 closeButton
-                src="https://www.youtube.com/embed/sfAc2U20uyg?autoplay=1"
+                src={`${movieDetails.trailer}?autoplay=1`}
                 title="YouTube video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -71,10 +72,9 @@ export default function MovieDetails() {
       </div>
     );
   }
-
   return (
     <div
-    id="movie-details-page"
+      id="movie-details-page"
       className="movie-details-container position-relative"
       style={{
         backgroundImage: `linear-gradient(rgba(8, 26, 54, 0.8), rgba(8, 26, 54, 0.8)) , url(${movieDetails.cover_image})`,
@@ -115,9 +115,9 @@ export default function MovieDetails() {
                 style={{ width: "15%", fontWeight: "bold" }}
               >
                 <CircularProgressbar
-                  value={movieDetails.rate}
+                  value={Math.round(movieDetails.rate * 10) / 10}
                   maxValue={10}
-                  text={`${movieDetails.rate}`}
+                  text={`${Math.round(movieDetails.rate * 10) / 10}`}
                   background="true"
                   styles={buildStyles({
                     textSize: "2rem",
@@ -215,11 +215,11 @@ export default function MovieDetails() {
           </div>
         </div>{" "}
         {products.length > 0 && (
-            <CardsSlider
-              movies={products}
-              title={"Related Products"}
-              type={`product`}
-            />
+          <CardsSlider
+            movies={products}
+            title={"Related Products"}
+            type={`product`}
+          />
         )}
         <Reviews typing={typing} setTyping={setTyping} />
       </div>
