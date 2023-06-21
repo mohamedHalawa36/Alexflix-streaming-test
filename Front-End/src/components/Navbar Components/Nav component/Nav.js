@@ -81,8 +81,11 @@ export function Nav({ positionStyle }) {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink onClick={scrollToTop} className="nav-link" to={"/store"}>
+              <NavLink onClick={scrollToTop} className="nav-link position-relative" to={"/store"}>
                 Store
+                <span class="blue-purple-badge">
+                  NEW
+                </span>
               </NavLink>
             </li>
 
