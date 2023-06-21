@@ -11,6 +11,7 @@ import ConfirmEmail from "../components/ConfirmEmail";
 import UserGaurdRouter from "./UserGaurdRouter.jsx";
 import { Home } from "../components/Home Component/Home";
 import { LoginGuard, UserGuard } from "../guards/AuthGuards.js";
+import Settings from "../components/Account  Component/Settings.js";
 
 export default function Router() {
   const AddUser = lazy(() => import("../pages/AdminPages/AddUser"));
@@ -81,6 +82,7 @@ import("./../pages/AccountPages/Profile")
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="/" element={<UserGuard><Home /></UserGuard>} />
 

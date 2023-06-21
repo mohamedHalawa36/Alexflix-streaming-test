@@ -35,6 +35,7 @@ export function MovieCard({ movie, isFav, type }) {
   const moveToDetails = function () {
     if (type === "video") navigate(`/movies/${movie._id}`);
     else if (type === "product") navigate(`/store/product/${movie._id}`);
+    window.scrollTo(0,0)
   };
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export function MovieCard({ movie, isFav, type }) {
   }, []);
 
   return (
-    <div className="card p-0 m-2 mt-0 border-0 rounded-3 position-relative">
+    <div className="movie_card p-0 m-2 mt-0 border-0 rounded-3 position-relative bg-transparent">
       <div className="img-container position-relative">
         <div className="card-overlay d-flex justify-content-center align-items-center rounded-3 position-absolute top-0 start-0 w-100 h-100 ">
           <div className="card-btns text-center">

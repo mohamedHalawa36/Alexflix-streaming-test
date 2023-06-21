@@ -1,0 +1,10 @@
+#account  .accordion-button {
+  color: var(--textColor);
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+#account .accordion-button:not(.collapsed){
+    background-color: var(--textColor);
+    color: var(--bgColor);
+}

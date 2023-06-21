@@ -1,26 +1,30 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavAuth } from "../NavAuth  Component/NavAuth";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
 import logo from "../../../assets/images/logo trans2.png";
-import Dropdown from "react-bootstrap/Dropdown";
 import "./nav.css";
 export function Nav({ positionStyle }) {
-  const [isLogedIn, setIsLogedIn] = useState(false);
-  const favoriteMovies = useSelector((state) => state.favorites);
+  const navCollapseScreen = 992
+  const navbar = useRef();
+  const [isloggedIn, setIsloggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const totalInCart = useSelector((state) => state.cart.total);
-  const navigate = useNavigate();
-  const scrollToTop = () => {
+  const linkClickHandle = () => {
     window.scrollTo(0, 0);
+    if (window.innerWidth <= navCollapseScreen) {
+      let bsCollapse = new bootstrap.Collapse(navbar.current);
+      bsCollapse.hide();
+    }
   };
   const signOut = () => {
     localStorage.removeItem("token");
   };
   useEffect(() => {
     //check if it's a logged in user
-    if (localStorage.getItem("token")) setIsLogedIn(true);
-    else setIsLogedIn(false);
+    if (localStorage.getItem("token")) setIsloggedIn(true);
+    else setIsloggedIn(false);
     //Applying Navbar effect
     window.addEventListener("scroll", () => {
       window.scrollY > 0 ? setIsScrolled(true) : setIsScrolled(false);
@@ -35,7 +39,7 @@ export function Nav({ positionStyle }) {
       } ${positionStyle} w-100`}
     >
       <div className="container mw-100 px-4 ">
-        <Link className="navbar-brand py-1" to={"/"} onClick={scrollToTop}>
+        <Link className="navbar-brand py-1" to={"/"} onClick={linkClickHandle}>
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
         <button
@@ -53,13 +57,14 @@ export function Nav({ positionStyle }) {
           </span>
         </button>
         <div
+          ref={navbar}
           className="collapse navbar-collapse justify-content-between"
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav mb-2 mb-lg-0 flex-grow-1">
             <li className="nav-item">
               <NavLink
-                onClick={scrollToTop}
+                onClick={linkClickHandle}
                 className="nav-link"
                 to={"/movies"}
               >
@@ -68,7 +73,7 @@ export function Nav({ positionStyle }) {
             </li>
             <li className="nav-item">
               <NavLink
-                onClick={scrollToTop}
+                onClick={linkClickHandle}
                 className="nav-link"
                 to={"/series"}
               >
@@ -76,16 +81,22 @@ export function Nav({ positionStyle }) {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink onClick={scrollToTop} className="nav-link" to={"/anime"}>
+              <NavLink
+                onClick={linkClickHandle}
+                className="nav-link"
+                to={"/anime"}
+              >
                 Anime
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink onClick={scrollToTop} className="nav-link position-relative" to={"/store"}>
+              <NavLink
+                onClick={linkClickHandle}
+                className="nav-link position-relative"
+                to={"/store"}
+              >
                 Store
-                <span className="blue-purple-badge">
-                  NEW
-                </span>
+                <span className="blue-purple-badge">NEW</span>
               </NavLink>
             </li>
 
@@ -106,12 +117,12 @@ export function Nav({ positionStyle }) {
 
             {/* <li id="lg-bag" className={`nav-item`}></li> */}
 
-            <li className={`nav-item ${isLogedIn ? "d-none" : "d-block"}`}>
+            <li className={`nav-item ${isloggedIn ? "d-none" : "d-block"}`}>
               <NavAuth />
             </li>
             <li
               className={`nav-item dropdown ${
-                isLogedIn ? "d-block" : "d-none"
+                isloggedIn ? "d-block" : "d-none"
               }`}
             >
               <Link
@@ -127,7 +138,7 @@ export function Nav({ positionStyle }) {
               <ul id="user_dropdown" className="dropdown-menu">
                 <li>
                   <Link
-                    onClick={scrollToTop}
+                    onClick={linkClickHandle}
                     className="dropdown-item text-capitalize"
                     to={"/profile"}
                   >
@@ -137,11 +148,21 @@ export function Nav({ positionStyle }) {
 
                 <li>
                   <Link
-                    onClick={scrollToTop}
+                    onClick={linkClickHandle}
                     className="dropdown-item text-capitalize"
                     to={"/favorites"}
                   >
-                    favorites
+                    my list
+                  </Link>
+                </li>
+                
+                <li>
+                  <Link
+                    onClick={linkClickHandle}
+                    className="dropdown-item text-capitalize"
+                    to={"/settings"}
+                  >
+                    settings
                   </Link>
                 </li>
 

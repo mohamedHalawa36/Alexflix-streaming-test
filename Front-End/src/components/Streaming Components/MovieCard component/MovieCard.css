@@ -1,5 +1,4 @@
-.card {
-  background-color: var(--bgColor) !important ;
+.movie_card {
   width: 11rem !important;
   animation: collapse 1s paused alternate;
   cursor: pointer;
@@ -7,34 +6,34 @@
   transition: all 0.3s;
 }
 
-.card:hover > img {
+.movie_card:hover > img {
 }
-.card:hover > .card-body {
+.movie_card:hover > .card-body {
   color: var(--specialColor);
   transition: all 0.3s;
 }
 
 
-.card > .card-body {
+.movie_card > .card-body {
   color: var(--textColor);
 }
-.card > .img-container > img {
+.movie_card > .img-container > img {
   height: 16rem;
 }
 
-.card > .img-container > .card-overlay {
+.movie_card > .img-container > .card-overlay {
   opacity: 0;
   background-color: var(--scrollNavColor);
 }
-.card:hover > .img-container > .card-overlay {
+.movie_card:hover > .img-container > .card-overlay {
   opacity: 1;
   transition: opacity 0.3s;
 }
-.card > .img-container > .card-overlay>.card-btns > button{
+.movie_card > .img-container > .card-overlay>.card-btns > button{
   color: var(--textColor);
 }
 
-.card > .img-container > .card-overlay>.card-btns > button:hover {
+.movie_card > .img-container > .card-overlay>.card-btns > button:hover {
   color: var(--specialColor) !important;
   transition: all 0.3s;
 }

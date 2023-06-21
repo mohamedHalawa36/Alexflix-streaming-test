@@ -29,7 +29,7 @@ export function Videos({ videos, type }) {
       <div className="filters text-center mb-5 d-flex flex-column align-items-center">
         <input
           onChange={searchHandler}
-          className="video-search mb-3 filter py-2 px-3 col-12 col-sm-10 col-md-6 col-lg-5 rounded-3 bg-transparent"
+          className="video-search mb-3 filter py-2 px-3 col-12 col-sm-10 col-md-6  rounded-3 bg-transparent"
           type="text"
           placeholder="what are you looking for !"
           value={searchVal}
