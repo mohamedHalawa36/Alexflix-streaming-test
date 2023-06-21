@@ -88,20 +88,16 @@ export function Nav({ positionStyle }) {
 
             <li id="separator" className="nav-item flex-grow-1"></li>
             <li id="lg-bag" className="nav-item ">
-              <NavLink
-              
-                className="nav-link  me-2"
-                to={"/store/cart"}
-              >
-                <div id="cart-icon-container" className="position-relative">
-                  <i className="fa-solid fa-bag-shopping fa-lg" />
+              <NavLink className="nav-link  me-2" to={"/store/cart"}>
+                <span id="cart-icon-container" className="position-relative">
+                  <i className="fa-solid fa-cart-shopping fa-lg" />
                   <span
                     id="cart-count"
                     className="position-absolute top-0 start-100 translate-middle badge rounded-pill"
                   >
                     {totalInCart}
                   </span>
-                </div>
+                </span>
               </NavLink>
             </li>
 
@@ -135,23 +131,7 @@ export function Nav({ positionStyle }) {
                     profile
                   </Link>
                 </li>
-                <li>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                      Dropdown Button
-                    </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">
-                        Another action
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">
-                        Something else
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </li>
                 <li>
                   <Link
                     onClick={scrollToTop}

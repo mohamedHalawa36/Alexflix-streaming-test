@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { CardsSlider } from "../Streaming Components//Cards Slider Component/CardsSlider";
 import { Nav } from "../Navbar Components/Nav component/Nav";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllVids } from "../../store/Slice/videosSlice";
+import { fetchAllVids, getAllFav } from "../../store/Slice/videosSlice";
 import { getAllProduct } from "../../api/apiEcommerce";
 import homeImage from "../../assets/images/homeImg.jpg";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./home.css";
+import {  getAllFavorites } from "../../api/requests";
 export function Home() {
   const [products, setProducts] = useState([]);
   const allVids = useSelector((state) => state.videos);
@@ -14,8 +15,10 @@ export function Home() {
   const movies = [...allVids.movies].sort((a, b) => b.rate - a.rate);
   const series = [...allVids.series].sort((a, b) => b.rate - a.rate);
   const animes = [...allVids.animes].sort((a, b) => b.rate - a.rate);
+  //const favorites = [...allVids.favorites];
   useEffect(() => {
     getAllProduct().then((res)=>setProducts(res))
+    dispatch(getAllFav())
     dispatch(fetchAllVids());
   }, [dispatch]);
 

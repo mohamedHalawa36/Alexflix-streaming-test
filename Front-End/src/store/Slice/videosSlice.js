@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../api/config";
+import { getAllFavorites } from "../../api/requests";
 
 //create thunks
 
 //1- get all videos
 export const fetchAllVids = createAsyncThunk("allVideos", () => {
-  return axiosInstance.get("movies")
-  .then((res) => res?.data.data)
-  .catch((error)=> []);
+  return axiosInstance
+    .get("movies")
+    .then((res) => res?.data.data)
+    .catch((error) => []);
 });
 
 //2- get all movies
@@ -16,7 +18,8 @@ export const fetchAllMovies = createAsyncThunk("allMovies", () => {
     .get("movies/search", {
       params: { type: "movie" },
     })
-    .then((res) => res?.data?.data);
+    .then((res) => res?.data?.data)
+    .catch((error) => []);
 });
 //3- get all series
 export const fetchAllSeries = createAsyncThunk("allSeries", () => {
@@ -24,7 +27,8 @@ export const fetchAllSeries = createAsyncThunk("allSeries", () => {
     .get("movies/search", {
       params: { type: "series" },
     })
-    .then((res) => res?.data?.data);
+    .then((res) => res?.data?.data)
+    .catch((error) => []);
 });
 //4- get all animes
 export const fetchAllAnimes = createAsyncThunk("allAnimes", () => {
@@ -32,9 +36,15 @@ export const fetchAllAnimes = createAsyncThunk("allAnimes", () => {
     .get("movies/search", {
       params: { type: "anime" },
     })
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((error) => []);
 });
 
+export const getAllFav = createAsyncThunk("allFav", () => {
+  return getAllFavorites()
+    .then((res) => res.data.data)
+    .catch((error) => []);
+});
 
 const videosSlice = createSlice({
   name: "videos",
@@ -42,6 +52,7 @@ const videosSlice = createSlice({
     movies: [],
     animes: [],
     series: [],
+    favorites: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -64,6 +75,10 @@ const videosSlice = createSlice({
     builder.addCase(fetchAllAnimes.fulfilled, (state, action) => {
       state.animes = action.payload;
     });
+
+    builder.addCase(getAllFav.fulfilled,(state, action) => {
+      state.favorites = action.payload;
+    })
   },
 });
 

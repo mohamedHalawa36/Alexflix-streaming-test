@@ -11,8 +11,8 @@ export function Videos({ videos, type }) {
     if (searchVal.length > 0 || category !== "") {
       searchForVid(type, category, searchVal)
         .then((res) => {
-          if (res.data.data) setRenderedVids(res.data.data);
-          else setRenderedVids([]);
+           setRenderedVids(res.data.data);
+         
         })
         .catch((error) => setRenderedVids([]));
     } else {

@@ -156,5 +156,5 @@ axiosInstance.interceptors.response.use(
         localStorage.removeItem("token");
         window.location.reload();
       }
-      return error;
+      return Promise.reject(error);
     }})

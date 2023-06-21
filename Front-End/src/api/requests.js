@@ -6,13 +6,15 @@ export const searchForVid = (type, category, name) => {
   });
 };
 
+export const getAllFavorites = ()=>{
+ return axiosInstance.get("user/favorites")
+}
+
 export const addToFavorites = (id) => {
-  axiosInstance.patch("/user/favorites", {
+ return axiosInstance.patch("/user/favorites", {
     id,
   });
 };
 export const deleteFromFavorites = (id) => {
-  axiosInstance.delete("/user/favorites", {
-    id,
-  });
+return  axiosInstance.delete(`user/favorites/${id}`);
 };

@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./MovieCard.css";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  addToFavorites,
-  deleteFromFavorites,
-} from "../../../store/Slice/favoritesSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { addToCart } from "../../../store/Slice/cart";
+import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
 export function MovieCard({ movie, isFav, type }) {
+  const allVids = useSelector((state)=>state.videos)
+  const favorites = [...allVids.favorites]
   const [inCart,setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
@@ -16,16 +15,19 @@ export function MovieCard({ movie, isFav, type }) {
     if(!inCart) setInCart(true);
     let obj = { ...movie, quantity: 1 };
     dispatch(addToCart(obj));
-    console.log(movie);
   };
   const addToFav = function (e) {
+    console.log(movie)
     e.stopPropagation();
     if (!isFavorite) {
-      dispatch(addToFavorites(movie));
-      setIsFavorite(true);
+      addToFavorites(movie._id).then((res)=>{
+        setIsFavorite(true);
+
+      });
     } else {
-      dispatch(deleteFromFavorites(movie));
-      setIsFavorite(false);
+      deleteFromFavorites(movie._id).then((res)=>{
+        setIsFavorite(false);
+      });
     }
   };
   const navigate = useNavigate();
@@ -33,6 +35,11 @@ export function MovieCard({ movie, isFav, type }) {
     if (type === "video") navigate(`/movies/${movie._id}`);
     else if (type === "product") navigate(`/store/product/${movie._id}`);
   };
+
+  useEffect(()=>{
+    let isMovieFav = favorites.find((obj)=>obj.id === movie._id);
+    if(isMovieFav) setIsFavorite(true);
+  },[])
 
   return (
     <div className="card p-0 m-2 mt-0 border-0 rounded-3 position-relative">
