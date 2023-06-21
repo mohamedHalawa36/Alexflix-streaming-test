@@ -12,7 +12,7 @@ import "./movie.css";
 import { CardsSlider } from "../../Streaming Components//Cards Slider Component/CardsSlider";
 import { searchProduct, getProductById } from "./../../../api/apiEcommerce";
 import { getMovie } from "./../../../api/apiMovies";
-
+import SeriesHandler from "../SeriesHandling/SeriesHandler";
 export default function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState({});
   const [products, setProducts] = useState([]);
@@ -88,7 +88,7 @@ export default function MovieDetails() {
       }}
     >
       <div
-        className=" container"
+        className="container"
         onKeyDown={(e) => {
           if (e.key === " " && e.target.localName === "div") {
             setTyping(true);
@@ -107,7 +107,7 @@ export default function MovieDetails() {
             >
               <img
                 src={`${movieDetails.poster_image}`}
-                className="img-fluid rounded-start h-100 w-100"
+                className="img-fluid rounded-start "
                 alt="..."
               />
               <div
@@ -171,6 +171,10 @@ export default function MovieDetails() {
                       {movieDetails.production_year}
                     </small>{" "}
                   </p>
+                  {movieDetails.type !== "movie" && (
+                    <SeriesHandler movieDetails={movieDetails} />
+                  )}
+
                   <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
@@ -182,7 +186,7 @@ export default function MovieDetails() {
         </div>
         {/* video player */}
         <div>
-          <div>
+          <div className=" py-5">
             <Player
               keyboardShortcut={{
                 pause: typing,
