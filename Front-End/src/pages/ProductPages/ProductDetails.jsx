@@ -39,10 +39,10 @@ export default function ProductDetails() {
     <>
       <section id="prodetails" className="section-p1 w-75 mx-auto text-light">
         {product.images?.length >= 3 ? (
-          <div className="single-pro-img">
+          <div className="single-pro-img ">
             <img
               src={product.images[0]?.secure_url}
-              className="full-width"
+              className="full-width main-img"
               alt=""
               ref={imgRef}
             />
@@ -77,7 +77,7 @@ export default function ProductDetails() {
           <div className="single-pro-img">
             <img
               src={product.images[0]?.secure_url}
-              className="full-width"
+              className="full-width main-img"
               alt=""
               ref={imgRef}
             />{" "}

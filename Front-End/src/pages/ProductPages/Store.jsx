@@ -112,8 +112,7 @@ export default function Store() {
       <section id="product-search">
         <input
           type="text"
-          name="movie"
-          className="search-bar  rounded-3 "
+          className="search-bar text-light rounded-3 "
           placeholder="What's you favorite movie?"
           id=""
           value={query.movie}
