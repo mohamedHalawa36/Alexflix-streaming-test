@@ -11,8 +11,7 @@ export function Videos({ videos, type }) {
     if (searchVal.length > 0 || category !== "") {
       searchForVid(type, category, searchVal)
         .then((res) => {
-           setRenderedVids(res.data.data);
-         
+          setRenderedVids(res.data.data);
         })
         .catch((error) => setRenderedVids([]));
     } else {
@@ -30,7 +29,7 @@ export function Videos({ videos, type }) {
       <div className="filters text-center mb-5 d-flex flex-column align-items-center">
         <input
           onChange={searchHandler}
-          className="video-search mb-3 filter py-2 px-3 w-25 rounded-3 bg-transparent"
+          className="video-search mb-3 filter py-2 px-3 col-12 col-sm-10 col-md-6 col-lg-5 rounded-3 bg-transparent"
           type="text"
           placeholder="what are you looking for !"
           value={searchVal}
@@ -38,7 +37,7 @@ export function Videos({ videos, type }) {
 
         <Form.Select
           onChange={categoryHandler}
-          className="category-filter filter w-25 py-2 px-3 pe-5 text-capitalize rounded-3"
+          className="category-filter filter w-100 py-2 px-3 pe-5 text-capitalize rounded-3"
           aria-label="Default select example"
           defaultValue={""}
         >
@@ -56,21 +55,22 @@ export function Videos({ videos, type }) {
       <div className="movie-cards row justify-content-center">
         <h3
           className={`text-center text-capitalize text-light ${
-            renderedVids.length === 0 ? "" : "d-none"
+            renderedVids && renderedVids.length === 0 ? "" : "d-none"
           }`}
         >
           {type} not found
         </h3>
-        {renderedVids.map((movie) => {
-          return (
-            <MovieCard
-              movie={movie}
-              isFav={false}
-              key={movie._id}
-              type={`video`}
-            />
-          );
-        })}
+        {renderedVids &&
+          renderedVids.map((movie) => {
+            return (
+              <MovieCard
+                movie={movie}
+                isFav={false}
+                key={movie._id}
+                type={`video`}
+              />
+            );
+          })}
       </div>
     </section>
   );

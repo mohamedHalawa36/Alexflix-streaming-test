@@ -34,7 +34,7 @@ export function Nav({ positionStyle }) {
         isScrolled ? "scrolled" : ""
       } ${positionStyle} w-100`}
     >
-      <div className="container mw-100 px-5 ">
+      <div className="container mw-100 px-4 ">
         <Link className="navbar-brand py-1" to={"/"} onClick={scrollToTop}>
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
