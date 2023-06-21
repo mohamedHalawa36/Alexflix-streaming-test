@@ -54,7 +54,12 @@ const videosSlice = createSlice({
     series: [],
     favorites: [],
   },
-  reducers: {},
+  reducers: {
+    addToList:(state,action)=>state.favorites.push(action.payload),
+    removeFromList:(state,action)=>{
+    state.favorites = [...state.favorites].filter((movie)=>movie.id !== action.payload._id);
+    }
+  },
   extraReducers: (builder) => {
     //Handling all videos
     builder.addCase(fetchAllVids.fulfilled, (state, action) => {
@@ -83,4 +88,4 @@ const videosSlice = createSlice({
 });
 
 export default videosSlice.reducer;
-export const { getAnimes, getMovies, getSeries } = videosSlice.actions;
+export const { getAnimes, getMovies, getSeries,addToList,removeFromList } = videosSlice.actions;

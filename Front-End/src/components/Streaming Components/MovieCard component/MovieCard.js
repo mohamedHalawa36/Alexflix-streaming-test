@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { addToCart } from "../../../store/Slice/cart";
 import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
+import { addToList, removeFromList } from "../../../store/Slice/videosSlice";
 export function MovieCard({ movie, isFav, type }) {
   const allVids = useSelector((state)=>state.videos)
   const favorites = [...allVids.favorites]
@@ -17,16 +18,16 @@ export function MovieCard({ movie, isFav, type }) {
     dispatch(addToCart(obj));
   };
   const addToFav = function (e) {
-    console.log(movie)
     e.stopPropagation();
     if (!isFavorite) {
       addToFavorites(movie._id).then((res)=>{
         setIsFavorite(true);
-
+       // dispatch(addToList(movie))
       });
     } else {
       deleteFromFavorites(movie._id).then((res)=>{
         setIsFavorite(false);
+        dispatch(removeFromList(movie))
       });
     }
   };
