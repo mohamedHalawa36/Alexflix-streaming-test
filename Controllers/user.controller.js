@@ -171,10 +171,9 @@ exports.searchUser = (req, res, next) => {
     .skip(skip)
     .limit(limit)
     .then(async (data) => {
-      if (!data.length) throw new Error("User not found");
-      let totalPages = await User.countDocuments({});
+      let totalPages = await User.countDocuments({ $or: [first, last] });
       totalPages = Math.ceil(totalPages / limit);
-      res.status(200).json({ message: "Done", data, totalPages });
+      res.status(200).json({ message: "Done", data,totalPages });
     })
     .catch((err) => next(err));
 };

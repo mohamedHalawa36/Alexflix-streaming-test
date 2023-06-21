@@ -12,27 +12,36 @@ import {
 } from "../../Utils/userUtils";
 
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import Swal from "sweetalert2";
 
 export default function UserList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [userList, setUserList] = useState([]);
   const [userListSearch, setUserListSearch] = useState([]);
-  const [searchName, setSearchName] = useState("");
+  const [searchName, setSearchName] = useState(
+    searchParams.get("name") ? searchParams.get("name") : ""
+  );
   const [totalPages, setTotalPages] = useState(1);
   const [totalSearchPages, setTotalSearchPages] = useState(1);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchName) {
-      // setSearchParams(`name=${searchName}&&searchPage=3`);
       setSearchParams(`name=${searchName}`);
       searchUser(
         searchName,
         searchParams.get("searchPage") ? searchParams.get("searchPage") : 1
       ).then((data) => {
-        if (data?.message) {
+        if (data?.message && data.data.length) {
           setUserListSearch(data.data);
           setTotalSearchPages(data.totalPages);
+        } else {
+          setUserListSearch([]);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "User Search Not Found",
+          });
         }
       });
     } else {
@@ -62,12 +71,23 @@ export default function UserList() {
         }
       }
     );
-    if (searchParams.get("searchPage")) {
+    if (searchParams.get("name")) {
       searchUser(
         searchParams.get("name"),
         searchParams.get("searchPage") ? searchParams.get("searchPage") : 1
       ).then((data) => {
-        if (data?.message) setUserListSearch(data.data);
+        if (data?.message && data.data.length) {
+          setUserListSearch(data.data);
+          setTotalSearchPages(data.totalPages);
+        } 
+        else {
+          setUserListSearch([]);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "User Search Not Found",
+          });
+        }
       });
     }
   }, [searchParams]);
@@ -120,7 +140,9 @@ export default function UserList() {
                         src={
                           item?.profile_img?.secure_url
                             ? item.profile_img.secure_url
-                            : item.gender==="female"? imgDefaultFemale:imgDefaultMale
+                            : item.gender === "female"
+                            ? imgDefaultFemale
+                            : imgDefaultMale
                         }
                         alt="Profile"
                         className="col-xl-8 col-lg-6 col-12 rounded-3 "
@@ -166,7 +188,7 @@ export default function UserList() {
                   </div>
                   <div className="col-xl col-12 row">
                     <p className="lead d-xl-none d-block col-6">Status</p>
-                    <p className="col-xl col-6 h4 text-xl-center text-end d-flex flex-nowrap justify-content-xl-center justify-content-end">
+                    <p className="col-xl col-6 h4 text-xl-center text-end d-flex flex-nowrap justify-content-xl-center justify-content-end align-items-center">
                       <span
                         className={
                           "badge  " + (item.status ? "bg-success" : "bg-danger")
@@ -200,8 +222,8 @@ export default function UserList() {
           </div>
         ) : (
           <div className="vh-100 d-flex align-items-center justify-content-center">
-          <i className="fas fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
-        </div>
+            <i className="fas fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
+          </div>
         )}
         <div
           className="py-4 w-75 mx-auto"
@@ -209,14 +231,14 @@ export default function UserList() {
         >
           <PaginationControl
             page={
-              searchParams.get("name")
+              searchParams.get("name") && userListSearch.length
                 ? +searchParams.get("searchPage")
                 : searchParams.get("page")
                 ? +searchParams.get("page")
                 : 1
             }
             total={
-              searchParams.get("name")
+              searchParams.get("name") && userListSearch.length
                 ? totalSearchPages > 1
                   ? totalSearchPages
                   : 0
@@ -226,7 +248,7 @@ export default function UserList() {
             }
             limit={1}
             changePage={(page) => {
-              searchParams.get("name")
+              searchParams.get("name") && userListSearch.length
                 ? setSearchParams(
                     `name=${searchParams.get("name")}&&searchPage=${page}`
                   )
