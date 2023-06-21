@@ -1,0 +1,12 @@
+.occordionList {
+  color: whitesmoke !important;
+}
+
+.occordionOnFocus {
+  --bs-accordion-active-bg: #13b6b6db !important;
+}
+
+occordionOnFocus::after {
+  color: whitesmoke !important;
+  background-color: whitesmoke !important;
+}

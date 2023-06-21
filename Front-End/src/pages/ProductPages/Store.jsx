@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct, searchProduct } from "../../api/apiEcommerce";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { addToCart } from "./../../store/Slice/cart";
+import { addToCart, toggleProductFromCart } from "./../../store/Slice/cart";
 
 export default function Store() {
   const [allProducts, setProdcts] = useState(null);
   const [page, setPage] = useState(1);
   const [paginationState, setPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const cartProducts = useSelector((state) => state.cart.cartList);
+
   let searchMovie = searchParams.get("movie");
   let searchMinPrice = searchParams.get("minPrice");
   let searchMaxPrice = searchParams.get("maxPrice");
@@ -98,7 +100,7 @@ export default function Store() {
   }
 
   return (
-    <div className="">
+    <div id="store">
       <section id="page-header" className="">
         <h2>
           At <strong className="alex-cl">Alexflix </strong>Store, you can
@@ -155,40 +157,53 @@ export default function Store() {
       </section>
       <section id="product1" className="section-p1">
         <div className="pro-container">
-          {allProducts?.map((product) => (
-            <div key={product._id} className="pro">
-              <img
-                src={product.images[0].secure_url}
-                className="full-width "
-                alt=""
-                onClick={() => getProductDetails(product._id)}
-              />
-              <div className="des">
-                <span className="mb-1">{product.category}</span>
-                <h5 className="m-0">{product.name}</h5>
-                <div className="star">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
+          {allProducts &&
+            allProducts?.map((product) => {
+              let i = cartProducts.findIndex((c) => c._id === product._id);
+              if (i !== -1) {
+                product = { ...product, isAdd: true };
+              }
+              return (
+                <div key={product._id} className="pro">
+                  <img
+                    src={product.images[0].secure_url}
+                    className="full-width "
+                    alt=""
+                    onClick={() => getProductDetails(product._id)}
+                  />
+                  <div className="des">
+                    <span className="mb-1">{product.category}</span>
+                    <h5 className="m-0">{product.name}</h5>
+                    <div className="star">
+                      <i className="fa-solid fa-star"></i>
+                      <i className="fa-solid fa-star"></i>
+                      <i className="fa-solid fa-star"></i>
+                      <i className="fa-solid fa-star"></i>
+                      <i className="fa-solid fa-star"></i>
+                    </div>
+                    <h4>${product.price}</h4>
+                  </div>
+                  <span
+                    href=""
+                    className="cart-icon"
+                    onClick={() => {
+                      let obj = { ...product, quantity: 1 };
+                      // dispatch(addToCart(obj));
+                      dispatch(toggleProductFromCart(obj));
+                    }}
+                  >
+                    {product.isAdd ? (
+                      <i class="fa-solid fa-cart-shopping cart text-danger"></i>
+                    ) : (
+                      <i className="fa-solid fa-cart-plus cart"></i>
+                    )}
+                    {/* <i className="fa-solid fa-cart-plus cart"></i> */}
+                  </span>
                 </div>
-                <h4>${product.price}</h4>
-              </div>
-              <span
-                href=""
-                className="cart-icon"
-                onClick={() => {
-                  let obj = { ...product, quantity: 1 };
-                  dispatch(addToCart(obj));
-                }}
-              >
-                <i className="fa-solid fa-cart-plus cart"></i>
-              </span>
-            </div>
-          ))}
+              );
+            })}
         </div>
-        {allProducts.length === 0 && (
+        {allProducts && allProducts.length === 0 && (
           <span className="text-danger">NO PRODUCTS FOUND .. </span>
         )}
       </section>
@@ -200,11 +215,11 @@ export default function Store() {
           >
             <i className="fa-solid fa-long-arrow-alt-left"></i>
           </button>
-          <button className="mx-1" onClick={() => setPage(1)}>
-            1
+          <button className="mx-1" onClick={() => setPage(page + 1)}>
+            {page}
           </button>
-          <button className="mx-1" onClick={() => setPage(2)}>
-            2
+          <button className="mx-1" onClick={() => setPage(page + 2)}>
+            {page + 1}
           </button>
           <button
             className=""

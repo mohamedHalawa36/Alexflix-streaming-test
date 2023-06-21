@@ -3,31 +3,31 @@ import "./MovieCard.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
-import { addToCart } from "../../../store/Slice/cart";
+import { toggleProductFromCart } from "../../../store/Slice/cart";
 import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
 import { addToList, removeFromList } from "../../../store/Slice/videosSlice";
 export function MovieCard({ movie, isFav, type }) {
-  const allVids = useSelector((state)=>state.videos)
-  const favorites = [...allVids.favorites]
-  const [inCart,setInCart] = useState(false);
+  const allVids = useSelector((state) => state.videos);
+  const favorites = [...allVids.favorites];
+  const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
   const handleAddToCart = function (e) {
-    if(!inCart) setInCart(true);
+    if (!inCart) setInCart(true);
     let obj = { ...movie, quantity: 1 };
-    dispatch(addToCart(obj));
+    dispatch(toggleProductFromCart(obj));
   };
   const addToFav = function (e) {
     e.stopPropagation();
     if (!isFavorite) {
-      addToFavorites(movie._id).then((res)=>{
+      addToFavorites(movie._id).then((res) => {
         setIsFavorite(true);
-       // dispatch(addToList(movie))
+        // dispatch(addToList(movie))
       });
     } else {
-      deleteFromFavorites(movie._id).then((res)=>{
+      deleteFromFavorites(movie._id).then((res) => {
         setIsFavorite(false);
-        dispatch(removeFromList(movie))
+        dispatch(removeFromList(movie));
       });
     }
   };
@@ -37,10 +37,10 @@ export function MovieCard({ movie, isFav, type }) {
     else if (type === "product") navigate(`/store/product/${movie._id}`);
   };
 
-  useEffect(()=>{
-    let isMovieFav = favorites.find((obj)=>obj.id === movie._id);
-    if(isMovieFav) setIsFavorite(true);
-  },[])
+  useEffect(() => {
+    let isMovieFav = favorites.find((obj) => obj.id === movie._id);
+    if (isMovieFav) setIsFavorite(true);
+  }, []);
 
   return (
     <div className="card p-0 m-2 mt-0 border-0 rounded-3 position-relative">
@@ -60,7 +60,8 @@ export function MovieCard({ movie, isFav, type }) {
               className={`my-1 ${type === "product" ? "" : "d-none"}`}
               variant="outline-secondary"
             >
-              <i className={`fa-solid fa-${inCart?"check":"plus"}`}></i> Cart
+              <i className={`fa-solid fa-${inCart ? "check" : "plus"}`}></i>{" "}
+              Cart
             </Button>
             <br />
             <Button
