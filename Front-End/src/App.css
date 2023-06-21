@@ -256,10 +256,10 @@ body {
 /* Product Details Page */
 #prodetails {
   display: flex;
-  margin-top: 50px;
+  margin-top: 30px;
   justify-content: center;
   background-color: #182953;
-  border: 2px solid var(--specialColor);
+  /* border: 2px solid var(--specialColor); */
   border-radius: 20px;
 }
 #prodetails .single-pro-img {
@@ -534,6 +534,12 @@ body {
 }
 
 /*Product Section  */
+#store{
+  background-image: linear-gradient(to bottom, rgba(27, 45, 73), rgba(27, 45, 73, 0.8)), url("./assets/img/1077913.webp");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
 #product1 {
   text-align: center;
 }
@@ -550,11 +556,10 @@ body {
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.028);
   border-radius: 25px;
-  box-shadow: 0 0px 10px 0px rgba(255, 255, 255,0.4);
   margin: 15px 0;
   transition: 0.2s ease;
   position: relative;
-  background-color: #182953;
+  background-color: #132143;
 }
 
 #product1 .pro:hover {
@@ -613,11 +618,8 @@ body {
 
 /* Shopping Page */
 #page-header {
-  background-image: linear-gradient(to bottom, rgba(27, 45, 73), rgba(27, 45, 73, 0.8)), url("https://wpassets.brainstation.io/app/uploads/2017/04/13100509/Netflix-Background.jpg");  height: 40vh;
-  background-size: cover;
-  background-position: top;
-  background-repeat: no-repeat;
   display: flex;
+  height: 40vh;
   flex-direction: column;
   justify-content: center;
   text-align: center;
