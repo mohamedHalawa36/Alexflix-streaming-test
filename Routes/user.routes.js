@@ -35,8 +35,8 @@ router
   )
   
   router.delete("/user/favorites/:id",
-    // userValidation.deleteFavoriteValidation,
-    // validate,
+    userValidation.deleteFavoriteValidation,
+    validate,
     userController.deleteFavoritesUser
   );
 
