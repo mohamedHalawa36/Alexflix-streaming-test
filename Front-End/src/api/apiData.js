@@ -129,3 +129,13 @@ export const softDeleteUser = async (id) => {
 };
 
 
+export const deleteUser = async () => {
+  try {
+    const check = await configAxios.delete("user");
+    if (check?.data) return check.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
