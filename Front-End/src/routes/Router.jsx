@@ -11,7 +11,6 @@ import ConfirmEmail from "../components/ConfirmEmail";
 import UserGaurdRouter from "./UserGaurdRouter.jsx";
 import { Home } from "../components/Home Component/Home";
 import { LoginGuard, UserGuard } from "../guards/AuthGuards.js";
-import Settings from "../components/Account  Component/Settings.js";
 
 export default function Router() {
   const AddUser = lazy(() => import("../pages/AdminPages/AddUser"));
@@ -50,6 +49,9 @@ export default function Router() {
 );
 const Profile = lazy(() =>
 import("./../pages/AccountPages/Profile")
+);
+const Settings = lazy(() =>
+import("../components/Account  Component/Settings")
 );
 
   return (

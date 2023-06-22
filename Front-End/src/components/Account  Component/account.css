@@ -8,3 +8,11 @@
     background-color: var(--textColor);
     color: var(--bgColor);
 }
+
+
+#account .accordion-button::after {
+  background-image: var(--bs-accordion-btn-icon-whitesmoke) !important;
+}
+#account .accordion-button:not(.collapsed)::after {
+  background-image: var(--bs-accordion-btn-active-icon) !important;
+}
