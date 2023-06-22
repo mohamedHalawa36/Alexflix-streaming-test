@@ -37,7 +37,7 @@ export default function ProductDetails() {
   }
   return (
     <>
-      <section id="prodetails" className="section-p1 w-75 mx-auto text-light">
+      <section id="prodetails" className="section-p1 w-75 mx-auto text-light ">
         {product.images?.length >= 3 ? (
           <div className="single-pro-img ">
             <img
@@ -85,7 +85,7 @@ export default function ProductDetails() {
         )}
 
         <div className="single-pro-details">
-          <h6>{product.category}</h6>
+          <h6 className="text-secondary">{product.category}</h6>
           <h4>{product.name}</h4>
           <h2>${product.price}</h2>
           <p className="mb-3">

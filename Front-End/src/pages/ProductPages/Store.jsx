@@ -33,6 +33,7 @@ export default function Store() {
       if (newQuery[item] && newQuery[item] !== "max")
         string += `${item}=${newQuery[item]}&`;
     }
+    console.log(string);
     string = string.slice(0, -1);
     navigate(`/store/search?${string}`);
   }
@@ -76,20 +77,20 @@ export default function Store() {
     navigate(`/store/product/${id}`);
   }
 
-  function increasePage(e) {
-    e.preventDefault();
-    if (page === 13) return;
-    let newP = page;
-    newP++;
-    setPage(newP);
-  }
-  function decreasePage(e) {
-    e.preventDefault();
-    if (page === 1) return;
-    let newP = page;
-    newP--;
-    setPage(newP);
-  }
+  // function increasePage(e) {
+  //   e.preventDefault();
+  //   if (page === 13) return;
+  //   let newP = page;
+  //   newP++;
+  //   setPage(newP);
+  // }
+  // function decreasePage(e) {
+  //   e.preventDefault();
+  //   if (page === 1) return;
+  //   let newP = page;
+  //   newP--;
+  //   setPage(newP);
+  // }
   if (!allProducts) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
@@ -98,7 +99,7 @@ export default function Store() {
       </div>
     );
   }
-
+  let nums = new Array(13).fill(1).map((el, i) => i + 1);
   return (
     <div id="store">
       <section id="page-header" className="">
@@ -115,6 +116,7 @@ export default function Store() {
           className="search-bar w-100 text-light rounded-3 "
           placeholder="What's you favorite movie?"
           id=""
+          name="movie"
           value={query.movie}
           onChange={searchProductsHandler}
         />
@@ -207,8 +209,20 @@ export default function Store() {
         )}
       </section>
       {paginationState && (
-        <section id="pagination" className="section-p1">
-          <button
+        <ul
+          id="pagination"
+          className="section-p1 d-flex pagination m-0 justify-content-center gap-2   "
+        >
+          {nums.map((pageNum) => (
+            <li
+              key={pageNum}
+              className=" page-item "
+              onClick={() => setPage(pageNum)}
+            >
+              <span className="page-link">{pageNum}</span>
+            </li>
+          ))}
+          {/* <button
             disabled={page === 1 ? true : false}
             onClick={(e) => decreasePage(e)}
           >
@@ -226,8 +240,8 @@ export default function Store() {
             onClick={(e) => increasePage(e)}
           >
             <i className="fa-solid fa-long-arrow-alt-right"></i>
-          </button>
-        </section>
+          </button> */}
+        </ul>
       )}
     </div>
   );
