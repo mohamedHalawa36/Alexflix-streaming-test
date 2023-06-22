@@ -15,7 +15,6 @@ export function Home() {
   const movies = [...allVids.movies].sort((a, b) => b.rate - a.rate);
   const series = [...allVids.series].sort((a, b) => b.rate - a.rate);
   const animes = [...allVids.animes].sort((a, b) => b.rate - a.rate);
-  //const favorites = [...allVids.favorites];
   useEffect(() => {
     getAllProduct().then((res) => {
       const { allProducts } = res;
@@ -25,7 +24,6 @@ export function Home() {
     dispatch(fetchAllVids());
   }, [dispatch]);
 
-  //Loader till the data arrive
   return (
     <>
       <Nav positionStyle={"position-fixed top-0 start-0"} />
