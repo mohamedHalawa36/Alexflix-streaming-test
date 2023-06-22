@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { userPostNewOrder } from "../../api/apiOrder";
@@ -14,6 +14,7 @@ import ConfirmOrderForm from "./ConfirmOrderForm";
 export default function Cart() {
   const cartProducts = useSelector((state) => state.cart.cartList);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let totalPrice =
     cartProducts.reduce(
@@ -120,146 +121,150 @@ export default function Cart() {
           notes: "",
           phone: "",
         });
+        navigate("/store");
       }
     });
   };
 
   return (
-    <section
-      id="cart"
-      className="section-p1 container text-light border border-1 "
-    >
-      <table className="full-width">
-        <thead>
-          <tr>
-            <td>IMAGE</td>
-            <td>PRODUCT</td>
-            <td>PRICE</td>
-            <td>QUANTITY</td>
-            <td>AVAILABLE</td>
-            <td>REMOVE</td>
-            <td>SUBTOTAL</td>
-          </tr>
-        </thead>
-        <tbody>
-          {cartProducts.map((product) => (
-            <tr key={product._id}>
-              <td>
-                <Link to={`/store/product/${product._id}`}>
-                  <img
-                    src={
-                      product.image
-                        ? product.image
-                        : product.images[0]?.secure_url
-                    }
-                    alt=""
-                  />
-                </Link>
-              </td>
-              <td>{product.name}</td>
-              <td>${product.price}</td>
-              <td>
-                <div className="qty text-center">
-                  <span
-                    className="minus bg-danger"
-                    onClick={() => {
-                      let newqunatity = product.quantity;
-                      newqunatity--;
-                      if (newqunatity < 1) return;
-                      dispatch(
-                        updateQuantity({
-                          id: product._id,
-                          quantity: newqunatity,
-                        })
-                      );
-                    }}
-                  >
-                    -
-                  </span>
-                  <input
-                    type="number"
-                    className="count border-0 bg-transparent text-white "
-                    name="qty"
-                    value={product.quantity}
-                    disabled
-                    max={product.available}
-                    placeholder={product.quantity}
-                    min="1"
-                  />
-                  <span
-                    className="plus bg-success"
-                    onClick={() => {
-                      let newqunatity = product.quantity;
-                      newqunatity++;
-                      if (newqunatity > product.available) return;
-                      dispatch(
-                        updateQuantity({
-                          id: product._id,
-                          quantity: newqunatity,
-                        })
-                      );
-                    }}
-                  >
-                    +
-                  </span>
-                </div>
-              </td>
-              <td>{product.available - product.quantity}</td>
-              <td onClick={() => dispatch(removeFromCart(product._id))}>
-                <i
-                  className="fa-solid fa-trash fs-5 del"
-                  style={{ color: "#a70101" }}
-                ></i>
-              </td>
-              <td> ${product.price * product.quantity}</td>
+    <>
+      <section
+        id="cart"
+        className="section-p1 container text-light border border-1 "
+      >
+        <table className="full-width">
+          <thead>
+            <tr>
+              <td>IMAGE</td>
+              <td>PRODUCT</td>
+              <td>PRICE</td>
+              <td>QUANTITY</td>
+              <td>AVAILABLE</td>
+              <td>REMOVE</td>
+              <td>SUBTOTAL</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="d-flex justify-content-end">
-        <div className="total-price ml-auto">
-          <table className="full-width">
-            <tbody>
-              <tr>
-                <td>SUBTOTAL</td>
+          </thead>
+          <tbody>
+            {cartProducts.map((product) => (
+              <tr key={product._id}>
                 <td>
-                  $
-                  {cartProducts.reduce(
-                    (accumulator, currentValue) =>
-                      accumulator + currentValue.quantity * currentValue.price,
-                    0
-                  )}{" "}
+                  <Link to={`/store/product/${product._id}`}>
+                    <img
+                      src={
+                        product.image
+                          ? product.image
+                          : product.images[0]?.secure_url
+                      }
+                      alt=""
+                    />
+                  </Link>
                 </td>
+                <td>{product.name}</td>
+                <td>${product.price}</td>
+                <td>
+                  <div className="qty text-center">
+                    <span
+                      className="minus bg-danger"
+                      onClick={() => {
+                        let newqunatity = product.quantity;
+                        newqunatity--;
+                        if (newqunatity < 1) return;
+                        dispatch(
+                          updateQuantity({
+                            id: product._id,
+                            quantity: newqunatity,
+                          })
+                        );
+                      }}
+                    >
+                      -
+                    </span>
+                    <input
+                      type="number"
+                      className="count border-0 bg-transparent text-white "
+                      name="qty"
+                      value={product.quantity}
+                      disabled
+                      max={product.available}
+                      placeholder={product.quantity}
+                      min="1"
+                    />
+                    <span
+                      className="plus bg-success"
+                      onClick={() => {
+                        let newqunatity = product.quantity;
+                        newqunatity++;
+                        if (newqunatity > product.available) return;
+                        dispatch(
+                          updateQuantity({
+                            id: product._id,
+                            quantity: newqunatity,
+                          })
+                        );
+                      }}
+                    >
+                      +
+                    </span>
+                  </div>
+                </td>
+                <td>{product.available - product.quantity}</td>
+                <td onClick={() => dispatch(removeFromCart(product._id))}>
+                  <i
+                    className="fa-solid fa-trash fs-5 del"
+                    style={{ color: "#a70101" }}
+                  ></i>
+                </td>
+                <td> ${product.price * product.quantity}</td>
               </tr>
-              <tr>
-                <td>TAX</td>
-                <td>$10.00 </td>
-              </tr>
-              <tr>
-                <td>TOTAL</td>
-                <td>${totalPrice}</td>
-              </tr>
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+        <div className="d-flex justify-content-end">
+          <div className="total-price ml-auto">
+            <table className="full-width">
+              <tbody>
+                <tr>
+                  <td>SUBTOTAL</td>
+                  <td>
+                    $
+                    {cartProducts.reduce(
+                      (accumulator, currentValue) =>
+                        accumulator +
+                        currentValue.quantity * currentValue.price,
+                      0
+                    )}{" "}
+                  </td>
+                </tr>
+                <tr>
+                  <td>TAX</td>
+                  <td>$10.00 </td>
+                </tr>
+                <tr>
+                  <td>TOTAL</td>
+                  <td>${totalPrice}</td>
+                </tr>
+              </tbody>
+            </table>
 
-          <button
-            className="btn btn-outline-success w-100"
-            onClick={() => setShowModal(true)}
-          >
-            Check Out
-          </button>
-          {showModal && (
-            <ConfirmOrderForm
-              showModal={showModal}
-              setShowModal={setShowModal}
-              handleSubmit={handleSubmit}
-              formData={formData}
-              handleChange={handleChange}
-              errors={errors}
-            />
-          )}
+            <button
+              className="btn btn-outline-success w-100"
+              onClick={() => setShowModal(true)}
+            >
+              Check Out
+            </button>
+            {showModal && (
+              <ConfirmOrderForm
+                showModal={showModal}
+                setShowModal={setShowModal}
+                handleSubmit={handleSubmit}
+                formData={formData}
+                handleChange={handleChange}
+                errors={errors}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
