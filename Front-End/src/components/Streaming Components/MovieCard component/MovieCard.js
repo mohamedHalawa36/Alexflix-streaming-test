@@ -5,15 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { toggleProductFromCart } from "../../../store/Slice/cart";
 import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
-import { addToList, removeFromList } from "../../../store/Slice/videosSlice";
+import {  removeFromList } from "../../../store/Slice/videosSlice";
 export function MovieCard({ movie, isFav, type }) {
+  const cart = useSelector((state)=>state.cart.cartList)
   const allVids = useSelector((state) => state.videos);
   const favorites = [...allVids.favorites];
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
   const handleAddToCart = function (e) {
-    if (!inCart) setInCart(true);
+    if(inCart) setInCart(false);
+    else setInCart(true);
     let obj = { ...movie, quantity: 1 };
     dispatch(toggleProductFromCart(obj));
   };
@@ -39,6 +41,8 @@ export function MovieCard({ movie, isFav, type }) {
   };
 
   useEffect(() => {
+    let isProductInCart = cart.find((product)=>product._id === movie._id);
+    if (isProductInCart) setInCart(true)
     let isMovieFav = favorites.find((obj) => obj.id === movie._id);
     if (isMovieFav) setIsFavorite(true);
   }, []);
