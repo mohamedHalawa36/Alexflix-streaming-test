@@ -7,7 +7,7 @@ import { getAllProduct } from "../../api/apiEcommerce";
 import homeImage from "../../assets/images/homeImg.jpg";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./home.css";
-import {  getAllFavorites } from "../../api/requests";
+import { getAllFavorites } from "../../api/requests";
 export function Home() {
   const [products, setProducts] = useState([]);
   const allVids = useSelector((state) => state.videos);
@@ -17,8 +17,11 @@ export function Home() {
   const animes = [...allVids.animes].sort((a, b) => b.rate - a.rate);
   //const favorites = [...allVids.favorites];
   useEffect(() => {
-    getAllProduct().then((res)=>setProducts(res))
-    dispatch(getAllFav())
+    getAllProduct().then((res) => {
+      const { allProducts } = res;
+      setProducts(allProducts);
+    });
+    dispatch(getAllFav());
     dispatch(fetchAllVids());
   }, [dispatch]);
 

@@ -7,6 +7,7 @@ import { addToCart, toggleProductFromCart } from "./../../store/Slice/cart";
 export default function Store() {
   const [allProducts, setProdcts] = useState(null);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [paginationState, setPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const cartProducts = useSelector((state) => state.cart.cartList);
@@ -58,14 +59,15 @@ export default function Store() {
   ]);
 
   async function getProducts() {
-    let products = await getAllProduct(page);
+    let { allProducts, totalPages } = await getAllProduct(page);
     setQuery({
       movie: "",
       minPrice: 0,
       maxPrice: "max",
       category: "",
     });
-    setProdcts(products);
+    setProdcts(allProducts);
+    setTotalPages(totalPages);
   }
 
   async function searchProducts() {
@@ -99,7 +101,7 @@ export default function Store() {
       </div>
     );
   }
-  let nums = new Array(13).fill(1).map((el, i) => i + 1);
+  let nums = new Array(totalPages).fill(1).map((el, i) => i + 1);
   return (
     <div id="store">
       <section id="page-header" className="">
