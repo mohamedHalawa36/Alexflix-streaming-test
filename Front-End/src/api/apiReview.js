@@ -1,8 +1,8 @@
-import { configAxios } from "./config.js";
+import { storeAxios } from "./config.js";
 
 export const getAllReviews = async () => {
   try {
-    const check = await configAxios.get("reviews");
+    const check = await storeAxios.get("reviews");
     if (check?.data) return check.data;
   } catch (error) {
     return error;
@@ -11,7 +11,7 @@ export const getAllReviews = async () => {
 
 export const deleteReview = async (reviewId) => {
   try {
-    const check = await configAxios.delete(`review/${reviewId}`);
+    const check = await storeAxios.delete(`review/${reviewId}`);
     if (check?.data) return check.data;
   } catch (error) {
     return error;
@@ -20,7 +20,7 @@ export const deleteReview = async (reviewId) => {
 
 export const getMovieReviews = async (movieId) => {
   try {
-    const check = await configAxios.get(`reviews/${movieId}`);
+    const check = await storeAxios.get(`reviews/${movieId}`);
     if (check?.data) return check.data;
   } catch (error) {
     return error;
@@ -29,7 +29,7 @@ export const getMovieReviews = async (movieId) => {
 
 export const addMovieReview = async (movieId, data) => {
   try {
-    const check = await configAxios.post(`reviews/${movieId}`, data);
+    const check = await storeAxios.post(`reviews/${movieId}`, data);
 
     if (check?.data) return check.data;
   } catch (error) {
@@ -39,7 +39,7 @@ export const addMovieReview = async (movieId, data) => {
 
 export const updateMovieReview = async (reviewId, data) => {
   try {
-    const check = await configAxios.patch(`review/${reviewId}`, data);
+    const check = await storeAxios.patch(`review/${reviewId}`, data);
     console.log(check);
     if (check?.data) return check.data;
   } catch (error) {

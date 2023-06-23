@@ -43,14 +43,8 @@ export default function MovieDetails() {
         setMovieDetails(res.data);
         return res.data;
       })
-      .then(async (movie) => {
-        let products = [];
-        for (let id of movie.products) {
-          await getProductById(id).then((data) => {
-            products.push(data);
-          });
-        }
-        setProducts(products);
+      .then((movie) => {
+        setProducts(movie.products);
       })
       .catch((err) => {
         console.log(err);

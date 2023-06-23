@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../api/apiEcommerce";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "./../../store/Slice/cart";
+import FullScreenLoader from "./../../components/FullScreenLoader";
 
 export default function ProductDetails() {
   const [product, setProduct] = useState({});
@@ -29,10 +30,7 @@ export default function ProductDetails() {
 
   if (!product || !product.images) {
     return (
-      <div className="vh-100 d-flex align-items-center justify-content-center">
-        {" "}
-        <i className="fas fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
-      </div>
+      <FullScreenLoader />
     );
   }
   return (

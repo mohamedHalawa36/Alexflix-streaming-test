@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct, searchProduct } from "../../api/apiEcommerce";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { addToCart, toggleProductFromCart } from "./../../store/Slice/cart";
+import { toggleProductFromCart } from "./../../store/Slice/cart";
+import FullScreenLoader from "./../../components/FullScreenLoader";
 
 export default function Store() {
   const [allProducts, setProdcts] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [paginationState, setPagination] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cartProducts = useSelector((state) => state.cart.cartList);
 
   let searchMovie = searchParams.get("movie");
@@ -94,12 +95,7 @@ export default function Store() {
   //   setPage(newP);
   // }
   if (!allProducts) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        {" "}
-        <i className="fas fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
-      </div>
-    );
+    return <FullScreenLoader />;
   }
   let nums = new Array(totalPages).fill(1).map((el, i) => i + 1);
   return (
