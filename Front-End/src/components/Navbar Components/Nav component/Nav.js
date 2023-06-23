@@ -6,14 +6,15 @@ import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
 import logo from "../../../assets/images/logo trans2.png";
 import "./nav.css";
 export function Nav({ positionStyle }) {
-  const navCollapseScreen = 992
+  const navCollapseScreen = 992;
   const navbar = useRef();
+  const toggler = useRef();
   const [isloggedIn, setIsloggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const totalInCart = useSelector((state) => state.cart.total);
   const linkClickHandle = () => {
     window.scrollTo(0, 0);
-    if (window.innerWidth <= navCollapseScreen) {
+    if (window.innerWidth <= navCollapseScreen && toggler.current.getAttribute("aria-expanded") === "true") {
       let bsCollapse = new bootstrap.Collapse(navbar.current);
       bsCollapse.hide();
     }
@@ -43,6 +44,7 @@ export function Nav({ positionStyle }) {
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
         <button
+        ref={toggler}
           id="nav-toggler"
           className="navbar-toggler"
           type="button"
@@ -95,8 +97,10 @@ export function Nav({ positionStyle }) {
                 className="nav-link position-relative"
                 to={"/store"}
               >
-                Store
-                <span className="blue-purple-badge">NEW</span>
+                <span id="badge-icon" className=" position-relative">
+                  Store
+                  <span className="blue-purple-badge">NEW</span>
+                </span>
               </NavLink>
             </li>
 
@@ -155,7 +159,7 @@ export function Nav({ positionStyle }) {
                     my list
                   </Link>
                 </li>
-                
+
                 <li>
                   <Link
                     onClick={linkClickHandle}

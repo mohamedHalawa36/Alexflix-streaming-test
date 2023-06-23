@@ -13,19 +13,30 @@ import { CardsSlider } from "../../Streaming Components//Cards Slider Component/
 import { searchProduct, getProductById } from "./../../../api/apiEcommerce";
 import { getMovie } from "./../../../api/apiMovies";
 import SeriesHandler from "../SeriesHandling/SeriesHandler";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllFav, removeFromList } from "../../../store/Slice/videosSlice";
+import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
 export default function MovieDetails() {
+  const [isFavorite, setIsFavorite] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
   const [products, setProducts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
-
+  const allVids = useSelector((state) => state.videos);
+  const favorites = [...allVids.favorites];
+  const dispatch = useDispatch();
   const [typing, setTyping] = useState(true);
 
   const params = useParams();
   const playerRef = useRef(null);
   useEffect(() => {
     getMoviedetails();
+    if (favorites.length === 0) dispatch(getAllFav());
   }, []);
 
+  useEffect(() => {
+    let isMovieFav = favorites.find((obj) => obj.id === movieDetails._id);
+    if (isMovieFav) setIsFavorite(true);
+  }, [movieDetails]);
   async function getMoviedetails() {
     getMovie(params.id)
       .then((res) => {
@@ -46,8 +57,21 @@ export default function MovieDetails() {
       });
   }
 
+  const addToFav = function (e) {
+    e.stopPropagation();
+    if (!isFavorite) {
+      addToFavorites(movieDetails._id).then((res) => {
+        setIsFavorite(true);
+      });
+    } else {
+      deleteFromFavorites(movieDetails._id).then((res) => {
+        setIsFavorite(false);
+        dispatch(removeFromList(movieDetails));
+      });
+    }
+  };
+
   function MyVerticallyCenteredModal(props) {
-    console.log(movieDetails);
     return (
       <div>
         <Modal
@@ -158,6 +182,19 @@ export default function MovieDetails() {
                         }}
                       >
                         watch Trailer
+                      </span>
+                      <span
+                        onClick={addToFav}
+                        className={`mx-4 fs-4`}
+                        variant="outline-secondary"
+                      >
+                        <i
+                        style={{color: "gold"}}
+                          className={`fa-star ${
+                            isFavorite ? "fa-solid" : "fa-regular"
+                          } `}
+                        ></i>{" "}
+                        List
                       </span>
                     </div>
                   </div>

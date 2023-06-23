@@ -85,8 +85,8 @@
 .blue-purple-badge {
   display: inline-block;
   position: absolute;
-  top:-5px;
-  right:-4px;
+  top:-87%;
+  right:-20%;
   background-image: linear-gradient(
     to right,
     #004eff,

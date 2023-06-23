@@ -5,16 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { toggleProductFromCart } from "../../../store/Slice/cart";
 import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
-import {  removeFromList } from "../../../store/Slice/videosSlice";
+import { removeFromList } from "../../../store/Slice/videosSlice";
+import Swal from "sweetalert2";
 export function MovieCard({ movie, isFav, type }) {
-  const cart = useSelector((state)=>state.cart.cartList)
+  const cart = useSelector((state) => state.cart.cartList);
   const allVids = useSelector((state) => state.videos);
   const favorites = [...allVids.favorites];
   const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
   const handleAddToCart = function (e) {
-    if(inCart) setInCart(false);
+    e.stopPropagation();
+    if (inCart) setInCart(false);
     else setInCart(true);
     let obj = { ...movie, quantity: 1 };
     dispatch(toggleProductFromCart(obj));
@@ -24,7 +26,6 @@ export function MovieCard({ movie, isFav, type }) {
     if (!isFavorite) {
       addToFavorites(movie._id).then((res) => {
         setIsFavorite(true);
-        // dispatch(addToList(movie))
       });
     } else {
       deleteFromFavorites(movie._id).then((res) => {
@@ -37,18 +38,21 @@ export function MovieCard({ movie, isFav, type }) {
   const moveToDetails = function () {
     if (type === "video") navigate(`/movies/${movie._id}`);
     else if (type === "product") navigate(`/store/product/${movie._id}`);
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
-    let isProductInCart = cart.find((product)=>product._id === movie._id);
-    if (isProductInCart) setInCart(true)
+    let isProductInCart = cart.find((product) => product._id === movie._id);
+    if (isProductInCart) setInCart(true);
     let isMovieFav = favorites.find((obj) => obj.id === movie._id);
     if (isMovieFav) setIsFavorite(true);
   }, []);
 
   return (
-    <div className="movie_card p-0 m-2 mt-0 border-0 rounded-3 position-relative bg-transparent">
+    <div
+      onClick={moveToDetails}
+      className="movie_card p-0 m-2 mt-0 border-0 rounded-3 position-relative bg-transparent"
+    >
       <div className="img-container position-relative">
         <div className="card-overlay d-flex justify-content-center align-items-center rounded-3 position-absolute top-0 start-0 w-100 h-100 ">
           <div className="card-btns text-center">
