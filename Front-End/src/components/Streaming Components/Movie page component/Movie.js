@@ -135,7 +135,7 @@ export default function MovieDetails() {
                 <CircularProgressbar
                   value={Math.round(movieDetails.rate * 10) / 10}
                   maxValue={10}
-                  text={`${Math.round(movieDetails.rate * 10) / 10}`}
+                  text={`${Math.round(movieDetails.rate * 10) / 10||0}`}
                   background="true"
                   styles={buildStyles({
                     textSize: "2rem",
