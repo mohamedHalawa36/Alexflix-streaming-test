@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { toggleProductFromCart } from "../../../store/Slice/cart";
-import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
+import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
 import { removeFromList } from "../../../store/Slice/videosSlice";
 import Swal from "sweetalert2";
 export function MovieCard({ movie, isFav, type }) {
+  const favLoader = useSelector((state)=>state.favLoader)
   const cart = useSelector((state) => state.cart.cartList);
+  const [inCart, setInCart] = useState(false);
   const allVids = useSelector((state) => state.videos);
   const favorites = [...allVids.favorites];
-  const [inCart, setInCart] = useState(false);
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
   const handleAddToCart = function (e) {
@@ -61,7 +62,7 @@ export function MovieCard({ movie, isFav, type }) {
               className={`my-1 ${type === "video" ? "" : "d-none"}`}
               variant="outline-secondary"
             >
-              <i className={`fa-solid fa-${isFavorite ? "check" : "plus"}`}></i>{" "}
+              <i className={`fa-solid fa-${favLoader?"spinner fa-spin":isFavorite ? "check" : "plus"}`}></i>{" "}
               List
             </Button>
             <Button

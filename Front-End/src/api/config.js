@@ -2,6 +2,7 @@ import axios from "axios";
 import store from "../store/store.js";
 import { setLoader } from "../store/Slice/loader.js";
 import Swal from "sweetalert2";
+import { setFavLoader } from "../store/Slice/favLoader.js";
 export const configAxios = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {},
@@ -149,6 +150,48 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     store.dispatch(setLoader(true));
+    if (error?.response?.data) {
+      if (
+        error.response.data.massage === "Error: your email has been blocked"
+      ) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }
+      return Promise.reject(error);
+    }})
+
+export const favAxios =axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL}/user/favorites`,
+  headers: {},
+});
+
+favAxios.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    store.dispatch(setFavLoader(true))
+    if (localStorage.getItem("token"))
+    config.headers = {
+        Authorization: `Basic ${localStorage.getItem("token")}`,
+      };
+    return config;
+  },
+  function (error) {
+    store.dispatch(setFavLoader(false));
+
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+favAxios.interceptors.response.use(
+  function (response) {
+    store.dispatch(setFavLoader(false));
+
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    store.dispatch(setLoader(false));
     if (error?.response?.data) {
       if (
         error.response.data.massage === "Error: your email has been blocked"

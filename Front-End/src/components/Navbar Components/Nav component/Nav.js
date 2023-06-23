@@ -119,8 +119,6 @@ export function Nav({ positionStyle }) {
               </NavLink>
             </li>
 
-            {/* <li id="lg-bag" className={`nav-item`}></li> */}
-
             <li className={`nav-item ${isloggedIn ? "d-none" : "d-block"}`}>
               <NavAuth />
             </li>
@@ -157,6 +155,15 @@ export function Nav({ positionStyle }) {
                     to={"/favorites"}
                   >
                     my list
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={linkClickHandle}
+                    className="dropdown-item text-capitalize"
+                    to={"/user/orders"}
+                  >
+                    orders
                   </Link>
                 </li>
 

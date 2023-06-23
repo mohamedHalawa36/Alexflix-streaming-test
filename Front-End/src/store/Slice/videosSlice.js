@@ -1,50 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../api/config";
-import { getAllFavorites } from "../../api/requests";
+import {
+  getAllAnimes,
+  getAllFavorites,
+  getAllMovies,
+  getAllSeries,
+  getAllvideos,
+} from "../../api/apiStream";
 
 //create thunks
 
 //1- get all videos
-export const fetchAllVids = createAsyncThunk("allVideos", () => {
-  return axiosInstance
-    .get("movies")
-    .then((res) => res?.data.data)
-    .catch((error) => []);
-});
+export const fetchAllVids = createAsyncThunk("allVideos", getAllvideos);
 
 //2- get all movies
-export const fetchAllMovies = createAsyncThunk("allMovies", () => {
-  return axiosInstance
-    .get("movies/search", {
-      params: { type: "movie" },
-    })
-    .then((res) => res?.data?.data)
-    .catch((error) => []);
-});
+export const fetchAllMovies = createAsyncThunk("allMovies", getAllMovies);
 //3- get all series
-export const fetchAllSeries = createAsyncThunk("allSeries", () => {
-  return axiosInstance
-    .get("movies/search", {
-      params: { type: "series" },
-    })
-    .then((res) => res?.data?.data)
-    .catch((error) => []);
-});
+export const fetchAllSeries = createAsyncThunk("allSeries", getAllSeries)
+  
 //4- get all animes
-export const fetchAllAnimes = createAsyncThunk("allAnimes", () => {
-  return axiosInstance
-    .get("movies/search", {
-      params: { type: "anime" },
-    })
-    .then((res) => res.data.data)
-    .catch((error) => []);
-});
+export const fetchAllAnimes = createAsyncThunk("allAnimes", getAllAnimes);
 
-export const getAllFav = createAsyncThunk("allFav", () => {
-  return getAllFavorites()
-    .then((res) => res.data.data)
-    .catch((error) => []);
-});
+export const getAllFav = createAsyncThunk("allFav", getAllFavorites);
 
 const videosSlice = createSlice({
   name: "videos",
@@ -55,10 +32,12 @@ const videosSlice = createSlice({
     favorites: [],
   },
   reducers: {
-    addToList:(state,action)=>state.favorites.push(action.payload),
-    removeFromList:(state,action)=>{
-    state.favorites = [...state.favorites].filter((movie)=>movie.id !== action.payload._id);
-    }
+    addToList: (state, action) => state.favorites.push(action.payload),
+    removeFromList: (state, action) => {
+      state.favorites = [...state.favorites].filter(
+        (movie) => movie.id !== action.payload._id
+      );
+    },
   },
   extraReducers: (builder) => {
     //Handling all videos
@@ -81,11 +60,12 @@ const videosSlice = createSlice({
       state.animes = action.payload;
     });
 
-    builder.addCase(getAllFav.fulfilled,(state, action) => {
+    builder.addCase(getAllFav.fulfilled, (state, action) => {
       state.favorites = action.payload;
-    })
+    });
   },
 });
 
 export default videosSlice.reducer;
-export const { getAnimes, getMovies, getSeries,addToList,removeFromList } = videosSlice.actions;
+export const { getAnimes, getMovies, getSeries, addToList, removeFromList } =
+  videosSlice.actions;

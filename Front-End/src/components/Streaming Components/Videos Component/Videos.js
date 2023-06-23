@@ -1,7 +1,7 @@
 import "./videos.css";
 import { MovieCard } from "../../Streaming Components/MovieCard component/MovieCard";
 import { useEffect, useState } from "react";
-import { searchForVid } from "../../../api/requests";
+import { searchForVid } from "../../../api/apiStream";
 import Form from "react-bootstrap/Form";
 export function Videos({ videos, type }) {
   const [category, setCategory] = useState("");

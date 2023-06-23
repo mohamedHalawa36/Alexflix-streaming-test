@@ -15,7 +15,7 @@ import { getMovie } from "./../../../api/apiMovies";
 import SeriesHandler from "../SeriesHandling/SeriesHandler";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllFav, removeFromList } from "../../../store/Slice/videosSlice";
-import { addToFavorites, deleteFromFavorites } from "../../../api/requests";
+import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
 export default function MovieDetails() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
