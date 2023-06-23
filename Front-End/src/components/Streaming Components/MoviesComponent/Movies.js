@@ -7,19 +7,11 @@ import { Videos } from "../Videos Component/Videos";
 export default function Movies() {
   const allVids = useSelector((state) => state.videos);
   const dispatch = useDispatch();
-  let movies = {...allVids}.movies
-    
-  useEffect(() => {
-    dispatch(fetchAllMovies());
-  },[]);
+  let movies = { ...allVids }.movies;
 
-//Loader till the data arrive
-if (movies.length === 0)
-return (
-  <h1 className="w-100 h-100 text-light d-flex justify-content-center align-items-center">
-    Loading....
-  </h1>
-);
+  useEffect(() => {
+    if (movies.length === 0) dispatch(fetchAllMovies());
+  }, []);
 
   return <Videos videos={movies} type={"movie"} />;
 }
