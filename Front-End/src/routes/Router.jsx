@@ -11,7 +11,6 @@ import ConfirmEmail from "../components/ConfirmEmail";
 import UserGaurdRouter from "./UserGaurdRouter.jsx";
 import { Home } from "../components/Home Component/Home";
 import { LoginGuard, UserGuard } from "../guards/AuthGuards.js";
-
 export default function Router() {
   const AddUser = lazy(() => import("../pages/AdminPages/AddUser"));
   const AddMovie = lazy(() => import("../pages/AdminPages/AddMovie"));
@@ -27,6 +26,9 @@ export default function Router() {
   const Store = lazy(() => import("./../pages/ProductPages/Store"));
   const ProductDetails = lazy(() =>
     import("./../pages/ProductPages/ProductDetails")
+  );
+  const UserOrders = lazy(() =>
+    import("./../pages/ProductPages/UserOrders")
   );
   //Stream
   const Movies = lazy(() =>
@@ -53,6 +55,7 @@ import("./../pages/AccountPages/Profile")
 const Settings = lazy(() =>
 import("../components/Account  Component/Settings")
 );
+
 
   return (
     <>
@@ -85,6 +88,7 @@ import("../components/Account  Component/Settings")
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/user/orders" element={<UserOrders />}></Route>
         </Route>
         <Route path="/" element={<UserGuard><Home /></UserGuard>} />
 

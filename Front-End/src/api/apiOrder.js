@@ -43,3 +43,14 @@ export const adminGetAllOrders = async () => {
   };
   
   
+  export const getAllUserOrders = async () => {
+    try {
+      const check = await configAxios.get(`/user/order`);
+      console.log(check.data)
+      if (check?.data) return check.data;
+    } catch (error) {
+      return error;
+    }
+  };
+  
+  
