@@ -187,10 +187,11 @@ export default function MovieDetails() {
                         </span>
                       </span>
 
-                      <span
+                      <button
+                        disabled={favLoader}
                         style={{ cursor: "pointer" }}
-                        onClick={addToFav}
-                        className={`mx-4 fs-4`}
+                        onClick={favLoader ? () => "" : addToFav}
+                        className={`mx-4 fs-4 bg-transparent border-0 text-light`}
                         variant="outline-secondary"
                       >
                         <i
@@ -204,7 +205,7 @@ export default function MovieDetails() {
                           } `}
                         ></i>{" "}
                         List
-                      </span>
+                      </button>
                     </div>
                   </div>
                 </div>
