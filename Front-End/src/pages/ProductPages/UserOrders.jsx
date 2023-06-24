@@ -10,8 +10,12 @@ export default function UserOrders() {
     getUserOrders();
   }, []); // should depend on order state
 
-  if (!orders.length) {
-    return <FullScreenLoader />;
+  if (!orders?.length) {
+    return (
+      <div className="text-danger d-flex justify-content-center mt-5 fw-bold fs-5">
+        You don't make any orders yet ..
+      </div>
+    );
   }
 
   function getUserOrders() {
@@ -52,10 +56,10 @@ export default function UserOrders() {
   return (
     <>
       <div className="table-responsive container mt-5 pro-order">
-        <h2 className="text-white text-center">MY ORDERS</h2>
-        <table className="table table-striped table-hover table-borderless table-dark align-middle text-center  mx-auto">
+        <h2 className="text-white text-center mb-4">MY ORDERS</h2>
+        <table className="table table-striped table-hover  table-borderless  align-middle text-center  mx-auto">
           <thead className="">
-            <tr>
+            <tr className="">
               <th>ORDER ID</th>
               <th># OF PRODUCTS</th>
               <th>TOTAL PRICE</th>
@@ -64,8 +68,8 @@ export default function UserOrders() {
               <th>STATUS</th>
             </tr>
           </thead>
-          <tbody className="table-group-divider">
-            {orders.length >= 1 &&
+          <tbody className="table-group-divider table-light">
+            {orders?.length >= 1 &&
               orders.map((order) => (
                 <tr key={order._id}>
                   <td scope="row">{order._id.slice(0, 6)}</td>
@@ -92,7 +96,13 @@ export default function UserOrders() {
                       ></i>
                     )}
                   </td>
-                  <td>{order.status}</td>
+                  <td
+                    className={`text-${
+                      order.status === "cancelled" ? "danger" : "primary"
+                    }`}
+                  >
+                    {order.status}
+                  </td>
                 </tr>
               ))}
           </tbody>
