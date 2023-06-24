@@ -25,20 +25,17 @@ export default function UserOrders() {
   async function removeThisOrder(id) {
     console.log("Removing order with ID:", id);
     let result = await userDeleteHisOrder(id);
-    console.log(result);
-    if (result?.message === "Done") {
-      getAllUserOrders().then((res) => {
-        setOrders(res.data);
-      });
+    if (result?.message === "deleted") {
+      await getUserOrders();
     }
   }
 
   return (
     <>
-      <div class="table-responsive container mt-5 pro-order">
+      <div className="table-responsive container mt-5 pro-order">
         <h2 className="text-white text-center">MY ORDERS</h2>
-        <table class="table table-striped table-hover table-borderless table-dark align-middle text-center  mx-auto">
-          <thead class="">
+        <table className="table table-striped table-hover table-borderless table-dark align-middle text-center  mx-auto">
+          <thead className="">
             <tr>
               <th>ORDER ID</th>
               <th># OF PRODUCTS</th>
@@ -48,10 +45,10 @@ export default function UserOrders() {
               <th>STATUS</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody className="table-group-divider">
             {orders.length >= 1 &&
               orders.map((order) => (
-                <tr key={order._id} class="">
+                <tr key={order._id} >
                   <td scope="row">{order._id.slice(0, 6)}</td>
                   <td>{order.products.length}</td>
                   <td>${order.total_price}</td>

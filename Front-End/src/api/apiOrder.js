@@ -50,8 +50,8 @@ export const userDeleteHisOrder = async (id) => {
     const check = await configAxios.delete(`/user/order`, {
       data: { _id: id },
     });
-    console.log(check);
-    if (check?.data) return check;
+    
+    if (check?.data) return check.data;
   } catch (error) {
     return error;
   }
