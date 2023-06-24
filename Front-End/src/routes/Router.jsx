@@ -10,7 +10,7 @@ import ResetPassword from "./../pages/AccountPages/ResetPassword";
 import ConfirmEmail from "../components/ConfirmEmail";
 import UserGaurdRouter from "./UserGaurdRouter.jsx";
 import { Home } from "../components/Home Component/Home";
-import { HomeGuard, LoginGuard, UserGuard } from "../guards/AuthGuards.js";
+import { HomeGuard, LoginGuard } from "../guards/AuthGuards.js";
 export default function Router() {
   const AddUser = lazy(() => import("../pages/AdminPages/AddUser"));
   const AddMovie = lazy(() => import("../pages/AdminPages/AddMovie"));
