@@ -3,10 +3,17 @@ import { MovieCard } from "../../Streaming Components/MovieCard component/MovieC
 import { useEffect, useState } from "react";
 import { searchForVid } from "../../../api/apiStream";
 import Form from "react-bootstrap/Form";
+import { useDispatch } from "react-redux";
+import { getAllFav } from "../../../store/Slice/videosSlice";
 export function Videos({ videos, type }) {
   const [category, setCategory] = useState("");
   const [searchVal, setSearchVal] = useState("");
   const [renderedVids, setRenderedVids] = useState(videos);
+const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getAllFav())
+  },[dispatch])
+
   useEffect(() => {
     if (searchVal.length > 0 || category !== "") {
       searchForVid(type, category, searchVal)
