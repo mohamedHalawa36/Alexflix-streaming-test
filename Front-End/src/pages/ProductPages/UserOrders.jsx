@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllUserOrders, userDeleteHisOrder } from "./../../api/apiOrder";
 import FullScreenLoader from "./../../components/FullScreenLoader";
+import Swal from "sweetalert2";
 
 export default function UserOrders() {
   const [orders, setOrders] = useState([]);
@@ -23,10 +24,28 @@ export default function UserOrders() {
       });
   }
   async function removeThisOrder(id) {
-    console.log("Removing order with ID:", id);
-    let result = await userDeleteHisOrder(id);
-    if (result?.message === "deleted") {
-      await getUserOrders();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#00d0c5",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "Cancel",
+    });
+    if (result.isConfirmed) {
+      let result = await userDeleteHisOrder(id);
+      if (result?.message === "deleted") {
+        await getUserOrders();
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Order Cancelled",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   }
 
@@ -48,7 +67,7 @@ export default function UserOrders() {
           <tbody className="table-group-divider">
             {orders.length >= 1 &&
               orders.map((order) => (
-                <tr key={order._id} >
+                <tr key={order._id}>
                   <td scope="row">{order._id.slice(0, 6)}</td>
                   <td>{order.products.length}</td>
                   <td>${order.total_price}</td>
