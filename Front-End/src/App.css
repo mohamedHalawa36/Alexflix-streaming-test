@@ -835,3 +835,11 @@ body {
   }
 }
 
+.pro-order table thead th{
+  background-color: #182953 !important;
+  color: var(--textColor);
+}
+.pro-order table tbody tr:hover{
+  background-color: #343a40 !important;
+
+}
