@@ -34,7 +34,7 @@ export default function UserOrders() {
     <>
       <div className="table-responsive container mt-5 pro-order">
         <h2 className="text-white text-center">MY ORDERS</h2>
-        <table className="table table-striped table-hover table-borderless table-light align-middle text-center  mx-auto">
+        <table className="table table-striped table-hover table-borderless table-dark align-middle text-center  mx-auto">
           <thead className="">
             <tr>
               <th>ORDER ID</th>
