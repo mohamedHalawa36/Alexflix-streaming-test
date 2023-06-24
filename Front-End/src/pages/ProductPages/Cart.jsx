@@ -121,7 +121,6 @@ export default function Cart() {
           notes: "",
           phone: "",
         });
-        navigate("/store");
       }
     });
   };

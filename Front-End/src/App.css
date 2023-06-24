@@ -826,3 +826,12 @@ body {
 .error {
   font-size: 14px;
 }
+
+.pro-order .fa-trash{
+  cursor: pointer;
+  
+  &:hover{
+    animation: pulse 1s infinite;
+  }
+}
+
