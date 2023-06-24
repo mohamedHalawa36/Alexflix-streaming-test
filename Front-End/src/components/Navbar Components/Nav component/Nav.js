@@ -69,6 +69,7 @@ export function Nav({ positionStyle }) {
                 onClick={linkClickHandle}
                 className="nav-link"
                 to={"/movies"}
+                end
               >
                 Movies
               </NavLink>
@@ -78,6 +79,8 @@ export function Nav({ positionStyle }) {
                 onClick={linkClickHandle}
                 className="nav-link"
                 to={"/series"}
+                end
+
               >
                 Series
               </NavLink>
@@ -87,6 +90,8 @@ export function Nav({ positionStyle }) {
                 onClick={linkClickHandle}
                 className="nav-link"
                 to={"/anime"}
+                end
+
               >
                 Anime
               </NavLink>
@@ -96,6 +101,8 @@ export function Nav({ positionStyle }) {
                 onClick={linkClickHandle}
                 className="nav-link position-relative"
                 to={"/store"}
+                end
+
               >
                 <span id="badge-icon" className=" position-relative">
                   Store
