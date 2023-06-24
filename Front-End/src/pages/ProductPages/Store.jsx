@@ -7,7 +7,7 @@ import FullScreenLoader from "./../../components/FullScreenLoader";
 
 export default function Store() {
   const [allProducts, setProdcts] = useState(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(sessionStorage.getItem("pageNumber") || 1);
   const [totalPages, setTotalPages] = useState(1);
   const [paginationState, setPagination] = useState(true);
   const [searchParams] = useSearchParams();
@@ -59,6 +59,12 @@ export default function Store() {
     searchCategory,
   ]);
 
+  useEffect(() => {
+    // When Navigate to anothe Component
+    return () => {
+      sessionStorage.setItem("pageNumber", 1);
+    };
+  }, []);
   async function getProducts() {
     let { allProducts, totalPages } = await getAllProduct(page);
     setQuery({
@@ -215,7 +221,10 @@ export default function Store() {
             <li
               key={pageNum}
               className=" page-item "
-              onClick={() => setPage(pageNum)}
+              onClick={() => {
+                sessionStorage.setItem("pageNumber", pageNum);
+                setPage(pageNum);
+              }}
             >
               <span className="page-link">{pageNum}</span>
             </li>
