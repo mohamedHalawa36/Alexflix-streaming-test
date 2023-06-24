@@ -60,6 +60,7 @@ export default function Store() {
   ]);
 
   useEffect(() => {
+    // When Navigate to anothe Component
     return () => {
       sessionStorage.setItem("pageNumber", 1);
     };
