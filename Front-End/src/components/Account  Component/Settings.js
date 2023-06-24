@@ -68,8 +68,7 @@ function Settings() {
         </Modal.Header>
         <Modal.Body>
           <p className="p-2 lead fw-medium">
-            Deleting your account will remove all of your information from our
-            database. This cannot be undone.
+            Deleting your account will remove all of your information. This cannot be undone.
           </p>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 row" controlId="formGroup">

@@ -60,6 +60,8 @@ configAxios.interceptors.response.use(
     // return Promise.reject(error);
   }
 );
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkwMGE3NjE3YjUzNjk2ZmEyOTRmZjMiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjg3NjA1OTkzfQ.gQnrfC6NNNa8oaFeGq2IE1e83KkPzJNdxbwhYnGxcJQ";
 
 // ECommerce
 export const storeAxios = axios.create({
@@ -74,6 +76,10 @@ storeAxios.interceptors.request.use(
     if (localStorage.getItem("token"))
       config.headers = {
         Authorization: `Basic ${localStorage.getItem("token")}`,
+      };
+      else
+      config.headers = {
+        Authorization: `Basic ${token}`,
       };
     return config;
   },
@@ -115,7 +121,6 @@ storeAxios.interceptors.response.use(
     // return Promise.reject(error);
   }
 );
-
 //Stream
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -128,6 +133,10 @@ axiosInstance.interceptors.request.use(
     if (localStorage.getItem("token"))
       config.headers = {
         Authorization: `Basic ${localStorage.getItem("token")}`,
+      };
+      else
+      config.headers = {
+        Authorization: `Basic ${token}`,
       };
     return config;
   },
@@ -158,9 +167,11 @@ axiosInstance.interceptors.response.use(
         window.location.reload();
       }
       return Promise.reject(error);
-    }})
+    }
+  }
+);
 
-export const favAxios =axios.create({
+export const favAxios = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}/user/favorites`,
   headers: {},
 });
@@ -168,9 +179,9 @@ export const favAxios =axios.create({
 favAxios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    store.dispatch(setFavLoader(true))
+    store.dispatch(setFavLoader(true));
     if (localStorage.getItem("token"))
-    config.headers = {
+      config.headers = {
         Authorization: `Basic ${localStorage.getItem("token")}`,
       };
     return config;
@@ -200,4 +211,6 @@ favAxios.interceptors.response.use(
         window.location.reload();
       }
       return Promise.reject(error);
-    }})
+    }
+  }
+);

@@ -28,7 +28,7 @@ export const rate = yup
   .number()
   .required("Rating is required")
   .min(1, "Rating must be at least 1")
-  .max(5, "Rating cannot exceed 5");
+  .max(10, "Rating cannot exceed 10");
 export const type = yup.string().required("type should be String");
 export const production_year = 
 yup.number().required('production_year is required').integer().min(1878).max(currentYear);
