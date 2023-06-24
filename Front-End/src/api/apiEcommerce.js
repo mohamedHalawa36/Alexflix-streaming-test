@@ -1,6 +1,3 @@
-import Axios from "axios";
-import React, { useEffect, useState } from "react";
-
 import { storeAxios } from "./config";
 export async function getAllProduct(page = 1) {
   let { data } = await storeAxios.get(`products?page=${page}`);
