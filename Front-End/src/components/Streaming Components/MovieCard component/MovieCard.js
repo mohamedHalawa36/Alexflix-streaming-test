@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { toggleProductFromCart } from "../../../store/Slice/cart";
 import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
-import { removeFromList } from "../../../store/Slice/videosSlice";
+import { addToList, removeFromList } from "../../../store/Slice/videosSlice";
 import Swal from "sweetalert2";
 export function MovieCard({ movie, isFav, type }) {
   const favLoader = useSelector((state)=>state.favLoader)
@@ -27,6 +27,7 @@ export function MovieCard({ movie, isFav, type }) {
     if (!isFavorite) {
       addToFavorites(movie._id).then((res) => {
         setIsFavorite(true);
+        dispatch(addToList(movie));
       });
     } else {
       deleteFromFavorites(movie._id).then((res) => {

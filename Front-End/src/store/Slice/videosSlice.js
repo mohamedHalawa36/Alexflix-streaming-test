@@ -32,7 +32,11 @@ const videosSlice = createSlice({
     favorites: [],
   },
   reducers: {
-    addToList: (state, action) => state.favorites.push(action.payload),
+    addToList: (state, action) => {
+      let newFav = state.favorites
+      newFav.push(action.payload)
+      state.favorites = newFav  
+    },
     removeFromList: (state, action) => {
       state.favorites = [...state.favorites].filter(
         (movie) => movie.id !== action.payload._id
