@@ -14,9 +14,15 @@ import { searchProduct, getProductById } from "./../../../api/apiEcommerce";
 import { getMovie } from "./../../../api/apiMovies";
 import SeriesHandler from "../SeriesHandling/SeriesHandler";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllFav, removeFromList } from "../../../store/Slice/videosSlice";
+import {
+  addToList,
+  getAllFav,
+  removeFromList,
+} from "../../../store/Slice/videosSlice";
 import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
+import { faV } from "@fortawesome/free-solid-svg-icons";
 export default function MovieDetails() {
+  const favLoader = useSelector((state) => state.favLoader);
   const [isFavorite, setIsFavorite] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
   const [products, setProducts] = useState([]);
@@ -36,7 +42,7 @@ export default function MovieDetails() {
   useEffect(() => {
     let isMovieFav = favorites.find((obj) => obj.id === movieDetails._id);
     if (isMovieFav) setIsFavorite(true);
-  }, [movieDetails]);
+  }, [movieDetails, favorites]);
   async function getMoviedetails() {
     getMovie(params.id)
       .then((res) => {
@@ -56,6 +62,7 @@ export default function MovieDetails() {
     if (!isFavorite) {
       addToFavorites(movieDetails._id).then((res) => {
         setIsFavorite(true);
+        //dispatch(addToList(movieDetails));
       });
     } else {
       deleteFromFavorites(movieDetails._id).then((res) => {
@@ -135,7 +142,7 @@ export default function MovieDetails() {
                 <CircularProgressbar
                   value={Math.round(movieDetails.rate * 10) / 10}
                   maxValue={10}
-                  text={`${Math.round(movieDetails.rate * 10) / 10||0}`}
+                  text={`${Math.round(movieDetails.rate * 10) / 10 || 0}`}
                   background="true"
                   styles={buildStyles({
                     textSize: "2rem",
@@ -153,39 +160,47 @@ export default function MovieDetails() {
                 <h1 className="card-title p-3 text-center text-lg-start">
                   {movieDetails.name}
                 </h1>
-                <div className=" py-2  p-3 my-2">
+                <div style={{}} className=" py-2  p-3 my-2">
                   <div className="IconsInDetails-container">
                     {/* <Rating movie={movieDetails} /> */}
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() => setModalShow(true)}
-                      className="IconsInDetails text-center text-lg-start"
-                    >
-                      <i
-                        className="fa-solid fa-play fa-2x fs-4 "
-                        style={{
-                          color: "#00d0c5",
-                        }}
-                      ></i>
+                    <div className="IconsInDetails text-center text-lg-start">
                       <span
-                        className=" text-capitalize"
-                        style={{
-                          fontSize: 20,
-                          color: "#00d0c5",
-                          paddingLeft: "0.23em",
-                        }}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setModalShow(true)}
+                        className="trailer-icon-container"
                       >
-                        watch Trailer
+                        <i
+                          className="fa-solid fa-play fa-2x fs-4 "
+                          style={{
+                            color: "#00d0c5",
+                          }}
+                        ></i>
+                        <span
+                          className=" text-capitalize"
+                          style={{
+                            fontSize: 20,
+                            color: "#00d0c5",
+                            paddingLeft: "0.23em",
+                          }}
+                        >
+                          watch Trailer
+                        </span>
                       </span>
+
                       <span
+                        style={{ cursor: "pointer" }}
                         onClick={addToFav}
                         className={`mx-4 fs-4`}
                         variant="outline-secondary"
                       >
                         <i
-                        style={{color: "gold"}}
-                          className={`fa-star ${
-                            isFavorite ? "fa-solid" : "fa-regular"
+                          style={{ color: "gold" }}
+                          className={`fa-${
+                            favLoader
+                              ? "spinner fa-spin fa-solid"
+                              : isFavorite
+                              ? "star fa-solid"
+                              : "star fa-regular"
                           } `}
                         ></i>{" "}
                         List

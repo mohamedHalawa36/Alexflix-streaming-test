@@ -27,7 +27,6 @@ export function MovieCard({ movie, isFav, type }) {
     if (!isFavorite) {
       addToFavorites(movie._id).then((res) => {
         setIsFavorite(true);
-        dispatch(addToList(movie));
       });
     } else {
       deleteFromFavorites(movie._id).then((res) => {
@@ -48,7 +47,7 @@ export function MovieCard({ movie, isFav, type }) {
     if (isProductInCart) setInCart(true);
     let isMovieFav = favorites.find((obj) => obj.id === movie._id);
     if (isMovieFav) setIsFavorite(true);
-  }, []);
+  }, [cart, favorites]);
 
   return (
     <div

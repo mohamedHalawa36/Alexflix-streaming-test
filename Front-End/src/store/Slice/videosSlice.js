@@ -33,6 +33,7 @@ const videosSlice = createSlice({
   },
   reducers: {
     addToList: (state, action) => {
+      console.log(action.payload)
       let newFav = state.favorites
       newFav.push(action.payload)
       state.favorites = newFav  
