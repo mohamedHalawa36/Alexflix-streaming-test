@@ -12,7 +12,6 @@ import {
 import MoviesModule from "../../components/MoviesModule";
 import { movieCategories } from "./../../validation/movieValidation";
 import { Formik } from "formik";
-import Swal from "sweetalert2";
 
 export default function MoviesList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,11 +84,6 @@ export default function MoviesList() {
         } 
         else {
           setMovieListSearch([]);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Movies Search Not Found",
-          });
         }
       });
     }

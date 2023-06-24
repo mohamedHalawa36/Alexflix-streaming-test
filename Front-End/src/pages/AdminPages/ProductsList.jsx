@@ -14,7 +14,6 @@ import ProductModule from "../../components/ProductModule";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 
 import { Formik } from "formik";
-import Swal from "sweetalert2";
 import { validCategories } from "../../validation/productValidation";
 
 export default function ProductsList() {
@@ -93,11 +92,6 @@ export default function ProductsList() {
         } 
         else {
           setProductListSearch([]);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Movies Search Not Found",
-          });
         }
       });
     }
@@ -255,7 +249,7 @@ export default function ProductsList() {
           <PaginationControl
             page={searchParams.get("page") ? +searchParams.get("page") : 1}
             total={
-              searchParams.get("name") ? 0 : totalPages > 1 ? totalPages : 0
+              searchParams.get("name")&& productListSearch.length ? 0 : totalPages > 1 ? totalPages : 0
             }
             limit={1}
             changePage={(page) => {
