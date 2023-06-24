@@ -15,6 +15,7 @@ import { PaginationControl } from "react-bootstrap-pagination-control";
 import Swal from "sweetalert2";
 
 export default function UserList() {
+  
   const [searchParams, setSearchParams] = useSearchParams();
   const [userList, setUserList] = useState([]);
   const [userListSearch, setUserListSearch] = useState([]);
@@ -79,7 +80,7 @@ export default function UserList() {
         if (data?.message && data.data.length) {
           setUserListSearch(data.data);
           setTotalSearchPages(data.totalPages);
-        } 
+        }
         else {
           setUserListSearch([]);
           Swal.fire({

@@ -18,15 +18,18 @@ export const getMovie = async (id) => {
   }
 };
 
-export const searchMovie = async (name) => {
+export const searchMovie = async (obj) => {
   try {
-    const check = await configAxios.get(`movies/search?name=${name}`);
+    const check = await configAxios.get(
+      `movies/search?name=${obj.name ? obj.name : ""}&type=${
+        obj.type ? obj.type : ""
+      }&category=${obj.category ? obj.category : ""}`
+    );
     if (check?.data) return check.data;
   } catch (error) {
     return error;
   }
 };
-
 
 export const addNewMovie = async (data) => {
   try {
@@ -37,15 +40,14 @@ export const addNewMovie = async (data) => {
   }
 };
 
-export const updateMovieById = async (id,data) => {
+export const updateMovieById = async (id, data) => {
   try {
-    const check = await configAxios.patch(`movies/${id}`,data);
+    const check = await configAxios.patch(`movies/${id}`, data);
     if (check?.data) return check.data;
   } catch (error) {
     return error;
   }
-}; 
-
+};
 
 export const deleteMovieById = async (id) => {
   try {
@@ -54,4 +56,4 @@ export const deleteMovieById = async (id) => {
   } catch (error) {
     return error;
   }
-}; 
+};
