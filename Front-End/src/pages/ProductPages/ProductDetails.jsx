@@ -29,9 +29,7 @@ export default function ProductDetails() {
   }
 
   if (!product || !product.images) {
-    return (
-      <FullScreenLoader />
-    );
+    return <FullScreenLoader />;
   }
   return (
     <>
@@ -91,15 +89,17 @@ export default function ProductDetails() {
             In Stock :{" "}
             <strong className="text-warning">{product.available}</strong> item
           </p>
-          <select name="" id="">
-            <option value="" disabled defaultValue>
-              Select Size
-            </option>
-            <option value="s">S</option>
-            <option value="m">M</option>
-            <option value="l">L</option>
-            <option value="xl">XL</option>
-          </select>
+          {product.category === "T-shirt" && (
+            <select name="" id="">
+              <option value="" disabled defaultValue>
+                Select Size
+              </option>
+              <option value="s">S</option>
+              <option value="m">M</option>
+              <option value="l">L</option>
+              <option value="xl">XL</option>
+            </select>
+          )}
           <input
             type="number"
             min="1"
@@ -107,6 +107,7 @@ export default function ProductDetails() {
             value={quantity}
             onChange={(e) => setQuantity(+e.target.value)}
             placeholder="1"
+            onKeyDown={(e) => e.preventDefault()}
           />
           <button
             className="btn add-button"
