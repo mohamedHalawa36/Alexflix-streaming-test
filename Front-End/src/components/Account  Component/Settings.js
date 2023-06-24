@@ -67,13 +67,12 @@ function Settings() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="p-2 lead fw-medium">
-            Deleting your account will remove all of your information from our
-            database. This cannot be undone.
+          <p className="p-3  lead fw-medium">
+            Deleting your account will remove all of your information. This cannot be undone.
           </p>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className="px-4">
             <Form.Group className="mb-3 row" controlId="formGroup">
-              <Form.Label className="text-muted p-3">
+              <Form.Label className="text-muted p-2">
                 To confirm this, type "DELETE"
               </Form.Label>
               <div className="col-8">
