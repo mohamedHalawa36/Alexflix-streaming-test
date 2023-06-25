@@ -10,7 +10,7 @@ export default function Movies() {
   let movies = { ...allVids }.movies;
 
   useEffect(() => {
-    if (movies.length === 0) dispatch(fetchAllMovies());
+    if (movies?.length === 0) dispatch(fetchAllMovies());
   }, []);
 
   return <Videos videos={movies} type={"movie"} />;

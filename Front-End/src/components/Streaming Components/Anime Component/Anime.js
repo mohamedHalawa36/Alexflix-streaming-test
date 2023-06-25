@@ -9,7 +9,7 @@ export default function Animes() {
   const animes = { ...allVids }.animes;
 
   useEffect(() => {
-    if (animes.length === 0) dispatch(fetchAllAnimes());
+    if (animes?.length === 0) dispatch(fetchAllAnimes());
   }, []);
 
   return <Videos videos={animes} type={"anime"} />;
