@@ -16,7 +16,7 @@
   left: 0;
 }
 .alice-carousel > .alice-carousel__next-btn {
-  right: 0;
+  right: -1px;
 }
 
 .alice-carousel > .alice-carousel__prev-btn > p,

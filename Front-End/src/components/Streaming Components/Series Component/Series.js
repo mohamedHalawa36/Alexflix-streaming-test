@@ -9,7 +9,7 @@ export default function Series() {
   let series = { ...allVids }.series;
 
   useEffect(() => {
-    if (series.length === 0) dispatch(fetchAllSeries());
+    if (series?.length === 0) dispatch(fetchAllSeries());
   }, []);
 
   return <Videos videos={series} type={"series"} />;

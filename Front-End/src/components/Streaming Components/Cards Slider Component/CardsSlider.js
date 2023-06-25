@@ -11,9 +11,10 @@ export function CardsSlider({ title, movies, type }) {
 
   const Carousel = () => (
     <AliceCarousel
+    
       infinite={true}
       autoPlay
-      autoPlayInterval={5000}
+      autoPlayInterval={7000}
       autoWidth
       disableDotsControls
       mouseTracking
