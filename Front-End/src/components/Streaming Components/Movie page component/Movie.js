@@ -132,11 +132,12 @@ export default function MovieDetails() {
             >
               <img
                 src={`${movieDetails.poster_image}`}
-                className="img-fluid rounded-start "
+                className="img-fluid rounded-start w-100 "
+                style={{ maxHeight: "90vh" }}
                 alt="..."
               />
               <div
-                className=" position-absolute top-0 end-0 m-2 "
+                className=" position-absolute top-0 end-0 m-3  "
                 style={{ width: "15%", fontWeight: "bold" }}
               >
                 <CircularProgressbar

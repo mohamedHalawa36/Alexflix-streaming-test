@@ -113,6 +113,9 @@ export default function MovieReviews({ typing, setTyping }) {
                   <div className="d-flex align-items-center">
                     <h5 className="mb-0 me-2">{`${review.user_id.firstName} ${review.user_id.lastName} `}</h5>
                   </div>
+
+                  {/* update review */}
+
                   {review.isEditing ? (
                     <div className="d-flex mt-2">
                       <textarea
@@ -131,6 +134,23 @@ export default function MovieReviews({ typing, setTyping }) {
                             )
                           )
                         }
+                        onKeyDown={(e) => {
+                          if (e.key === " ") {
+                            // Space key is pressed
+                            setTyping(false);
+                            console.log("Space key pressed");
+                            setReviews((prevReviews) =>
+                              prevReviews.map((prevReview) =>
+                                prevReview._id === review._id
+                                  ? {
+                                      ...prevReview,
+                                      updatedReview: e.target.value + " ",
+                                    }
+                                  : prevReview
+                              )
+                            );
+                          }
+                        }}
                       ></textarea>
                       <button
                         id="review-save-btn"
@@ -210,7 +230,7 @@ export default function MovieReviews({ typing, setTyping }) {
             ></textarea>
             <button
               id="post-review"
-              className="btn fw-bold"
+              className="btn fw-bold my-5"
               onClick={handleAddReview}
             >
               Post Review
