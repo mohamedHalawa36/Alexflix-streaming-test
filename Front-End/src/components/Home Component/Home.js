@@ -7,6 +7,7 @@ import { getAllProduct } from "../../api/apiEcommerce";
 import homeImage from "../../assets/images/homeImg.jpg";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./home.css";
+import Footer from "../Footer";
 export function Home() {
   const [products, setProducts] = useState([]);
   const allVids = useSelector((state) => state.videos);
@@ -48,6 +49,7 @@ export function Home() {
       <CardsSlider movies={series} title={"top series"} type={`video`} />
       <CardsSlider movies={animes} title={"top animes"} type={`video`} />
       <CardsSlider movies={products} title={"top products"} type={`product`} />
+      <Footer />
     </>
   );
 }
