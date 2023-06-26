@@ -47,9 +47,9 @@ const videosSlice = createSlice({
   extraReducers: (builder) => {
     //Handling all videos
     builder.addCase(fetchAllVids.fulfilled, (state, action) => {
-      state.movies = action.payload.filter((vid) => vid.type === "movie");
-      state.series = action.payload.filter((vid) => vid.type === "series");
-      state.animes = action.payload.filter((vid) => vid.type === "anime");
+      state.movies = action.payload?.filter((vid) => vid.type === "movie")||[];
+      state.series = action.payload?.filter((vid) => vid.type === "series")||[];
+      state.animes = action.payload?.filter((vid) => vid.type === "anime")||[];
     });
 
     //Handling movies

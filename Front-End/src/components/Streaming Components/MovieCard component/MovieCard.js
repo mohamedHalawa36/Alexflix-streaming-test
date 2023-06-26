@@ -17,6 +17,17 @@ export function MovieCard({ movie, isFav, type }) {
   const favorites = [...allVids.favorites];
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
+  const favPopUpMsg = (error) => {
+    let textMsg;
+    navigator.onLine
+      ? (textMsg = error.message)
+      : (textMsg = "Connection Failed");
+    return Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: textMsg,
+    });
+  };
   const handleAddToCart = function (e) {
     e.stopPropagation();
     if (inCart) setInCart(false);
@@ -27,14 +38,22 @@ export function MovieCard({ movie, isFav, type }) {
   const addToFav = function (e) {
     e.stopPropagation();
     if (!isFavorite) {
-      addToFavorites(movie._id).then((res) => {
-        setIsFavorite(true);
-      });
+      addToFavorites(movie._id)
+        .then((res) => {
+          setIsFavorite(true);
+        })
+        .catch((error) => {
+          return favPopUpMsg(error);
+        });
     } else {
-      deleteFromFavorites(movie._id).then((res) => {
-        setIsFavorite(false);
-        dispatch(removeFromList(movie));
-      });
+      deleteFromFavorites(movie._id)
+        .then((res) => {
+          setIsFavorite(false);
+          dispatch(removeFromList(movie));
+        })
+        .catch((error) => {
+          return favPopUpMsg(error);
+        });
     }
   };
   const navigate = useNavigate();
@@ -53,7 +72,7 @@ export function MovieCard({ movie, isFav, type }) {
 
   return (
     <div
-    onContextMenu={(e)=>e.preventDefault()}
+      onContextMenu={(e) => e.preventDefault()}
       style={{ userSelect: "none" }}
       onClick={favLoader ? () => "" : moveToDetails}
       className="movie_card p-0 m-2 mt-0 border-0 rounded-3 position-relative bg-transparent"
