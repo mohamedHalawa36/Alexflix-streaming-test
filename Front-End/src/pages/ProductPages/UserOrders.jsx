@@ -64,8 +64,8 @@ export default function UserOrders() {
               <th># OF PRODUCTS</th>
               <th>TOTAL PRICE</th>
               <th>ADDRESS</th>
-              <th>REMOVE</th>
               <th>STATUS</th>
+              <th>ACTION</th>
             </tr>
           </thead>
           <tbody className="table-group-divider table-light">
@@ -79,8 +79,23 @@ export default function UserOrders() {
                     {`${order.address.city},${order.address.street},${order.address.building} `}
                   </td>
                   <td
+                    className={`text-${
+                      order.status === "cancelled"
+                        ? "danger"
+                        : order.status === "approved"
+                        ? "success"
+                        : "primary"
+                    } text-capitalize`}
+                  >
+                    {order.status}
+                  </td>
+                  <td
                     onClick={() => {
-                      if (order.status === "cancelled") return;
+                      if (
+                        order.status === "cancelled" ||
+                        order.status === "approved"
+                      )
+                        return;
                       removeThisOrder(order._id);
                     }}
                   >
@@ -89,19 +104,14 @@ export default function UserOrders() {
                         className="fa-solid fa-trash fs-5 del"
                         style={{ color: "#a70101" }}
                       ></i>
-                    ) : (
+                    ) : order.status === "cancelled" ? (
                       <i
-                        className="fa-solid fa-check fs-5 del"
-                        style={{ color: "green" }}
+                        className="fa fa-ban fs-5"
+                        style={{ color: "#a70101" }}
                       ></i>
+                    ) : (
+                      <i className="fa-solid fa-circle-check text-success fs-5"></i>
                     )}
-                  </td>
-                  <td
-                    className={`text-${
-                      order.status === "cancelled" ? "danger" : "primary"
-                    }`}
-                  >
-                    {order.status}
                   </td>
                 </tr>
               ))}

@@ -82,7 +82,7 @@ export default function ProductDetails() {
 
         <div className="single-pro-details">
           <h6 className="text-secondary">{product.category}</h6>
-          <h4>{product.name}</h4>
+          <h4 className="pt-3">{product.name}</h4>
           <h2>${product.price}</h2>
           <p className="mb-3">
             {" "}
@@ -107,7 +107,7 @@ export default function ProductDetails() {
             value={quantity}
             onChange={(e) => setQuantity(+e.target.value)}
             placeholder="1"
-            onKeyDown={(e) => e.preventDefault()}
+            // onKeyDown={(e) => e.preventDefault()}
           />
           <button
             className="btn add-button"

@@ -38,7 +38,6 @@ export default function Cart() {
     street: "",
     building: "",
     phone: "",
-    submit: "",
   });
 
   const handleChange = (e) => {
@@ -51,8 +50,9 @@ export default function Cart() {
     } else if (name === "phone" && !/^\d{11}$/.test(value)) {
       error = "Please enter a valid 11-digit phone number";
     }
-
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    if (name !== "notes") {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    }
 
     // Update the form data state
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -158,7 +158,7 @@ export default function Cart() {
                     />
                   </Link>
                 </td>
-                <td>{product.name}</td>
+                <td className="p-0">{product.name}</td>
                 <td>${product.price}</td>
                 <td>
                   <div className="qty text-center">

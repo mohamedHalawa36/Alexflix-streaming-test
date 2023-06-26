@@ -222,6 +222,10 @@ export default function Store() {
               key={pageNum}
               className=" page-item "
               onClick={() => {
+                window.scroll({
+                  top: 300,
+                  behavior: "smooth",
+                });
                 sessionStorage.setItem("pageNumber", pageNum);
                 setPage(pageNum);
               }}
@@ -229,25 +233,6 @@ export default function Store() {
               <span className="page-link">{pageNum}</span>
             </li>
           ))}
-          {/* <button
-            disabled={page === 1 ? true : false}
-            onClick={(e) => decreasePage(e)}
-          >
-            <i className="fa-solid fa-long-arrow-alt-left"></i>
-          </button>
-          <button className="mx-1" onClick={() => setPage(page + 1)}>
-            {page}
-          </button>
-          <button className="mx-1" onClick={() => setPage(page + 2)}>
-            {page + 1}
-          </button>
-          <button
-            className=""
-            disabled={page === 13 ? true : false}
-            onClick={(e) => increasePage(e)}
-          >
-            <i className="fa-solid fa-long-arrow-alt-right"></i>
-          </button> */}
         </ul>
       )}
     </div>
