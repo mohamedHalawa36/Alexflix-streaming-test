@@ -77,7 +77,7 @@ storeAxios.interceptors.request.use(
       config.headers = {
         Authorization: `Basic ${localStorage.getItem("token")}`,
       };
-      else
+    else
       config.headers = {
         Authorization: `Basic ${token}`,
       };
@@ -134,7 +134,7 @@ axiosInstance.interceptors.request.use(
       config.headers = {
         Authorization: `Basic ${localStorage.getItem("token")}`,
       };
-      else
+    else
       config.headers = {
         Authorization: `Basic ${token}`,
       };
