@@ -2,21 +2,20 @@ import React from "react";
 import logo from "../assets/images/logo trans2.png";
 import { Link } from "react-router-dom";
 export default function Footer() {
+  const token = localStorage.getItem("token");
   return (
-    <footer className="section-p1 ">
+    <footer className="section-p1 mt-5 pb-0">
       <div className="footer-col">
         <div className="info-footer">
           <img className="logo" src={logo} alt="" width="25%" />
-          <h4>Contact</h4>
           <p>
-            <strong>Addess: </strong> 562 Wllington Road,Street 32, San
-            Francisco
+            <strong>Addess: </strong> 562 Miami,Street 32, Alexandria,Egypt
           </p>
           <p>
             <strong>Phone: </strong> +01 2222 365 /(+91) 01 2345 6789
           </p>
           <p>
-            <strong>Hours: </strong>10:00 - 18:00, Mon - Sat{" "}
+            <strong>Email: </strong> Alexx.flixx@gmail.com
           </p>
           <div className="follow">
             <h4>Follow us</h4>
@@ -32,21 +31,11 @@ export default function Footer() {
       </div>
 
       <div className="footer-col">
-        <h4>About</h4>
-        <Link>About us</Link>
-        <Link>Delivery Information</Link>
-        <Link>Privacy policy</Link>
-        <Link>Terms & Conditions </Link>
-        <Link>Contact Us</Link>
-      </div>
-
-      <div className="footer-col">
         <h4>My Account</h4>
-        <Link>Sign In</Link>
-        <Link>View Cart</Link>
-        <Link>My Wishlist</Link>
-        <Link>Track My Order</Link>
-        <Link>Help</Link>
+        <Link to={token?"/profile":"/login"} >{token?"Profile":"Sign In"}</Link>
+        <Link to={`/store/cart`}>View Cart</Link>
+        <Link to={`/favorites`}>My Favorites</Link>
+        <Link to={`/user/orders`}>Track My Order</Link>
       </div>
 
       <div className="copyright">

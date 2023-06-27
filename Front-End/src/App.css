@@ -854,6 +854,7 @@ footer {
   flex-wrap: wrap;
   justify-content: start;
   color: var(--textColor);
+  box-shadow: 0 0 2px var(--textColor);
 }
 footer .footer-col:nth-child(1){
   flex-grow: 2;
@@ -874,12 +875,12 @@ footer .logo {
 
 footer h4 {
   font-size: 14px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 footer p {
   font-size: 13px;
-  padding: 0 0 8px 0;
+  /* padding: 0 0 8px 0; */
 }
 
 footer a {

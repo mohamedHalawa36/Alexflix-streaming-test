@@ -60,13 +60,13 @@ const dispatch = useDispatch();
         </Form.Select>
       </div>
       <div className="movie-cards row justify-content-center">
-        <h3
-          className={`text-center text-capitalize text-light ${
+        <p
+          className={` text-danger text-center text-capitalize fs-4 ${
             renderedVids && renderedVids.length === 0 ? "" : "d-none"
           }`}
         >
           {type} not found
-        </h3>
+        </p>
         {renderedVids &&
           renderedVids.map((movie) => {
             return (

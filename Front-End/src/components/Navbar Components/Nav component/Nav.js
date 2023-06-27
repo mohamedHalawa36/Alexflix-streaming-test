@@ -14,17 +14,19 @@ export function Nav({ positionStyle }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const totalInCart = useSelector((state) => state.cart.total);
   const linkClickHandle = (e) => {
-    if(localStorage.getItem("token")) {
-    window.scrollTo(0, 0);
-    if (window.innerWidth <= navCollapseScreen && toggler.current.getAttribute("aria-expanded") === "true") {
-      let bsCollapse = new bootstrap.Collapse(navbar.current);
-      bsCollapse.hide();
+    if (localStorage.getItem("token")) {
+      window.scrollTo(0, 0);
+      if (
+        window.innerWidth <= navCollapseScreen &&
+        toggler.current.getAttribute("aria-expanded") === "true"
+      ) {
+        let bsCollapse = new bootstrap.Collapse(navbar.current);
+        bsCollapse.hide();
+      }
+    } else {
+      e.preventDefault();
+      return PopUpMsg({ message: "Please Login First" });
     }
-  }  else {
-    e.preventDefault();
-    return PopUpMsg({message:"Please Login First"})
-  }
-
   };
   const signOut = () => {
     localStorage.removeItem("token");
@@ -51,7 +53,7 @@ export function Nav({ positionStyle }) {
           <img src={logo} alt="Alexflix" width="170" height="35" />
         </Link>
         <button
-        ref={toggler}
+          ref={toggler}
           id="nav-toggler"
           className="navbar-toggler"
           type="button"
@@ -87,7 +89,6 @@ export function Nav({ positionStyle }) {
                 className="nav-link"
                 to={"/series"}
                 end
-
               >
                 Series
               </NavLink>
@@ -98,7 +99,6 @@ export function Nav({ positionStyle }) {
                 className="nav-link"
                 to={"/anime"}
                 end
-
               >
                 Anime
               </NavLink>
@@ -109,7 +109,6 @@ export function Nav({ positionStyle }) {
                 className="nav-link position-relative"
                 to={"/store"}
                 end
-
               >
                 <span id="badge-icon" className=" position-relative">
                   Store
@@ -120,7 +119,11 @@ export function Nav({ positionStyle }) {
 
             <li id="separator" className="nav-item flex-grow-1"></li>
             <li id="lg-bag" className="nav-item ">
-              <NavLink className="nav-link  me-2" to={"/store/cart"}>
+              <NavLink
+                onClick={linkClickHandle}
+                className="nav-link  me-2"
+                to={"/store/cart"}
+              >
                 <span id="cart-icon-container" className="position-relative">
                   <i className="fa-solid fa-cart-shopping fa-lg" />
                   <span
