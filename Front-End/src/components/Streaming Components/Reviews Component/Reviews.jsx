@@ -102,7 +102,7 @@ export default function MovieReviews({ typing, setTyping }) {
       <div id="reviews" className="mt-5">
         <h2 className="mb-4">Reviews</h2>
         <ul className="list-group">
-          {reviews.slice(0, visibleReviews).map((review) => (
+          {reviews && reviews.slice(0, visibleReviews).map((review) => (
             <li key={review._id} className="list-group-item">
               <div className="d-flex align-items-start">
                 <Avatar className="me-3">
@@ -198,7 +198,7 @@ export default function MovieReviews({ typing, setTyping }) {
             </li>
           ))}
         </ul>
-        {visibleReviews < reviews.length && (
+        {reviews && visibleReviews < reviews.length && (
           <div className="text-center mt-4">
             <button className="btn btn-secondary" onClick={handleViewMore}>
               View More

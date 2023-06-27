@@ -40,7 +40,6 @@ export const addMovieReview = async (movieId, data) => {
 export const updateMovieReview = async (reviewId, data) => {
   try {
     const check = await storeAxios.patch(`review/${reviewId}`, data);
-    console.log(check);
     if (check?.data) return check.data;
   } catch (error) {
     return error;

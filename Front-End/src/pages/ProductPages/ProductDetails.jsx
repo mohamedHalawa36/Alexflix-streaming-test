@@ -6,7 +6,7 @@ import { addToCart } from "./../../store/Slice/cart";
 import FullScreenLoader from "./../../components/FullScreenLoader";
 
 export default function ProductDetails() {
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const imgRef = useRef(null);
@@ -28,11 +28,11 @@ export default function ProductDetails() {
     imgRef.current.src = e.target.src;
   }
 
-  if (!product || !product.images) {
+  if (!product) {
     return <FullScreenLoader />;
   }
   return (
-    <>
+    <>{product.images?.length >= 0 &&( 
       <section id="prodetails" className="section-p1 w-75 mx-auto text-light ">
         {product.images?.length >= 3 ? (
           <div className="single-pro-img ">
@@ -125,7 +125,7 @@ export default function ProductDetails() {
           <h4>Product Details</h4>
           <span>{product.description}</span>
         </div>
-      </section>
+      </section>)}
     </>
   );
 }
