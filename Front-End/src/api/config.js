@@ -3,6 +3,7 @@ import store from "../store/store.js";
 import { setLoader } from "../store/Slice/loader.js";
 import Swal from "sweetalert2";
 import { setFavLoader } from "../store/Slice/favLoader.js";
+import thunk from "redux-thunk";
 export const configAxios = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {},
@@ -178,13 +179,28 @@ export const favAxios = axios.create({
 
 favAxios.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
-    store.dispatch(setFavLoader(true));
-    if (localStorage.getItem("token"))
-      config.headers = {
-        Authorization: `Basic ${localStorage.getItem("token")}`,
-      };
-    return config;
+    if (navigator.onLine) {
+      // Do something before request is sent
+      if (localStorage.getItem("token")) {
+        store.dispatch(setFavLoader(true));
+        config.headers = {
+          Authorization: `Basic ${localStorage.getItem("token")}`,
+        };
+        return config;
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please Login First",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Connection Failed",
+      });
+    }
   },
   function (error) {
     store.dispatch(setFavLoader(false));

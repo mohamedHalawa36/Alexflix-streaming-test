@@ -5,6 +5,7 @@ import { NavAuth } from "../NavAuth  Component/NavAuth";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
 import logo from "../../../assets/images/logo trans2.png";
 import "./nav.css";
+import { PopUpMsg } from "../../../api/apiStream";
 export function Nav({ positionStyle }) {
   const navCollapseScreen = 992;
   const navbar = useRef();
@@ -12,12 +13,18 @@ export function Nav({ positionStyle }) {
   const [isloggedIn, setIsloggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const totalInCart = useSelector((state) => state.cart.total);
-  const linkClickHandle = () => {
+  const linkClickHandle = (e) => {
+    if(localStorage.getItem("token")) {
     window.scrollTo(0, 0);
     if (window.innerWidth <= navCollapseScreen && toggler.current.getAttribute("aria-expanded") === "true") {
       let bsCollapse = new bootstrap.Collapse(navbar.current);
       bsCollapse.hide();
     }
+  }  else {
+    e.preventDefault();
+    return PopUpMsg({message:"Please Login First"})
+  }
+
   };
   const signOut = () => {
     localStorage.removeItem("token");

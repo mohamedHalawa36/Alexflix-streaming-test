@@ -7,16 +7,20 @@ import { getAllProduct } from "../../api/apiEcommerce";
 import homeImage from "../../assets/images/homeImg.jpg";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./home.css";
+import Swal from "sweetalert2";
 export function Home() {
   const [products, setProducts] = useState([]);
   const allVids = useSelector((state) => state.videos);
   const dispatch = useDispatch();
-  const movies =allVids.movies&& [...allVids.movies]?.sort((a, b) => b.rate - a.rate);
-  const series =allVids.series&& [...allVids.series]?.sort((a, b) => b.rate - a.rate);
-  const animes =allVids.animes&& [...allVids.animes]?.sort((a, b) => b.rate - a.rate);
+  const movies =
+    allVids.movies && [...allVids.movies]?.sort((a, b) => b.rate - a.rate);
+  const series =
+    allVids.series && [...allVids.series]?.sort((a, b) => b.rate - a.rate);
+  const animes =
+    allVids.animes && [...allVids.animes]?.sort((a, b) => b.rate - a.rate);
   useEffect(() => {
     getAllProduct().then((res) => {
-      const { allProducts } = res||[];
+      const { allProducts } = res || [];
       setProducts(allProducts);
     });
     dispatch(getAllFav());

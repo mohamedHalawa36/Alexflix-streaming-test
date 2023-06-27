@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { axiosInstance, favAxios } from "./config";
 
 export const getAllvideos = ()=>{
@@ -52,4 +53,13 @@ export const addToFavorites = (id) => {
 };
 export const deleteFromFavorites = (id) => {
 return  favAxios.delete(`${id}`);
+};
+
+//error handling
+export const PopUpMsg = (error) => {
+  return Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: error.message,
+  });
 };

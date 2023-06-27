@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { toggleProductFromCart } from "../../../store/Slice/cart";
-import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
+import {
+  PopUpMsg,
+  addToFavorites,
+  deleteFromFavorites,
+} from "../../../api/apiStream";
 import { addToList, removeFromList } from "../../../store/Slice/videosSlice";
 import Swal from "sweetalert2";
 import { useRef } from "react";
+import { setFavLoader } from "../../../store/Slice/favLoader";
 export function MovieCard({ movie, isFav, type }) {
   const smFavIcon = useRef();
   const favLoader = useSelector((state) => state.favLoader);
@@ -17,50 +22,45 @@ export function MovieCard({ movie, isFav, type }) {
   const favorites = [...allVids.favorites];
   const [isFavorite, setIsFavorite] = useState(isFav);
   const dispatch = useDispatch();
-  const favPopUpMsg = (error) => {
-    let textMsg;
-    navigator.onLine
-      ? (textMsg = error.message)
-      : (textMsg = "Connection Failed");
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: textMsg,
-    });
-  };
   const handleAddToCart = function (e) {
-    e.stopPropagation();
-    if (inCart) setInCart(false);
-    else setInCart(true);
-    let obj = { ...movie, quantity: 1 };
-    dispatch(toggleProductFromCart(obj));
+    if (localStorage.getItem("token")) {
+      e.stopPropagation();
+      if (inCart) setInCart(false);
+      else setInCart(true);
+      let obj = { ...movie, quantity: 1 };
+      dispatch(toggleProductFromCart(obj));
+    } else return PopUpMsg({ message: "Please Login First" });
   };
   const addToFav = function (e) {
     e.stopPropagation();
     if (!isFavorite) {
       addToFavorites(movie._id)
         .then((res) => {
-          setIsFavorite(true);
+          if (res) setIsFavorite(true);
         })
         .catch((error) => {
-          return favPopUpMsg(error);
+          dispatch(setFavLoader(false));
+          return PopUpMsg(error);
         });
     } else {
       deleteFromFavorites(movie._id)
         .then((res) => {
-          setIsFavorite(false);
+          if (res) setIsFavorite(false);
           dispatch(removeFromList(movie));
         })
         .catch((error) => {
-          return favPopUpMsg(error);
+          dispatch(setFavLoader(false));
+          return PopUpMsg(error);
         });
     }
   };
   const navigate = useNavigate();
   const moveToDetails = function () {
-    if (type === "video") navigate(`/movies/${movie._id}`);
-    else if (type === "product") navigate(`/store/product/${movie._id}`);
-    window.scrollTo(0, 0);
+    if (localStorage.getItem("token")) {
+      if (type === "video") navigate(`/movies/${movie._id}`);
+      else if (type === "product") navigate(`/store/product/${movie._id}`);
+      window.scrollTo(0, 0);
+    } else return PopUpMsg({ message: "Please Login First" });
   };
 
   useEffect(() => {
