@@ -1,12 +1,22 @@
 import { storeAxios } from "./config";
 export async function getAllProduct(page = 1) {
-  let { data } = await storeAxios.get(`products?page=${page}`);
-  return data;
+  try {
+    let check = await storeAxios.get(`products?page=${page}`);
+    console.log(check);
+    return check?.data || { allProducts: [], totalPages: 0 };
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function getProductById(id) {
-  let { data } = await storeAxios.get(`products/${id}`);
-  return data;
+  try {
+    let check = await storeAxios.get(`products/${id}`);
+    console.log(check?.data || {});
+    return check?.data || {};
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function searchProduct(query) {
@@ -20,6 +30,6 @@ export async function searchProduct(query) {
     );
     return data.products;
   } catch (error) {
-    return [];
+    return error;
   }
 }
