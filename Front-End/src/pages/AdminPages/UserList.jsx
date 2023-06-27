@@ -116,7 +116,7 @@ export default function UserList() {
           <div className="row row-cols-1">
             <article className="table-header row d-xl-flex d-none  px-xl-3  pb-4 pt-2 col-lg-11 mx-auto border border-1 border-bottom-0 bg-blue-dark">
               <p className="lead col">Profile</p>
-              <p className="lead col">Name</p>
+              <p className="lead col-3 text-center">Name</p>
               <p className="lead col">Contact</p>
               <p className="lead col text-center">Gender</p>
               <p className="lead col text-center">Age</p>
@@ -150,9 +150,9 @@ export default function UserList() {
                       />
                     </div>
                   </div>
-                  <div className="col-xl col-12 row">
+                  <div className="col-xl-3 col-12 row">
                     <p className="lead d-xl-none d-block col-6">Name</p>
-                    <p className="col-xl col-6 text-xl-start text-end">
+                    <p className="col-xl col-6 text-xl-center text-end">
                       {item.firstName + " " + item.lastName}
                     </p>
                   </div>
