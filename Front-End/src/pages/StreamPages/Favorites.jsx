@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { MovieCard } from "../../components/Streaming Components/MovieCard component/MovieCard";
-import "../../components/Streaming Components/StreamPagesStyles/favorites.css";
+import "../../components/Streaming Components/StreamPagesStyles/favorites.css"
 import { useDispatch, useSelector } from "react-redux";
 import { getAllFav } from "../../store/Slice/videosSlice";
 export default function Favorites() {
