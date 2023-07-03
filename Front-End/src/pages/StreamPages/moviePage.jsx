@@ -15,7 +15,7 @@ import {
   removeFromList,
 } from "../../store/Slice/videosSlice";
 import { addToFavorites, deleteFromFavorites } from "../../api/apiStream";
-import "../../components/Streaming Components/Movie page component/movie.css";
+import "../../components/Streaming Components/StreamPagesStyles/movie.css";
 export default function MovieDetails() {
   const favLoader = useSelector((state) => state.favLoader);
   const [isFavorite, setIsFavorite] = useState(false);
