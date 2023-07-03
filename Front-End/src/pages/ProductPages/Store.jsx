@@ -198,7 +198,7 @@ export default function Store() {
                     }}
                   >
                     {product.isAdd ? (
-                      <i class="fa-solid fa-cart-shopping cart text-danger"></i>
+                      <i className="fa-solid fa-cart-shopping cart text-danger"></i>
                     ) : (
                       <i className="fa-solid fa-cart-plus cart"></i>
                     )}
