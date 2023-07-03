@@ -9,7 +9,7 @@ import RecoverPassword from "./../pages/AccountPages/RecoverPassword";
 import ResetPassword from "./../pages/AccountPages/ResetPassword";
 import ConfirmEmail from "../components/ConfirmEmail";
 import UserGaurdRouter from "./UserGaurdRouter.jsx";
-import { Home } from "../components/Home Component/Home";
+import { Home } from "../pages/Home.jsx";
 import { HomeGuard, LoginGuard } from "../guards/AuthGuards.js";
 export default function Router() {
   const AddUser = lazy(() => import("../pages/AdminPages/AddUser"));
@@ -32,19 +32,19 @@ export default function Router() {
   );
   //Stream
   const Movies = lazy(() =>
-    import("../components/Streaming Components/MoviesComponent/Movies")
+    import("../pages/StreamPages/Movies.jsx")
   );
   const MovieDetails = lazy(() =>
-    import("../components/Streaming Components/Movie page component/Movie")
+    import("../pages/StreamPages/moviePage.jsx")
   );
   const Favorites = lazy(() =>
-    import("../components/Streaming Components/Favorites component/Favorites")
+    import("../pages/StreamPages/Favorites.jsx")
   );
   const Animes = lazy(() =>
-    import("../components/Streaming Components/Anime Component/Anime")
+    import("../pages/StreamPages/Anime.jsx")
   );
   const Series = lazy(() =>
-    import("../components/Streaming Components/Series Component/Series")
+    import("../pages/StreamPages/Series.jsx")
   );
   const ChangePassword = lazy(() =>
   import("./../pages/AccountPages/ChangePassword")
@@ -53,7 +53,7 @@ const Profile = lazy(() =>
 import("./../pages/AccountPages/Profile")
 );
 const Settings = lazy(() =>
-import("../components/Account  Component/Settings")
+import("../pages/AccountPages/Settings")
 );
 
 

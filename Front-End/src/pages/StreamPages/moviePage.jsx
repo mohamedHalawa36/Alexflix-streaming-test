@@ -1,26 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import Rating from "../Rating Component/Rating";
 import Modal from "react-bootstrap/Modal";
 import "react-tuby/css/main.css";
 import { Player } from "react-tuby";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Reviews from "../Reviews Component/Reviews";
-import "./movie.css";
-import { CardsSlider } from "../../Streaming Components//Cards Slider Component/CardsSlider";
-import { searchProduct, getProductById } from "./../../../api/apiEcommerce";
-import { getMovie } from "./../../../api/apiMovies";
-import SeriesHandler from "../SeriesHandling/SeriesHandler";
+import Reviews from "../../components/Streaming Components/Reviews Component/Reviews";
+import { CardsSlider } from "../../components/Streaming Components//Cards Slider Component/CardsSlider";
+import { getMovie } from "../../api/apiMovies";
+import SeriesHandler from "../../components/Streaming Components/SeriesHandling/SeriesHandler";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToList,
   getAllFav,
   removeFromList,
-} from "../../../store/Slice/videosSlice";
-import { addToFavorites, deleteFromFavorites } from "../../../api/apiStream";
-import { faV } from "@fortawesome/free-solid-svg-icons";
+} from "../../store/Slice/videosSlice";
+import { addToFavorites, deleteFromFavorites } from "../../api/apiStream";
+import "../../components/Streaming Components/Movie page component/movie.css";
 export default function MovieDetails() {
   const favLoader = useSelector((state) => state.favLoader);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -232,7 +227,6 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-        {/* video player */}
         <div>
           <div className=" py-5">
             <Player
@@ -261,7 +255,6 @@ export default function MovieDetails() {
               ]}
               poster={movieDetails.cover_image}
               controls
-              // keyboard
               fullScreenOnDoubleClick
             />
           </div>
