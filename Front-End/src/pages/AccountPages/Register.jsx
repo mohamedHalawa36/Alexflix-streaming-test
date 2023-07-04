@@ -65,7 +65,7 @@ export default function Register() {
                   <FloatingLabel controlId="firstName" label="FirstName">
                     <Form.Control
                       type="text"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="firstName"
                       placeholder=" "
                       value={values.firstName}
@@ -83,7 +83,7 @@ export default function Register() {
                   <FloatingLabel controlId="lastName" label="LastName">
                     <Form.Control
                       type="text"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="lastName"
                       placeholder=" "
                       value={values.lastName}
@@ -101,7 +101,7 @@ export default function Register() {
                   <FloatingLabel controlId="email" label="Email Address">
                     <Form.Control
                       type="email"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="email"
                       placeholder=" "
                       value={values.email}
@@ -119,7 +119,7 @@ export default function Register() {
                   <FloatingLabel controlId="password" label="Password">
                     <Form.Control
                       type="password"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="password"
                       placeholder="Password "
                       autoComplete="true"
@@ -141,7 +141,7 @@ export default function Register() {
                   >
                     <Form.Control
                       type="password"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="confirmPassword"
                       placeholder="Password"
                       autoComplete="true"
@@ -164,7 +164,7 @@ export default function Register() {
                   <FloatingLabel controlId="phone" label="Phone">
                     <Form.Control
                       type="text"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="phone"
                       placeholder=" "
                       value={values.phone}
@@ -182,7 +182,7 @@ export default function Register() {
                   <FloatingLabel controlId="age" label="Age">
                     <Form.Control
                       type="number"
-                      className=" rounded-1 login-input"
+                      className="text-light rounded-1 login-input"
                       name="age"
                       placeholder=" "
                       value={values.age}
