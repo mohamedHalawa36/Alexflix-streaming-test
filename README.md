@@ -86,8 +86,8 @@ To get a local copy up and running follow these simple example steps.
    SENDER_PASSWORD = "";
    Url_FrontEnd = "http://localhost:3000";
    ```
-3. open cmd
-   ```sh
+3. open cmd ./
+  ```sh
    npm install
    npm start
    ```
@@ -98,7 +98,7 @@ To get a local copy up and running follow these simple example steps.
    REACT_APP_Dark = "/movies/6480d1f16dac30a126565b6b";
    ```
 
-5. open cmd 
+5. open cmd ./frontend
    ```sh
    npm install
    npm start
