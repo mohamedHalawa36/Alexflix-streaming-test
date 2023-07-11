@@ -75,15 +75,8 @@ To get a local copy up and running follow these simple example steps.
    git clone https://github.com/SamyIsaac1/Alexflix-Web-App
    ```
 
-2. cd ./
 
-   ```sh
-   npm install
-   npm start
-   ```
-
-3. Add .env file
-
+2. cd ./ then Add .env file
    ```js
    URL = "mongodb://127.0.0.1:27017/Alexflix";
    Atlas_URL = "";
@@ -93,19 +86,25 @@ To get a local copy up and running follow these simple example steps.
    SENDER_PASSWORD = "";
    Url_FrontEnd = "http://localhost:3000";
    ```
-
-4. cd ./frontend
-
+3. open cmd
    ```sh
    npm install
    npm start
    ```
 
-5. Add .env file
+4. cd ./frontend then Add .env file
    ```js
    REACT_APP_BASE_URL = "http://localhost:8080";
    REACT_APP_Dark = "/movies/6480d1f16dac30a126565b6b";
    ```
+
+5. open cmd 
+   ```sh
+   npm install
+   npm start
+   ```
+
+
 
 List of 3rd Parties.
 
