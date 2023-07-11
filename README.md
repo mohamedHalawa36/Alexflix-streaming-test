@@ -2,10 +2,9 @@
 <br />
 <div align="center">
   <a href="/Documentation.pdf">
-    <img src="images/logo.png" alt="Logo" width="150" height="50">
+    <img src="images/logo.png" alt="Logo" width="150" height="40">
   </a>
 
-  <h3 align="center">Alexflix</h3>
 
   <p align="center">
     An awesome README template to jumpstart your projects!
