@@ -209,11 +209,11 @@ Samy Isaac - samyIsaack7@gmail.com - [LinkendIn](https://www.linkedin.com/in/sam
 
 Mohaned Mohamed - mohanedmohamed41@gmail.com - [LinkendIn](https://www.linkedin.com/in/mohaned-mohamed-khalil/)
 
-Adel George - adelgeorge@gmail.com - [LinkendIn](https://www.linkedin.com/in/adel-george/) 
+Adel George - adel.george.isaac@gmail.com - [LinkendIn](https://www.linkedin.com/in/adel-george/) 
 
 Mohamed Halawa - mohamedhalawah22@gmail.com - [LinkendIn](https://www.linkedin.com/in/mohamed-halawa-b99334237/) 
 
-Abdelrahman Salah - abdelrahmansalah@gmail.com - [LinkendIn](https://www.linkedin.com/in/abdelrahman-salah-85a823214/) 
+Abdelrahman Salah - abdelrahmansalah141298@gmail.com - [LinkendIn](https://www.linkedin.com/in/abdelrahman-salah-85a823214/) 
 
 Project Link: https://github.com/SamyIsaac1/Alexflix-Web-App
 
