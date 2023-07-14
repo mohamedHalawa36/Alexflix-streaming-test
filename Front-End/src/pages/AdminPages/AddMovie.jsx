@@ -21,6 +21,7 @@ export default function AddMovie() {
     production_year: movieValidation.production_year,
     trailer: movieValidation.trailer,
     poster_image: movieValidation.poster,
+    cover_image: movieValidation.cover,
     videos: movieValidation.videos,
   });
   const [img, setImg] = useState("");
@@ -38,7 +39,7 @@ export default function AddMovie() {
     setSelectCheck(true);
   };
   const handleSearch = (e) => {
-    searchProduct(e.target.value).then((data) => {
+    searchProduct({ name: e.target.value }).then((data) => {
       if (data?.message) setProductListSearch(data.products);
     });
   };
@@ -193,6 +194,7 @@ export default function AddMovie() {
               production_year: "",
               trailer: "",
               poster_image: img,
+              cover_image: "",
               videos: "",
             }}
           >
@@ -300,12 +302,31 @@ export default function AddMovie() {
                     placeholder=" "
                     value={values.poster_image}
                     onChange={handleChange}
-                    onBlur={handlePoster}
+                    onBlur={(e) => {
+                      handlePoster(e);
+                      handleBlur(e);
+                    }}
                     isValid={touched.poster_image && !errors.poster_image}
                     isInvalid={touched.poster_image && errors.poster_image}
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.poster_image}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="cover">
+                  <Form.Label>Cover</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="cover_image"
+                    placeholder=" "
+                    value={values.cover_image}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isValid={touched.cover_image && !errors.cover_image}
+                    isInvalid={touched.cover_image && errors.cover_image}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.cover_image}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="trailer">

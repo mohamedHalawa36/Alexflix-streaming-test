@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+const videoSchema = new mongoose.Schema({
+  season: Number,
+  episodes: [{ type: String }],
+},{_id:false});
 const schema = new mongoose.Schema({
   name: String,
   rate: Number,
@@ -11,7 +15,7 @@ const schema = new mongoose.Schema({
   trailer: String,
   poster_image: String,
   cover_image: String,
-  videos: String,
+  videos: [videoSchema],
 });
 
 module.exports = mongoose.model("movies", schema);
