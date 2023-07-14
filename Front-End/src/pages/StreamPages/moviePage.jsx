@@ -23,6 +23,8 @@ export default function MovieDetails() {
   const favorites = [...allVids.favorites];
   const dispatch = useDispatch();
   const [typing, setTyping] = useState(true);
+  const [playerSrc,setPlayerSrc] = useState();
+  const vidRef = useRef()
 
   const params = useParams();
   const playerRef = useRef(null);
@@ -39,6 +41,7 @@ export default function MovieDetails() {
     getMovie(params.id)
       .then((res) => {
         setMovieDetails(res.data);
+        setPlayerSrc(res.data.videos[0]["episodes"][0])
         return res.data;
       })
       .then((movie) => {
@@ -212,7 +215,7 @@ export default function MovieDetails() {
                     </small>{" "}
                   </p>
                   {movieDetails.type !== "movie" && (
-                    <SeriesHandler movieDetails={movieDetails} />
+                    <SeriesHandler movieDetails={movieDetails} setPlayerSrc={setPlayerSrc} playerRef={vidRef.current} />
                   )}
 
                   <MyVerticallyCenteredModal
@@ -225,7 +228,7 @@ export default function MovieDetails() {
           </div>
         </div>
         <div>
-          <div className=" py-5">
+          <div ref={vidRef} className=" py-5">
             <Player
               keyboardShortcut={{
                 pause: typing,
@@ -239,16 +242,9 @@ export default function MovieDetails() {
               src={[
                 {
                   quality: "Full HD",
-                  url: "http://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/1080.mp4",
+                  url: playerSrc,
                 },
-                {
-                  quality: 720,
-                  url: "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/720.mp4",
-                },
-                {
-                  quality: 480,
-                  url: "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/480.mp4",
-                },
+                
               ]}
               poster={movieDetails.cover_image}
               controls
